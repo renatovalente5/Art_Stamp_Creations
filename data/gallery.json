@@ -1,0 +1,28 @@
+{
+  "items": [
+    { "img": "assets/img/trabalhos/hoodie-raposa-costas.jpg", "cap": "Hoodie com estampagem DTF" },
+    { "img": "assets/img/trabalhos/tshirt-raposa-vermelha.jpg", "cap": "T-shirt com arte personalizada" },
+    { "img": "assets/img/trabalhos/caneca-magica-foto.jpg", "cap": "Caneca mágica com fotografia" },
+    { "img": "assets/img/trabalhos/autocolantes-mascote.jpg", "cap": "Autocolantes personalizados" },
+    { "img": "assets/img/trabalhos/capa-telemovel-nike.jpg", "cap": "Capa de telemóvel (DTF UV)" },
+    { "img": "assets/img/trabalhos/vinil-montra-speranza.jpg", "cap": "Vinil de montra" },
+    { "img": "assets/img/trabalhos/dtf-textil-transfer.jpg", "cap": "Transfer DTF têxtil" },
+    { "img": "assets/img/trabalhos/saco-tote-barber.jpg", "cap": "Saco tote personalizado" },
+    { "img": "assets/img/trabalhos/hoodie-clube-ipic.jpg", "cap": "Equipamento de clube" },
+    { "img": "assets/img/trabalhos/tshirt-echovisuals.jpg", "cap": "T-shirt para empresa" },
+    { "img": "assets/img/trabalhos/caneca-inox-texto.jpg", "cap": "Caneca inox com mensagem" },
+    { "img": "assets/img/trabalhos/autocolantes-bella-donna.jpg", "cap": "Autocolantes para empresa" },
+    { "img": "assets/img/trabalhos/capa-telemovel-laranja.jpg", "cap": "Capa de telemóvel com logótipo" },
+    { "img": "assets/img/trabalhos/casaco-personal-trainer.jpg", "cap": "Casaco para personal trainer" },
+    { "img": "assets/img/trabalhos/tshirts-evento.jpg", "cap": "T-shirts para evento" },
+    { "img": "assets/img/trabalhos/mangas-sublimadas.jpg", "cap": "Vestuário desportivo sublimado" },
+    { "img": "assets/img/trabalhos/azulejo-foto-casal.jpg", "cap": "Azulejo com fotografia" },
+    { "img": "assets/img/trabalhos/vinil-montra-cafe.jpg", "cap": "Decoração de montra em vinil" },
+    { "img": "assets/img/trabalhos/tshirt-crest-loja.jpg", "cap": "T-shirt com emblema" },
+    { "img": "assets/img/trabalhos/autocolantes-redondos.jpg", "cap": "Autocolantes em vinil" },
+    { "img": "assets/img/trabalhos/capa-telemovel-fcp.jpg", "cap": "Capa de telemóvel personalizada" },
+    { "img": "assets/img/trabalhos/canetas-personalizadas.jpg", "cap": "Canetas personalizadas" },
+    { "img": "assets/img/trabalhos/tshirt-texto-humor.jpg", "cap": "T-shirt com frase" },
+    { "img": "assets/img/trabalhos/bracadeira-capitao.jpg", "cap": "Braçadeira de capitão" }
+  ]
+}

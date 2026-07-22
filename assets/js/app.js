@@ -104,4 +104,51 @@
       renderModels();
     }).catch(function () { mgrid.innerHTML = '<p class="muted">Não foi possível carregar os modelos.</p>'; });
   }
+
+  /* ------------------------- GALERIA / PORTFÓLIO + LIGHTBOX ------------------------- */
+  var ggrid = doc.getElementById('gallery-grid');
+  if (ggrid) {
+    var gItems = [];
+    getJSON('data/gallery.json').then(function (d) {
+      gItems = (d && d.items) || [];
+      ggrid.innerHTML = gItems.map(function (it, i) {
+        return '<figure class="gitem" data-i="' + i + '" data-reveal>' +
+          '<img src="' + esc(normImg(it.img)) + '" alt="' + esc(it.cap || 'Trabalho Art Stamp') + '" loading="lazy" />' +
+          '<figcaption>' + esc(it.cap || '') + '</figcaption>' +
+          '</figure>';
+      }).join('');
+      observeReveals(ggrid);
+    }).catch(function () { ggrid.innerHTML = '<p class="muted">Não foi possível carregar a galeria.</p>'; });
+
+    /* Lightbox */
+    var lb = doc.getElementById('lightbox');
+    var lbImg = lb && lb.querySelector('.lightbox__img');
+    var lbCap = lb && lb.querySelector('.lightbox__cap');
+    var cur = 0;
+    function openLB(i) {
+      cur = (i + gItems.length) % gItems.length;
+      lbImg.src = normImg(gItems[cur].img); lbImg.alt = gItems[cur].cap || '';
+      lbCap.textContent = gItems[cur].cap || '';
+      lb.classList.add('is-open'); lb.setAttribute('aria-hidden', 'false'); doc.body.classList.add('menu-open');
+    }
+    function closeLB() { lb.classList.remove('is-open'); lb.setAttribute('aria-hidden', 'true'); doc.body.classList.remove('menu-open'); }
+    if (lb) {
+      ggrid.addEventListener('click', function (e) {
+        var fig = e.target.closest('.gitem'); if (!fig) return;
+        openLB(parseInt(fig.getAttribute('data-i'), 10) || 0);
+      });
+      lb.addEventListener('click', function (e) {
+        var a = e.target.getAttribute && e.target.getAttribute('data-lb');
+        if (a === 'close' || e.target === lb) closeLB();
+        else if (a === 'prev') openLB(cur - 1);
+        else if (a === 'next') openLB(cur + 1);
+      });
+      doc.addEventListener('keydown', function (e) {
+        if (!lb.classList.contains('is-open')) return;
+        if (e.key === 'Escape') closeLB();
+        else if (e.key === 'ArrowLeft') openLB(cur - 1);
+        else if (e.key === 'ArrowRight') openLB(cur + 1);
+      });
+    }
+  }
 })();

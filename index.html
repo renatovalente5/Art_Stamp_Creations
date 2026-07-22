@@ -130,10 +130,29 @@
         <div class="models__grid" id="models-grid"><p class="muted">A carregar modelos…</p></div>
       </div>
     </section>
-    <section id="trabalhos" class="section"><div class="container"><h2>Trabalhos</h2><p class="section-lead">(em construção)</p></div></section>
+    <!-- ================= TRABALHOS / PORTFÓLIO ================= -->
+    <section id="trabalhos" class="section section--soft">
+      <div class="container">
+        <div class="section-head section-head--center" data-reveal>
+          <span class="eyebrow">Trabalhos</span>
+          <h2 class="section-title">Feito para quem quer destacar-se</h2>
+          <p class="section-lead">Uma amostra de personalizações que já criámos — para particulares, empresas, clubes e eventos.</p>
+        </div>
+        <div class="gallery" id="gallery-grid"><p class="muted">A carregar trabalhos…</p></div>
+      </div>
+    </section>
     <section id="como" class="section section--soft"><div class="container"><h2>Como funciona</h2><p class="section-lead">(em construção)</p></div></section>
     <section id="contacto" class="section"><div class="container"><h2>Contacto</h2><p class="section-lead">(em construção)</p></div></section>
   </main>
+
+  <!-- Lightbox da galeria -->
+  <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Galeria de trabalhos">
+    <button class="lightbox__btn lightbox__close" data-lb="close" type="button" aria-label="Fechar">×</button>
+    <button class="lightbox__btn lightbox__prev" data-lb="prev" type="button" aria-label="Anterior">‹</button>
+    <img class="lightbox__img" src="" alt="" />
+    <button class="lightbox__btn lightbox__next" data-lb="next" type="button" aria-label="Seguinte">›</button>
+    <p class="lightbox__cap"></p>
+  </div>
 
   <script src="assets/js/main.js" defer></script>
   <script src="assets/js/app.js" defer></script>
