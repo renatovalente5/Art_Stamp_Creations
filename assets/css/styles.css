@@ -145,6 +145,18 @@ body.menu-open{overflow:hidden}
 .model__specs span{color:var(--muted)}
 .model__specs b{color:var(--ink);text-align:right;font-weight:600}
 .model__cta{margin-top:auto;align-self:flex-start}
+@media (max-width:600px){
+  .models__grid{grid-template-columns:1fr 1fr;gap:.7rem}
+  .model__body{padding:.8rem .8rem .95rem;gap:.5rem}
+  .model__head{gap:.15rem}
+  .model__name{font-size:1rem}
+  .model__tag{font-size:.72rem}
+  .model__specs{font-size:.73rem;gap:.28rem}
+  .model__specs li{gap:.4rem;padding-bottom:.28rem}
+  .model__specs b{font-size:.73rem}
+  .model__cat{font-size:.65rem;padding:.28em .6em}
+  .model__cta{width:100%;align-self:stretch;padding:.62em .4em;font-size:.82rem}
+}
 
 /* ---------------- GALERIA / PORTFÓLIO ---------------- */
 .gallery{columns:4 230px;column-gap:1rem}
