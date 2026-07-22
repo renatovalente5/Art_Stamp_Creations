@@ -86,6 +86,7 @@ body.menu-open{overflow:hidden}
 .hero{position:relative;padding-top:calc(var(--header-h) + 1.6rem);padding-bottom:clamp(2.4rem,5vw,4rem);overflow:hidden}
 .hero::before{content:"";position:absolute;top:-18%;right:-12%;width:62vw;max-width:760px;height:760px;background:radial-gradient(circle at 60% 40%,rgba(26,140,228,.16),transparent 60%);pointer-events:none;z-index:0}
 .hero__grid{position:relative;z-index:1;display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(2rem,5vw,4rem);align-items:center}
+.hero .eyebrow{color:var(--ink)}
 .hero__title{font-size:clamp(2.4rem,5.6vw,4.05rem);line-height:1.02;margin-top:.7rem}
 .hero__title .hl{position:relative;white-space:nowrap;z-index:1}
 .hero__title .hl::after{content:"";position:absolute;left:-.07em;right:-.07em;bottom:.08em;height:.4em;background:var(--orange);border-radius:.22em;z-index:-1;transform:rotate(-1.4deg)}

@@ -48,7 +48,7 @@ content:
           - { name: desc, label: Descrição, type: text }
 
   - name: models
-    label: Modelos base
+    label: Catálogo Têxtil
     type: file
     path: data/models.json
     fields:
