@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://renatovalente5.github.io/Art_Stamp_Creations/sitemap.xml
