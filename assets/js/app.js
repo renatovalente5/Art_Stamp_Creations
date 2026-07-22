@@ -86,7 +86,7 @@
   /* ------------------------- MODELOS BASE (THCLOTHES) ------------------------- */
   var mgrid = doc.getElementById('models-grid');
   var mfilters = doc.getElementById('models-filters');
-  var WA = 'https://wa.me/351935218857?text=';
+  var WA = 'https://wa.me/351932938467?text=';
   var CAT_ORDER = ['Todos', 'T-shirts', 'Polos', 'Sweats e hoodies', 'Casacos e softshell', 'Vestuário de trabalho'];
   if (mgrid) {
     var allModels = [], activeCat = 'Todos';
@@ -200,7 +200,7 @@
       if (msg) t += ' ' + msg;
       if (contacto) t += ' O meu contacto: ' + contacto + '.';
       t += ' Podem dar-me um orçamento?';
-      window.open('https://wa.me/351935218857?text=' + encodeURIComponent(t), '_blank', 'noopener');
+      window.open('https://wa.me/351932938467?text=' + encodeURIComponent(t), '_blank', 'noopener');
     });
   }
 

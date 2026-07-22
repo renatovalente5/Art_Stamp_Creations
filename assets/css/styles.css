@@ -102,7 +102,7 @@ body.menu-open{overflow:hidden}
 .hero__badge{position:absolute;z-index:2;left:-8px;bottom:22px;background:var(--orange);color:var(--ink);font-family:var(--font-head);font-weight:600;font-size:.95rem;padding:.6em 1.05em;border-radius:var(--radius-pill);box-shadow:var(--shadow-sm);transform:rotate(-3deg)}
 @media (max-width:860px){
   .hero__grid{grid-template-columns:1fr;gap:2.2rem}
-  .hero__media{max-width:400px;margin-inline:auto;width:100%}
+  .hero__media{order:-1;max-width:360px;margin-inline:auto;width:100%}
   .hero__photo{transform:none}
 }
 

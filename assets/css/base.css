@@ -45,6 +45,11 @@
   --shadow-sm:0 3px 12px -6px rgba(38,38,26,.28);
   --shadow:0 16px 40px -20px rgba(38,38,26,.42);
   --shadow-blue:0 16px 34px -16px rgba(26,140,228,.5);
+  /* Botões "sticker" (contorno + sombra sólida deslocada) */
+  --stroke:#16160F;
+  --stroke-w:2.5px;
+  --sticker:4px 4px 0 var(--stroke);
+  --sticker-lg:6px 6px 0 var(--stroke);
 
   /* ---- Movimento ---- */
   --t-fast:.16s ease;
@@ -112,29 +117,26 @@ strong{font-weight:700;color:var(--ink)}
 
 /* ---------------- BOTÕES ---------------- */
 .btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:.55em;
-  font-family:var(--font-head);font-weight:600;font-size:1rem;line-height:1;
-  padding:.9em 1.5em;border-radius:var(--radius-pill);
-  border:2px solid transparent;white-space:nowrap;
-  transition:transform var(--t-fast),box-shadow var(--t),background var(--t-fast),color var(--t-fast),border-color var(--t-fast);
+  display:inline-flex;align-items:center;justify-content:center;gap:.6em;
+  font-family:var(--font-head);font-weight:600;font-size:1.02rem;line-height:1;
+  padding:.92em 1.5em;border-radius:var(--radius-pill);white-space:nowrap;
+  border:var(--stroke-w) solid var(--stroke);
+  box-shadow:var(--sticker);
+  transition:transform var(--t),box-shadow var(--t),background var(--t-fast),color var(--t-fast);
+  will-change:transform;
 }
-.btn:hover{transform:translateY(-2px)}
-.btn:active{transform:translateY(0)}
-.btn svg{width:1.15em;height:1.15em;flex:none}
-.btn--primary{background:var(--blue);color:#fff;box-shadow:var(--shadow-blue)}
-.btn--primary:hover{background:var(--blue-600)}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:var(--sticker-lg)}
+.btn:active{transform:translate(0,0);box-shadow:2px 2px 0 var(--stroke)}
+.btn svg{width:1.2em;height:1.2em;flex:none}
+.btn--primary{background:var(--blue);color:#fff}
 .btn--accent{background:var(--orange);color:var(--ink)}
-.btn--accent:hover{background:var(--orange-600)}
 .btn--dark{background:var(--ink);color:#fff}
-.btn--dark:hover{background:#000}
-.btn--wa{background:var(--wa);color:#0a2e18}
-.btn--wa:hover{filter:brightness(1.05)}
-.btn--outline{background:transparent;border-color:var(--line-2);color:var(--ink)}
-.btn--outline:hover{border-color:var(--ink);background:var(--ink);color:#fff}
-.btn--outline-light{background:transparent;border-color:rgba(255,255,255,.5);color:#fff}
-.btn--outline-light:hover{background:#fff;color:var(--ink);border-color:#fff}
-.btn--lg{font-size:1.08rem;padding:1.02em 1.8em}
-.btn--sm{font-size:.9rem;padding:.65em 1.1em}
+.btn--wa{background:var(--wa);color:#073d1c}
+.btn--outline{background:#fff;color:var(--ink)}
+.btn--outline-light{background:transparent;color:#fff;border-color:#fff;box-shadow:4px 4px 0 rgba(0,0,0,.35)}
+.btn--lg{font-size:1.12rem;padding:1.05em 1.8em}
+.btn--sm{font-size:.92rem;padding:.68em 1.1em;box-shadow:3px 3px 0 var(--stroke)}
+.btn--sm:hover{box-shadow:var(--sticker)}
 
 /* ---------------- CHIPS (filtros) ---------------- */
 .chip{
