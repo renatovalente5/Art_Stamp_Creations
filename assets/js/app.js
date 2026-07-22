@@ -151,4 +151,26 @@
       });
     }
   }
+
+  /* ------------------------- FORMULÁRIO → WHATSAPP ------------------------- */
+  var qf = doc.getElementById('quote-form');
+  if (qf) {
+    qf.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var nome = (qf.nome.value || '').trim();
+      if (!nome) { qf.nome.setAttribute('aria-invalid', 'true'); qf.nome.focus(); return; }
+      qf.nome.removeAttribute('aria-invalid');
+      var consent = doc.getElementById('f-consent');
+      if (consent && !consent.checked) { consent.focus(); return; }
+      var contacto = (qf.contacto.value || '').trim();
+      var servico = qf.servico.value || '';
+      var msg = (qf.mensagem.value || '').trim();
+      var t = 'Olá! Sou ' + nome + '.';
+      if (servico) t += ' Preciso de: ' + servico + '.';
+      if (msg) t += ' ' + msg;
+      if (contacto) t += ' O meu contacto: ' + contacto + '.';
+      t += ' Podem dar-me um orçamento?';
+      window.open('https://wa.me/351935218857?text=' + encodeURIComponent(t), '_blank', 'noopener');
+    });
+  }
 })();
