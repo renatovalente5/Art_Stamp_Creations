@@ -54,4 +54,54 @@
       observeReveals(sgrid);
     }).catch(function () { sgrid.innerHTML = '<p class="muted">Não foi possível carregar os serviços.</p>'; });
   }
+
+  /* ------------------------- MODELOS BASE (THCLOTHES) ------------------------- */
+  var mgrid = doc.getElementById('models-grid');
+  var mfilters = doc.getElementById('models-filters');
+  var WA = 'https://wa.me/351935218857?text=';
+  var CAT_ORDER = ['Todos', 'T-shirts', 'Polos', 'Sweats e hoodies', 'Casacos e softshell', 'Vestuário de trabalho'];
+  if (mgrid) {
+    var allModels = [], activeCat = 'Todos';
+    function modelCard(m) {
+      var ask = WA + encodeURIComponent('Olá! Tenho interesse no modelo ' + m.name + ' para personalizar. Podem dar-me um orçamento?');
+      return '<article class="model" data-cat="' + esc(m.cat) + '" data-reveal>' +
+        '<div class="model__media"><img src="' + esc(normImg(m.img)) + '" alt="Modelo ' + esc(m.name) + ' — ' + esc(m.tag) + '" loading="lazy" /><span class="model__cat">' + esc(m.cat) + '</span></div>' +
+        '<div class="model__body">' +
+          '<div class="model__head"><h3 class="model__name">' + esc(m.name) + '</h3><span class="model__tag">' + esc(m.tag) + '</span></div>' +
+          '<ul class="model__specs">' +
+            '<li><span>Gramagem</span><b>' + esc(m.gsm) + '</b></li>' +
+            '<li><span>Tecido</span><b>' + esc(m.fabric) + '</b></li>' +
+            '<li><span>Tamanhos</span><b>' + esc(m.sizes) + '</b></li>' +
+            '<li><span>Cores</span><b>' + esc(m.colors) + ' disponíveis</b></li>' +
+          '</ul>' +
+          '<a class="btn btn--primary btn--sm model__cta" href="' + ask + '" target="_blank" rel="noopener">Pedir com personalização</a>' +
+        '</div>' +
+      '</article>';
+    }
+    function renderModels() {
+      var list = activeCat === 'Todos' ? allModels : allModels.filter(function (m) { return m.cat === activeCat; });
+      mgrid.innerHTML = list.map(modelCard).join('');
+      observeReveals(mgrid);
+    }
+    function buildModelFilters() {
+      if (!mfilters) return;
+      var cats = CAT_ORDER.filter(function (c) { return c === 'Todos' || allModels.some(function (m) { return m.cat === c; }); });
+      mfilters.innerHTML = cats.map(function (c) {
+        return '<button class="chip" role="tab" aria-pressed="' + (c === activeCat ? 'true' : 'false') + '" data-cat="' + esc(c) + '">' + esc(c) + '</button>';
+      }).join('');
+      mfilters.addEventListener('click', function (e) {
+        var b = e.target.closest('.chip'); if (!b) return;
+        activeCat = b.getAttribute('data-cat');
+        mfilters.querySelectorAll('.chip').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+        renderModels();
+      });
+    }
+    getJSON('data/models.json').then(function (d) {
+      allModels = (d && d.models) || [];
+      var intro = doc.getElementById('models-intro');
+      if (intro && d.intro) intro.textContent = d.intro;
+      buildModelFilters();
+      renderModels();
+    }).catch(function () { mgrid.innerHTML = '<p class="muted">Não foi possível carregar os modelos.</p>'; });
+  }
 })();

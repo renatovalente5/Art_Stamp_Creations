@@ -1,0 +1,19 @@
+{
+  "intro": "Trabalhamos com têxtil promocional de qualidade profissional (THCLOTHES). Escolhe o modelo base — nós tratamos da personalização. Muitas mais cores, tamanhos e modelos disponíveis a pedido.",
+  "models": [
+    { "name": "Luanda", "cat": "T-shirts", "img": "assets/img/modelos/luanda.jpg", "tag": "T-shirt unissexo", "gsm": "150 g/m²", "fabric": "100% algodão (jersey)", "gender": "Unissexo", "sizes": "XS–5XL", "colors": 41 },
+    { "name": "Ankara", "cat": "T-shirts", "img": "assets/img/modelos/ankara.jpg", "tag": "T-shirt", "gsm": "190 g/m²", "fabric": "100% algodão (jersey)", "gender": "Homem", "sizes": "XS–5XL", "colors": 26 },
+    { "name": "Move", "cat": "T-shirts", "img": "assets/img/modelos/move.jpg", "tag": "T-shirt técnica (desporto)", "gsm": "135 g/m²", "fabric": "100% poliéster (piqué mesh)", "gender": "Unissexo", "sizes": "XS–XXL", "colors": 10 },
+    { "name": "Fjord", "cat": "T-shirts", "img": "assets/img/modelos/fjord.jpg", "tag": "T-shirt oversized", "gsm": "220 g/m²", "fabric": "100% algodão (jersey)", "gender": "Unissexo", "sizes": "XS–XXL", "colors": 2 },
+    { "name": "Monaco", "cat": "Polos", "img": "assets/img/modelos/monaco.jpg", "tag": "Polo", "gsm": "240 g/m²", "fabric": "100% algodão (piqué)", "gender": "Homem", "sizes": "S–3XL", "colors": 12 },
+    { "name": "Phoenix", "cat": "Sweats e hoodies", "img": "assets/img/modelos/phoenix.jpg", "tag": "Sweat com capuz", "gsm": "320 g/m²", "fabric": "50% algodão · 50% poliéster (felpa)", "gender": "Unissexo", "sizes": "XS–5XL", "colors": 33 },
+    { "name": "Amsterdam", "cat": "Sweats e hoodies", "img": "assets/img/modelos/amsterdam.jpg", "tag": "Sweat com fecho e capuz", "gsm": "320 g/m²", "fabric": "50% algodão · 50% poliéster (felpa)", "gender": "Homem", "sizes": "S–5XL", "colors": 9 },
+    { "name": "Berrio", "cat": "Sweats e hoodies", "img": "assets/img/modelos/berrio.jpg", "tag": "Sweat (fabrico nacional)", "gsm": "300 g/m²", "fabric": "50% algodão · 50% poliéster (felpa)", "gender": "Unissexo", "sizes": "S–XXL", "colors": 6 },
+    { "name": "Zagreb", "cat": "Casacos e softshell", "img": "assets/img/modelos/zagreb.jpg", "tag": "Softshell com capuz removível", "gsm": "280 g/m²", "fabric": "96% poliéster · 4% elastano (2 camadas)", "gender": "Homem", "sizes": "S–3XL", "colors": 9 },
+    { "name": "Baku", "cat": "Casacos e softshell", "img": "assets/img/modelos/baku.jpg", "tag": "Colete softshell", "gsm": "280 g/m²", "fabric": "96% poliéster · 4% elastano (2 camadas)", "gender": "Unissexo", "sizes": "S–XXXL", "colors": 5 },
+    { "name": "Zagreb Work", "cat": "Vestuário de trabalho", "img": "assets/img/modelos/zagreb_work.jpg", "tag": "Softshell alta-visibilidade", "gsm": "300 g/m²", "fabric": "100% poliéster (3 camadas)", "gender": "Unissexo", "sizes": "S–XXL", "colors": 2 },
+    { "name": "Alexandria", "cat": "Vestuário de trabalho", "img": "assets/img/modelos/alexandria.jpg", "tag": "Colete de segurança", "gsm": "120 g/m²", "fabric": "100% poliéster (malha rede)", "gender": "Unissexo", "sizes": "M/L · XL/XXL", "colors": 2 },
+    { "name": "Pixel", "cat": "Vestuário de trabalho", "img": "assets/img/modelos/pixel.jpg", "tag": "Colete multifunções", "gsm": "200 g/m²", "fabric": "65% poliéster · 35% algodão (sarja)", "gender": "Unissexo", "sizes": "S–XXXL", "colors": 4 },
+    { "name": "Vaduz", "cat": "Vestuário de trabalho", "img": "assets/img/modelos/vaduz.jpg", "tag": "Avental 2 em 1", "gsm": "190 g/m²", "fabric": "80% poliéster · 20% algodão", "gender": "Unissexo", "sizes": "Único", "colors": 3 }
+  ]
+}
