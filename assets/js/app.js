@@ -1,0 +1,57 @@
+/* =============================================================
+   ART STAMP CREATIONS — app.js
+   Renderiza secções a partir de data/*.json (editável no backoffice):
+   serviços, modelos base (THCLOTHES) e galeria de trabalhos.
+   ============================================================= */
+(function () {
+  'use strict';
+  var doc = document;
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function normImg(p) { if (!p) return ''; if (/^https?:\/\//.test(p)) return p; return p.replace(/^\/+/, ''); }
+  function getJSON(url) { return fetch(url, { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }); }
+
+  /* Reveal para conteúdo injetado dinamicamente */
+  var revIO = ('IntersectionObserver' in window) ? new IntersectionObserver(function (en, o) {
+    en.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); o.unobserve(e.target); } });
+  }, { rootMargin: '0px 0px -6% 0px', threshold: .06 }) : null;
+  function observeReveals(scope) {
+    var els = (scope || doc).querySelectorAll('[data-reveal]:not(.is-in)');
+    if (!revIO) { els.forEach(function (el) { el.classList.add('is-in'); }); return; }
+    els.forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.top < (window.innerHeight || 0) && r.bottom > 0) el.classList.add('is-in');
+      else revIO.observe(el);
+    });
+  }
+
+  /* ------------------------- ÍCONES DOS SERVIÇOS ------------------------- */
+  var S = 'fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"';
+  var ICONS = {
+    tshirt: '<svg viewBox="0 0 24 24" ' + S + '><path d="M8.5 3.5 4 6l2 3 2-1.2V20h8V7.8L18 9l2-3-4.5-2.5a3.5 3.5 0 0 1-7 0Z"/></svg>',
+    hoodie: '<svg viewBox="0 0 24 24" ' + S + '><path d="M8 4 4 6.5 6 10l2-1v11h8V9l2 1 2-3.5L16 4"/><path d="M8 4c.6 2.4 7.4 2.4 8 0"/><path d="M12 6v4"/></svg>',
+    polo: '<svg viewBox="0 0 24 24" ' + S + '><path d="M9 3.5 4 6l2 3 2-1v11h8V8l2 1 2-3-5-2.5"/><path d="M9 3.5 12 7l3-3.5"/><path d="M12 7v4"/></svg>',
+    cap: '<svg viewBox="0 0 24 24" ' + S + '><path d="M4 14a8 8 0 0 1 16 0"/><path d="M12 6v8"/><path d="M20 14H4"/><path d="M4 14c-1 0-2 .4-2 1.5"/></svg>',
+    mug: '<svg viewBox="0 0 24 24" ' + S + '><rect x="5" y="5" width="11" height="15" rx="2.5"/><path d="M16 8h3a2.5 2.5 0 0 1 0 5h-3"/></svg>',
+    sticker: '<svg viewBox="0 0 24 24" ' + S + '><path d="M5 4h9l5 5v11H5Z"/><path d="M14 4v5h5"/></svg>',
+    dtf: '<svg viewBox="0 0 24 24" ' + S + '><path d="m12 3 8 4-8 4-8-4Z"/><path d="m4 12 8 4 8-4"/><path d="m4 16 8 4 8-4"/></svg>',
+    uv: '<svg viewBox="0 0 24 24" ' + S + '><path d="M12 3s5 5.4 5 9.2A5 5 0 0 1 7 12.2C7 8.4 12 3 12 3Z"/><path d="M9.6 12.4a2.4 2.4 0 0 0 4.8 0"/></svg>',
+    vinyl: '<svg viewBox="0 0 24 24" ' + S + '><ellipse cx="12" cy="6.5" rx="8" ry="3"/><path d="M4 6.5v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/><circle cx="12" cy="6.5" r="1.3"/></svg>',
+    banner: '<svg viewBox="0 0 24 24" ' + S + '><path d="M6 3v18"/><path d="M6 4.5h13l-3 4 3 4H6"/></svg>'
+  };
+
+  /* ------------------------- SERVIÇOS ------------------------- */
+  var sgrid = doc.getElementById('services-grid');
+  if (sgrid) {
+    getJSON('data/services.json').then(function (d) {
+      var items = (d && d.services) || [];
+      sgrid.innerHTML = items.map(function (s) {
+        return '<article class="svc" data-reveal>' +
+          '<span class="svc__icon" aria-hidden="true">' + (ICONS[s.icon] || ICONS.tshirt) + '</span>' +
+          '<h3 class="svc__title">' + esc(s.title) + '</h3>' +
+          '<p class="svc__desc">' + esc(s.desc) + '</p>' +
+          '</article>';
+      }).join('');
+      observeReveals(sgrid);
+    }).catch(function () { sgrid.innerHTML = '<p class="muted">Não foi possível carregar os serviços.</p>'; });
+  }
+})();

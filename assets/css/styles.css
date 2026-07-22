@@ -106,6 +106,18 @@ body.menu-open{overflow:hidden}
   .hero__photo{transform:none}
 }
 
+/* ---------------- SERVIÇOS ---------------- */
+.muted{color:var(--muted)}
+.services__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:1.1rem;margin-top:.5rem}
+.svc{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:1.5rem 1.4rem;box-shadow:var(--shadow-sm);transition:transform var(--t),box-shadow var(--t),border-color var(--t)}
+.svc:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:var(--line-2)}
+.svc__icon{display:inline-flex;align-items:center;justify-content:center;width:54px;height:54px;border-radius:15px;background:var(--blue-050);color:var(--blue);margin-bottom:1rem}
+.svc__icon svg{width:30px;height:30px}
+.svc:nth-child(3n+2) .svc__icon{background:#FDEEDD;color:var(--orange-600)}
+.svc:nth-child(3n+3) .svc__icon{background:#EAF4FD;color:var(--blue)}
+.svc__title{font-size:1.12rem}
+.svc__desc{margin-top:.5rem;color:var(--muted);font-size:.95rem}
+
 /* ---------------- REVEAL ---------------- */
 [data-reveal]{opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
 [data-reveal].is-in{opacity:1;transform:none}

@@ -1,0 +1,14 @@
+{
+  "services": [
+    { "icon": "tshirt", "title": "T-shirts personalizadas", "desc": "Estampagem de alta qualidade em t-shirts para todas as ocasiões — do exemplar único à produção para eventos." },
+    { "icon": "hoodie", "title": "Sweats e hoodies", "desc": "Sweatshirts e hoodies personalizados, confortáveis e resistentes, com a sua arte ou logótipo." },
+    { "icon": "polo", "title": "Polos", "desc": "Polos elegantes para equipas, empresas e uniformes, com estampagem ou vinil." },
+    { "icon": "cap", "title": "Bonés", "desc": "Bonés personalizados para marcas, eventos e equipas — o detalhe que completa o look." },
+    { "icon": "mug", "title": "Canecas", "desc": "Canecas com fotografias, frases ou logótipos. Presentes únicos que ficam para sempre." },
+    { "icon": "sticker", "title": "Autocolantes", "desc": "Autocolantes e etiquetas em qualquer forma e tamanho — para produtos, montras e brindes." },
+    { "icon": "dtf", "title": "DTF Têxtil", "desc": "Transfers DTF de cores vivas e grande durabilidade, ideais para designs detalhados em tecido." },
+    { "icon": "uv", "title": "DTF UV", "desc": "Autocolantes DTF UV com relevo e acabamento premium para copos, capas, brindes e superfícies rígidas." },
+    { "icon": "vinyl", "title": "Vinil", "desc": "Corte de vinil para montras, viaturas, paredes e decoração — impacto visual garantido." },
+    { "icon": "banner", "title": "Lonas e banners", "desc": "Lonas e banners de grande formato para eventos, campanhas e sinalética." }
+  ]
+}
