@@ -99,7 +99,7 @@
     <section id="inicio" class="hero">
       <div class="container hero__grid">
         <div class="hero__copy" data-reveal>
-          <span class="eyebrow" data-site="hero.eyebrow">Personalização &amp; Estampagem</span>
+          <span class="eyebrow" data-site="hero.eyebrow">Art Stamp Creations</span>
           <h1 class="hero__title">Damos vida às tuas <span class="hl">ideias</span>.</h1>
           <p class="hero__lead" data-site="hero.lead"><strong>Tu imaginas, nós criamos.</strong> Personalizamos as tuas ideias em produtos exclusivos — t-shirts, sweats, canecas, autocolantes, DTF, vinil e muito mais. Sempre com atenção ao detalhe, qualidade e dedicação.</p>
           <div class="hero__cta">
@@ -177,22 +177,6 @@
       </div>
     </section>
 
-    <!-- ================= PORQUÊ ================= -->
-    <section class="section section--soft">
-      <div class="container">
-        <div class="section-head section-head--center" data-reveal>
-          <span class="eyebrow">Porquê a Art Stamp</span>
-          <h2 class="section-title">Cada personalização conta uma história</h2>
-          <p class="section-lead">Criamos produtos únicos para particulares, empresas, eventos e marcas — sempre com atenção ao detalhe, qualidade e dedicação.</p>
-        </div>
-        <div class="why__grid">
-          <div class="why" data-reveal><span class="why__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9 6.8 19.2l1-5.8L3.5 9.2l5.9-.9z"/></svg></span><div><h3>Cada detalhe conta</h3><p>Cuidamos de cada pormenor, da arte ao acabamento, para um resultado impecável.</p></div></div>
-          <div class="why" data-reveal><span class="why__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 8 4-8 4-8-4Z"/><path d="m4 12 8 4 8-4"/><path d="m4 16 8 4 8-4"/></svg></span><div><h3>Do único à produção</h3><p>Tanto fazemos uma peça especial como centenas para a tua empresa ou evento.</p></div></div>
-          <div class="why" data-reveal><span class="why__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="m9 12 2 2 4-4"/></svg></span><div><h3>Materiais de qualidade</h3><p>Têxtil e materiais profissionais e técnicas duradouras — DTF, DTF UV, vinil e mais.</p></div></div>
-          <div class="why" data-reveal><span class="why__ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H8l-4 3z"/></svg></span><div><h3>Acompanhamento próximo</h3><p>Aconselhamento honesto e resposta rápida em cada pedido.</p></div></div>
-        </div>
-      </div>
-    </section>
 
     <!-- ================= FAIXA B2B ================= -->
     <section class="section section--dark">
@@ -307,7 +291,7 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-5.6 7-12a7 7 0 10-14 0c0 6.4 7 12 7 12z"/><circle cx="12" cy="10" r="2.6"/></svg>
                 <span class="map-facade__t">Ver localização no mapa</span>
                 <span class="map-facade__s">Av. Abade Tagilde 1011, 4815-429 Vizela</span>
-                <span class="map-facade__n">Carrega o mapa do Google Maps (que pode usar cookies).</span>
+                <span class="map-facade__n">Aceita os cookies para carregar o mapa do Google.</span>
               </button>
             </div>
           </div>
@@ -357,9 +341,21 @@
         <li><a href="legal/termos.html">Termos e Condições</a></li>
         <li><a href="legal/cookies.html">Cookies</a></li>
         <li><a href="https://www.livroreclamacoes.pt/inicio" target="_blank" rel="noopener">Livro de Reclamações</a></li>
+        <li><a href="#" data-cookie-manage>Gerir cookies</a></li>
       </ul>
     </div>
   </footer>
+
+  <!-- Consentimento de cookies (mapa Google) -->
+  <div id="cookie-banner" class="cookie" role="dialog" aria-label="Consentimento de cookies" hidden>
+    <div class="cookie__inner">
+      <p class="cookie__txt">Para mostrar a nossa localização usamos o <strong>Google Maps</strong>, que pode instalar cookies. O resto do site funciona sem cookies. Consulta a <a href="legal/cookies.html">Política de Cookies</a>.</p>
+      <div class="cookie__btns">
+        <button class="btn btn--outline btn--sm" type="button" data-consent="rejected">Recusar</button>
+        <button class="btn btn--primary btn--sm" type="button" data-consent="accepted">Aceitar</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Lightbox da galeria -->
   <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Galeria de trabalhos">

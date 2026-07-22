@@ -79,7 +79,7 @@
           '</article>';
       }).join('');
       observeReveals(sgrid);
-      collapsible(sgrid, doc.getElementById('more-services'), '.svc', 6, 4);
+      collapsible(sgrid, doc.getElementById('more-services'), '.svc', 8, 4);
     }).catch(function () { sgrid.innerHTML = '<p class="muted">Não foi possível carregar os serviços.</p>'; });
   }
 
@@ -204,19 +204,34 @@
     });
   }
 
-  /* ------------------------- MAPA GOOGLE (carrega só com consentimento) ------------------------- */
-  var mapBox = doc.getElementById('map-box');
-  if (mapBox) {
-    var mapBtn = mapBox.querySelector('[data-map-load]');
-    if (mapBtn) mapBtn.addEventListener('click', function () {
+  /* ------------------------- COOKIES + MAPA GOOGLE (consentimento) ------------------------- */
+  (function () {
+    var KEY = 'as-consent';
+    var banner = doc.getElementById('cookie-banner');
+    var mapBox = doc.getElementById('map-box');
+    function get() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
+    function set(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
+    function loadMap() {
+      if (!mapBox || mapBox.querySelector('iframe')) return;
       var f = doc.createElement('iframe');
       f.src = mapBox.getAttribute('data-embed');
       f.title = 'Mapa Google — Art Stamp Creations, Vizela';
-      f.loading = 'lazy'; f.setAttribute('referrerpolicy', 'no-referrer');
-      f.setAttribute('allowfullscreen', '');
+      f.loading = 'lazy'; f.setAttribute('referrerpolicy', 'no-referrer'); f.setAttribute('allowfullscreen', '');
       f.style.cssText = 'width:100%;height:100%;border:0;display:block';
-      mapBox.innerHTML = '';
-      mapBox.appendChild(f);
+      mapBox.innerHTML = ''; mapBox.appendChild(f);
+    }
+    function show() { if (banner) banner.hidden = false; }
+    function hide() { if (banner) banner.hidden = true; }
+    var cur = get();
+    if (cur === 'accepted') loadMap();
+    else if (cur !== 'rejected') show();
+    if (banner) banner.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-consent]'); if (!b) return;
+      var v = b.getAttribute('data-consent'); set(v); hide();
+      if (v === 'accepted') loadMap();
     });
-  }
+    var mapBtn = mapBox && mapBox.querySelector('[data-map-load]');
+    if (mapBtn) mapBtn.addEventListener('click', function () { if (get() === 'accepted') loadMap(); else show(); });
+    doc.querySelectorAll('[data-cookie-manage]').forEach(function (el) { el.addEventListener('click', function (e) { e.preventDefault(); show(); }); });
+  })();
 })();
