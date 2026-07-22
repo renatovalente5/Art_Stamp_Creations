@@ -1,5 +1,9 @@
 {
-  "intro": "Trabalhamos com têxtil promocional de qualidade profissional (THCLOTHES). Escolhe o modelo base — nós tratamos da personalização. Muitas mais cores, tamanhos e modelos disponíveis a pedido.",
+  "head": {
+    "eyebrow": "Catálogo Têxtil",
+    "title": "Escolhe a base, nós personalizamos",
+    "lead": "Trabalhamos com têxtil promocional de qualidade profissional. Escolhe o modelo — nós tratamos da personalização. Muitas mais cores, tamanhos e modelos disponíveis a pedido."
+  },
   "models": [
     { "name": "Luanda", "cat": "T-shirts", "img": "assets/img/modelos/luanda.jpg", "tag": "T-shirt unissexo", "gsm": "150 g/m²", "fabric": "100% algodão (jersey)", "gender": "Unissexo", "sizes": "XS–5XL", "colors": 41 },
     { "name": "Ankara", "cat": "T-shirts", "img": "assets/img/modelos/ankara.jpg", "tag": "T-shirt", "gsm": "190 g/m²", "fabric": "100% algodão (jersey)", "gender": "Homem", "sizes": "XS–5XL", "colors": 26 },

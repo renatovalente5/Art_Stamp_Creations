@@ -1,4 +1,9 @@
 {
+  "head": {
+    "eyebrow": "Trabalhos",
+    "title": "Feito para quem quer destacar-se",
+    "lead": "Uma amostra de personalizações que já criámos — para particulares, empresas, clubes e eventos."
+  },
   "items": [
     { "img": "assets/img/trabalhos/hoodie-raposa-costas.jpg", "cap": "Hoodie com estampagem DTF" },
     { "img": "assets/img/trabalhos/tshirt-raposa-vermelha.jpg", "cap": "T-shirt com arte personalizada" },

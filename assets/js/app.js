@@ -24,6 +24,14 @@
     });
   }
 
+  /* Aplica o cabeçalho de uma secção (etiqueta/título/subtítulo) a partir de {eyebrow,title,lead} */
+  function applyHead(scope, head) {
+    if (!scope || !head) return;
+    if (head.eyebrow) { var e = scope.querySelector('.eyebrow'); if (e) e.textContent = head.eyebrow; }
+    if (head.title) { var t = scope.querySelector('.section-title'); if (t) t.textContent = head.title; }
+    if (head.lead) { var l = scope.querySelector('.section-lead'); if (l) l.textContent = head.lead; }
+  }
+
   /* Colapsar grelhas grandes: mostra N itens + botão "Ver mais" (menos itens no telemóvel) */
   function collapsible(grid, btn, itemSelector, desktopN, mobileN) {
     if (!grid || !btn) return;
@@ -49,6 +57,20 @@
     if (c.phone_intl) doc.querySelectorAll('[data-tel]').forEach(function (a) { a.setAttribute('href', 'tel:+' + c.phone_intl); });
     if (c.email) doc.querySelectorAll('[data-mail]').forEach(function (a) { a.setAttribute('href', 'mailto:' + c.email); });
     if (c.instagram_url) doc.querySelectorAll('[data-ig]').forEach(function (a) { a.setAttribute('href', c.instagram_url); });
+    // Hero: título com palavra destacada + público-alvo
+    var h = site.hero || {};
+    var ht = doc.getElementById('hero-title');
+    if (ht && h.title) ht.innerHTML = esc(h.title) + ' <span class="hl">' + esc(h.highlight || '') + '</span>' + esc(h.title_end || '');
+    var aud = doc.getElementById('hero-aud');
+    if (aud && h.audience && h.audience.length) aud.innerHTML = h.audience.map(function (a) { return '<li>' + esc(a) + '</li>'; }).join('');
+    // Cabeçalho da secção de Contacto
+    applyHead(doc.getElementById('contacto'), site.contacto);
+    // Faixa B2B (Empresas)
+    var b = site.b2b || {};
+    applyHead(doc.getElementById('b2b'), b);
+    if (b.list) { var bl = doc.getElementById('b2b-list'); if (bl) bl.innerHTML = b.list.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join(''); }
+    if (b.cta_label) { var bc = doc.getElementById('b2b-cta'); if (bc) bc.textContent = b.cta_label; }
+    if (b.image) { var bi = doc.getElementById('b2b-img'); if (bi) bi.setAttribute('src', normImg(b.image)); }
   }).catch(function () {});
 
   /* ------------------------- ÍCONES DOS SERVIÇOS ------------------------- */
@@ -70,6 +92,7 @@
   var sgrid = doc.getElementById('services-grid');
   if (sgrid) {
     getJSON('data/services.json').then(function (d) {
+      applyHead(doc.getElementById('servicos'), d.head);
       var items = (d && d.services) || [];
       sgrid.innerHTML = items.map(function (s) {
         return '<article class="svc" data-reveal>' +
@@ -127,8 +150,7 @@
     }
     getJSON('data/models.json').then(function (d) {
       allModels = (d && d.models) || [];
-      var intro = doc.getElementById('models-intro');
-      if (intro && d.intro) intro.textContent = d.intro;
+      applyHead(doc.getElementById('modelos'), d.head);
       buildModelFilters();
       renderModels();
     }).catch(function () { mgrid.innerHTML = '<p class="muted">Não foi possível carregar os modelos.</p>'; });
@@ -139,6 +161,7 @@
   if (ggrid) {
     var gItems = [];
     getJSON('data/gallery.json').then(function (d) {
+      applyHead(doc.getElementById('trabalhos'), d.head);
       gItems = (d && d.items) || [];
       ggrid.innerHTML = gItems.map(function (it, i) {
         return '<figure class="gitem" data-i="' + i + '" data-reveal>' +
@@ -203,6 +226,27 @@
       window.open('https://wa.me/351932938467?text=' + encodeURIComponent(t), '_blank', 'noopener');
     });
   }
+
+  /* ------------------------- COMO FUNCIONA (passos) ------------------------- */
+  var stepsGrid = doc.getElementById('steps-grid');
+  if (stepsGrid) getJSON('data/steps.json').then(function (d) {
+    applyHead(doc.getElementById('como'), d.head);
+    var items = (d && d.steps) || [];
+    stepsGrid.innerHTML = items.map(function (s, i) {
+      return '<article class="step" data-reveal><div class="step__n">' + (i + 1) + '</div><h3>' + esc(s.title) + '</h3><p>' + esc(s.desc) + '</p></article>';
+    }).join('');
+    observeReveals(stepsGrid);
+  }).catch(function () {});
+
+  /* ------------------------- FAQ ------------------------- */
+  var faqList = doc.getElementById('faq-list');
+  if (faqList) getJSON('data/faq.json').then(function (d) {
+    applyHead(doc.getElementById('faq'), d.head);
+    var items = (d && d.items) || [];
+    faqList.innerHTML = items.map(function (it) {
+      return '<details><summary>' + esc(it.q) + '</summary><p>' + esc(it.a) + '</p></details>';
+    }).join('');
+  }).catch(function () {});
 
   /* ------------------------- COOKIES + MAPA GOOGLE (consentimento) ------------------------- */
   (function () {

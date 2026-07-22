@@ -1,0 +1,14 @@
+{
+  "head": {
+    "eyebrow": "Perguntas frequentes",
+    "title": "Ainda com dúvidas?"
+  },
+  "items": [
+    { "q": "Existe quantidade mínima?", "a": "Não há mínimos. Fazemos desde uma peça única até grandes produções para empresas e eventos." },
+    { "q": "Posso enviar o meu próprio design?", "a": "Sim! Aceitamos a tua arte ou logótipo. Se precisares, também ajudamos a criar ou ajustar o design." },
+    { "q": "Que produtos posso personalizar?", "a": "T-shirts, sweats, hoodies, polos, bonés, canecas, autocolantes, capas, brindes, vinil de montra, lonas e banners — e muito mais." },
+    { "q": "Quais são os prazos?", "a": "Dependem do produto e da quantidade. Indicamos sempre o prazo no orçamento, antes de avançar." },
+    { "q": "Fazem envios?", "a": "Sim, enviamos para todo o país. Também pode combinar o levantamento diretamente connosco." },
+    { "q": "Como peço um orçamento?", "a": "Fala connosco por WhatsApp ou pelo formulário de contacto — respondemos rapidamente." }
+  ]
+}

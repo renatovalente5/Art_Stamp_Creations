@@ -1,0 +1,12 @@
+{
+  "head": {
+    "eyebrow": "Como funciona",
+    "title": "Da ideia ao produto, sem complicações"
+  },
+  "steps": [
+    { "title": "Envias a ideia", "desc": "Conta-nos o que imaginas e envia a tua arte, logótipo ou inspiração. Aconselhamos-te no melhor produto e técnica." },
+    { "title": "Orçamento", "desc": "Recebes um orçamento claro e sem compromisso, com opções e prazos." },
+    { "title": "Produção", "desc": "Produzimos com atenção ao detalhe e materiais de qualidade profissional." },
+    { "title": "Entrega", "desc": "Levantas ou recebes em casa. Também produzimos para empresas e eventos." }
+  ]
+}

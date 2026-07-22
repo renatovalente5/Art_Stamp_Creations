@@ -1,9 +1,15 @@
 {
   "hero": {
     "eyebrow": "Art Stamp Creations",
+    "title": "Damos vida às tuas",
+    "highlight": "ideias",
+    "title_end": ".",
     "lead": "Tu imaginas, nós criamos. Personalizamos as tuas ideias em produtos exclusivos — t-shirts, sweats, canecas, autocolantes, DTF, vinil e muito mais. Sempre com atenção ao detalhe, qualidade e dedicação.",
     "image": "assets/img/trabalhos/hero-hoodie-douro.webp",
-    "badge": "✦ Produtos únicos"
+    "badge": "✦ Produtos únicos",
+    "cta_primary": "Pedir orçamento",
+    "cta_secondary": "Ver portfólio",
+    "audience": ["Particulares", "Empresas", "Eventos", "Marcas"]
   },
   "contacts": {
     "phone": "932 938 467",
@@ -14,5 +20,19 @@
     "address_line1": "Av. Abade Tagilde 1011",
     "address_line2": "4815-429 Vizela"
   },
+  "contacto": {
+    "eyebrow": "Contacto",
+    "title": "Vamos dar vida à tua ideia?",
+    "lead": "Pede o teu orçamento sem compromisso. Respondemos rápido, por WhatsApp."
+  },
+  "b2b": {
+    "eyebrow": "Empresas · Eventos · Marcas",
+    "title": "Merchandising e fardamento que representam a tua marca",
+    "lead": "Equipa a tua empresa, cria brindes memoráveis ou veste o teu evento. Tratamos de tudo, do design à produção.",
+    "list": ["Fardamento e uniformes", "Merchandising", "Brindes personalizados", "Materiais para eventos", "Vinil, lonas e banners"],
+    "cta_label": "Falar sobre o meu projeto",
+    "image": "assets/img/trabalhos/merchandising.jpg"
+  },
+  "footer_tagline": "Damos vida às tuas ideias. Personalização e estampagem para particulares, empresas, eventos e marcas.",
   "owner_name": "[Nome do titular]"
 }

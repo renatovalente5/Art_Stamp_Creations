@@ -3,8 +3,9 @@ media:
   output: /assets/img
 
 content:
+  # ---------------- GERAL / HERO / CONTACTOS / B2B / RODAPÉ ----------------
   - name: site
-    label: Definições gerais
+    label: Geral (hero, contactos, empresas, rodapé)
     type: file
     path: data/site.json
     fields:
@@ -13,27 +14,59 @@ content:
         type: object
         fields:
           - { name: eyebrow, label: Etiqueta pequena, type: string }
+          - { name: title, label: "Título (antes da palavra destacada)", type: string }
+          - { name: highlight, label: "Palavra destacada (a laranja)", type: string }
+          - { name: title_end, label: "Fim do título (ex.: ponto final)", type: string }
           - { name: lead, label: Texto principal, type: text }
           - { name: image, label: Imagem do destaque, type: image }
           - { name: badge, label: Selo sobre a imagem, type: string }
+          - { name: cta_primary, label: "Botão principal (texto)", type: string }
+          - { name: cta_secondary, label: "Botão secundário (texto)", type: string }
+          - { name: audience, label: "Público-alvo (chips)", type: string, list: true }
       - name: contacts
-        label: Contactos
+        label: Contactos (aparecem em todo o site)
         type: object
         fields:
           - { name: phone, label: "Telefone (visível)", type: string }
-          - { name: phone_intl, label: "Telefone (formato internacional, ex.: 351935218857)", type: string }
+          - { name: phone_intl, label: "Telefone internacional (ex.: 351932938467)", type: string }
           - { name: email, label: Email, type: string }
           - { name: instagram_url, label: Link do Instagram, type: string }
           - { name: instagram_handle, label: "Nome do Instagram (ex.: @artstamp...)", type: string }
           - { name: address_line1, label: "Morada (linha 1)", type: string }
           - { name: address_line2, label: "Morada (linha 2)", type: string }
-      - { name: owner_name, label: Nome do titular (rodapé legal), type: string }
+      - name: contacto
+        label: Secção Contacto (títulos)
+        type: object
+        fields:
+          - { name: eyebrow, label: Etiqueta, type: string }
+          - { name: title, label: Título, type: string }
+          - { name: lead, label: Subtítulo, type: text }
+      - name: b2b
+        label: Faixa Empresas / B2B
+        type: object
+        fields:
+          - { name: eyebrow, label: Etiqueta, type: string }
+          - { name: title, label: Título, type: string }
+          - { name: lead, label: Texto, type: text }
+          - { name: list, label: Lista (itens), type: string, list: true }
+          - { name: cta_label, label: "Botão (texto)", type: string }
+          - { name: image, label: Imagem, type: image }
+      - { name: footer_tagline, label: Frase do rodapé, type: text }
+      - { name: owner_name, label: Nome do titular (páginas legais), type: string }
 
+  # ---------------- SERVIÇOS ----------------
   - name: services
-    label: Serviços
+    label: Serviços (O que fazemos)
     type: file
     path: data/services.json
     fields:
+      - name: head
+        label: Títulos da secção
+        type: object
+        fields:
+          - { name: eyebrow, label: Etiqueta, type: string }
+          - { name: title, label: Título, type: string }
+          - { name: lead, label: Subtítulo, type: text }
       - name: services
         label: Lista de serviços
         type: object
@@ -47,12 +80,40 @@ content:
           - { name: title, label: Título, type: string }
           - { name: desc, label: Descrição, type: text }
 
+  # ---------------- TRABALHOS / GALERIA ----------------
+  - name: gallery
+    label: Trabalhos (galeria)
+    type: file
+    path: data/gallery.json
+    fields:
+      - name: head
+        label: Títulos da secção
+        type: object
+        fields:
+          - { name: eyebrow, label: Etiqueta, type: string }
+          - { name: title, label: Título, type: string }
+          - { name: lead, label: Subtítulo, type: text }
+      - name: items
+        label: Trabalhos
+        type: object
+        list: true
+        fields:
+          - { name: img, label: Imagem, type: image }
+          - { name: cap, label: Legenda, type: string }
+
+  # ---------------- CATÁLOGO TÊXTIL ----------------
   - name: models
     label: Catálogo Têxtil
     type: file
     path: data/models.json
     fields:
-      - { name: intro, label: Texto de introdução, type: text }
+      - name: head
+        label: Títulos da secção
+        type: object
+        fields:
+          - { name: eyebrow, label: Etiqueta, type: string }
+          - { name: title, label: Título, type: string }
+          - { name: lead, label: Subtítulo / introdução, type: text }
       - name: models
         label: Modelos
         type: object
@@ -72,15 +133,42 @@ content:
           - { name: sizes, label: "Tamanhos (ex.: XS–5XL)", type: string }
           - { name: colors, label: "Nº de cores", type: number }
 
-  - name: gallery
-    label: Galeria / Trabalhos
+  # ---------------- COMO FUNCIONA ----------------
+  - name: steps
+    label: Como funciona (passos)
     type: file
-    path: data/gallery.json
+    path: data/steps.json
     fields:
-      - name: items
-        label: Trabalhos
+      - name: head
+        label: Títulos da secção
+        type: object
+        fields:
+          - { name: eyebrow, label: Etiqueta, type: string }
+          - { name: title, label: Título, type: string }
+      - name: steps
+        label: Passos
         type: object
         list: true
         fields:
-          - { name: img, label: Imagem, type: image }
-          - { name: cap, label: Legenda, type: string }
+          - { name: title, label: Título do passo, type: string }
+          - { name: desc, label: Descrição, type: text }
+
+  # ---------------- PERGUNTAS FREQUENTES ----------------
+  - name: faq
+    label: Perguntas frequentes
+    type: file
+    path: data/faq.json
+    fields:
+      - name: head
+        label: Títulos da secção
+        type: object
+        fields:
+          - { name: eyebrow, label: Etiqueta, type: string }
+          - { name: title, label: Título, type: string }
+      - name: items
+        label: Perguntas e respostas
+        type: object
+        list: true
+        fields:
+          - { name: q, label: Pergunta, type: string }
+          - { name: a, label: Resposta, type: text }

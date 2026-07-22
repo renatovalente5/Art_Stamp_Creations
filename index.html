@@ -103,16 +103,16 @@
       <div class="container hero__grid">
         <div class="hero__copy" data-reveal>
           <span class="eyebrow" data-site="hero.eyebrow">Art Stamp Creations</span>
-          <h1 class="hero__title">Damos vida às tuas <span class="hl">ideias</span>.</h1>
+          <h1 class="hero__title" id="hero-title">Damos vida às tuas <span class="hl">ideias</span>.</h1>
           <p class="hero__lead" data-site="hero.lead"><strong>Tu imaginas, nós criamos.</strong> Personalizamos as tuas ideias em produtos exclusivos — t-shirts, sweats, canecas, autocolantes, DTF, vinil e muito mais. Sempre com atenção ao detalhe, qualidade e dedicação.</p>
           <div class="hero__cta">
             <a class="btn btn--primary btn--lg" href="https://wa.me/351932938467?text=Ol%C3%A1%21%20Gostaria%20de%20um%20or%C3%A7amento." target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2zm5.8 14.16c-.24.68-1.42 1.31-1.95 1.35-.5.04-.99.21-3.42-.71-2.88-1.14-4.72-4.09-4.86-4.28-.14-.19-1.17-1.56-1.17-2.97 0-1.41.74-2.11 1-2.4.26-.28.57-.35.76-.35.19 0 .38 0 .55.01.18.01.42-.07.65.5.24.58.81 2 .88 2.15.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.71 1.17 1.53 1.9 1.05.94 1.94 1.23 2.22 1.37.28.14.44.12.6-.07.16-.19.69-.81.88-1.09.19-.28.37-.23.63-.14.26.09 1.65.78 1.93.92.28.14.47.21.54.33.07.11.07.66-.17 1.34z"/></svg>
-              Pedir orçamento
+              <span data-site="hero.cta_primary">Pedir orçamento</span>
             </a>
-            <a class="btn btn--outline btn--lg" href="#trabalhos">Ver portfólio</a>
+            <a class="btn btn--outline btn--lg" href="#trabalhos"><span data-site="hero.cta_secondary">Ver portfólio</span></a>
           </div>
-          <ul class="hero__aud">
+          <ul class="hero__aud" id="hero-aud">
             <li>Particulares</li>
             <li>Empresas</li>
             <li>Eventos</li>
@@ -158,7 +158,7 @@
           <span class="eyebrow">Como funciona</span>
           <h2 class="section-title">Da ideia ao produto, sem complicações</h2>
         </div>
-        <div class="steps">
+        <div class="steps" id="steps-grid">
           <article class="step" data-reveal><div class="step__n">1</div><h3>Envias a ideia</h3><p>Conta-nos o que imaginas e envia a tua arte, logótipo ou inspiração. Aconselhamos-te no melhor produto e técnica.</p></article>
           <article class="step" data-reveal><div class="step__n">2</div><h3>Orçamento</h3><p>Recebes um orçamento claro e sem compromisso, com opções e prazos.</p></article>
           <article class="step" data-reveal><div class="step__n">3</div><h3>Produção</h3><p>Produzimos com atenção ao detalhe e materiais de qualidade profissional.</p></article>
@@ -169,24 +169,24 @@
 
 
     <!-- ================= FAIXA B2B ================= -->
-    <section class="section section--dark">
+    <section id="b2b" class="section section--dark">
       <div class="container">
         <div class="b2b__grid">
           <div data-reveal>
             <span class="eyebrow" style="color:#fff">Empresas · Eventos · Marcas</span>
             <h2 class="section-title">Merchandising e fardamento que representam a tua marca</h2>
             <p class="section-lead" style="color:rgba(255,255,255,.82)">Equipa a tua empresa, cria brindes memoráveis ou veste o teu evento. Tratamos de tudo, do design à produção.</p>
-            <ul class="b2b__list">
+            <ul class="b2b__list" id="b2b-list">
               <li>Fardamento e uniformes</li>
               <li>Merchandising</li>
               <li>Brindes personalizados</li>
               <li>Materiais para eventos</li>
               <li>Vinil, lonas e banners</li>
             </ul>
-            <a class="btn btn--accent btn--lg" href="https://wa.me/351932938467?text=Ol%C3%A1%21%20Gostaria%20de%20falar%20sobre%20um%20projeto%20para%20a%20minha%20empresa." target="_blank" rel="noopener">Falar sobre o meu projeto</a>
+            <a class="btn btn--accent btn--lg" id="b2b-cta" href="https://wa.me/351932938467?text=Ol%C3%A1%21%20Gostaria%20de%20falar%20sobre%20um%20projeto%20para%20a%20minha%20empresa." target="_blank" rel="noopener">Falar sobre o meu projeto</a>
           </div>
           <div class="b2b__media" data-reveal>
-            <img src="assets/img/trabalhos/merchandising.jpg" alt="Merchandising personalizado — t-shirts, canecas, sacos e hoodies" loading="lazy" />
+            <img id="b2b-img" src="assets/img/trabalhos/merchandising.jpg" alt="Merchandising personalizado — t-shirts, canecas, sacos e hoodies" loading="lazy" />
           </div>
         </div>
       </div>
@@ -213,7 +213,7 @@
           <span class="eyebrow">Perguntas frequentes</span>
           <h2 class="section-title">Ainda com dúvidas?</h2>
         </div>
-        <div class="faq" data-reveal>
+        <div class="faq" id="faq-list" data-reveal>
           <details><summary>Existe quantidade mínima?</summary><p>Não há mínimos. Fazemos desde uma peça única até grandes produções para empresas e eventos.</p></details>
           <details><summary>Posso enviar o meu próprio design?</summary><p>Sim! Aceitamos a tua arte ou logótipo. Se precisares, também ajudamos a criar ou ajustar o design.</p></details>
           <details><summary>Que produtos posso personalizar?</summary><p>T-shirts, sweats, hoodies, polos, bonés, canecas, autocolantes, capas, brindes, vinil de montra, lonas e banners — e muito mais.</p></details>
@@ -309,7 +309,7 @@
     <div class="container footer__grid">
       <div class="footer__brand">
         <img class="footer__logo" src="assets/img/logo.png" alt="Art Stamp Creations" width="859" height="865" />
-        <p>Damos vida às tuas ideias. Personalização e estampagem para particulares, empresas, eventos e marcas.</p>
+        <p data-site="footer_tagline">Damos vida às tuas ideias. Personalização e estampagem para particulares, empresas, eventos e marcas.</p>
         <div class="footer__social">
           <a href="https://www.instagram.com/artstampcreationpersonalizados" target="_blank" rel="noopener" aria-label="Instagram">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>

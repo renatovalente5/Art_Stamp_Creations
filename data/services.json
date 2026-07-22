@@ -1,4 +1,9 @@
 {
+  "head": {
+    "eyebrow": "O que fazemos",
+    "title": "Personalizamos quase tudo",
+    "lead": "Da peça única à produção para empresas e eventos. Escolhe o produto — nós tratamos da arte, da estampagem e do acabamento."
+  },
   "services": [
     { "icon": "tshirt", "title": "T-shirts personalizadas", "desc": "Estampagem de alta qualidade em t-shirts para todas as ocasiões — do exemplar único à produção para eventos." },
     { "icon": "hoodie", "title": "Sweats e hoodies", "desc": "Sweatshirts e hoodies personalizados, confortáveis e resistentes, com a sua arte ou logótipo." },

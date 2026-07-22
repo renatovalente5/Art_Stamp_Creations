@@ -12,12 +12,16 @@ Este site foi feito para **poder ser gerido por si, sem programação**. Pode al
 
 ## 2. O que pode editar
 
-No menu do lado esquerdo encontra:
+O site é **totalmente editável**. No menu do lado esquerdo encontra:
 
-- **Definições gerais** — o texto e a imagem do topo da página (hero), o selo, e todos os **contactos** (telefone, email, Instagram, morada) e o nome do titular no rodapé. Alterar o contacto aqui atualiza-o em **todo o site**.
-- **Serviços** — a lista de serviços (título, descrição e ícone). Pode adicionar, remover e reordenar.
-- **Modelos base** — os modelos de roupa para personalizar (nome, categoria, imagem, gramagem, tecido, tamanhos, nº de cores).
-- **Galeria / Trabalhos** — as fotografias de trabalhos, com legenda. Pode adicionar e remover à vontade.
+- **Geral (hero, contactos, empresas, rodapé)** — o topo da página (etiqueta, título, palavra destacada, texto, imagem, selo, botões e público-alvo); todos os **contactos** (telefone, email, Instagram, morada) que se atualizam em **todo o site**; os títulos da secção Contacto; a faixa **Empresas/B2B** (textos, lista, botão e imagem); a frase do **rodapé**; e o nome do titular (para as páginas legais).
+- **Serviços (O que fazemos)** — títulos da secção + a lista de serviços (ícone, título, descrição). Pode adicionar, remover e reordenar.
+- **Trabalhos (galeria)** — títulos da secção + as fotografias de trabalhos com legenda. Adicione e remova à vontade.
+- **Catálogo Têxtil** — títulos da secção + os modelos de roupa (nome, categoria, imagem, gramagem, tecido, género, tamanhos, nº de cores).
+- **Como funciona (passos)** — títulos da secção + os passos (título e descrição). A numeração é automática.
+- **Perguntas frequentes** — títulos da secção + todas as perguntas e respostas. Adicione, edite ou remova.
+
+> Praticamente todo o texto, imagem e lista do site é editável aqui — sem tocar em código.
 
 ## 3. Alterar textos
 
