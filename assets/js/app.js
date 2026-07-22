@@ -24,6 +24,17 @@
     });
   }
 
+  /* ------------------------- CONTEÚDO EDITÁVEL (data/site.json) ------------------------- */
+  getJSON('data/site.json').then(function (site) {
+    function val(path) { return path.split('.').reduce(function (o, k) { return o && o[k]; }, site); }
+    doc.querySelectorAll('[data-site]').forEach(function (el) { var v = val(el.getAttribute('data-site')); if (v != null && v !== '') el.textContent = v; });
+    doc.querySelectorAll('[data-site-src]').forEach(function (el) { var v = val(el.getAttribute('data-site-src')); if (v) el.setAttribute('src', normImg(v)); });
+    var c = site.contacts || {};
+    if (c.phone_intl) doc.querySelectorAll('[data-tel]').forEach(function (a) { a.setAttribute('href', 'tel:+' + c.phone_intl); });
+    if (c.email) doc.querySelectorAll('[data-mail]').forEach(function (a) { a.setAttribute('href', 'mailto:' + c.email); });
+    if (c.instagram_url) doc.querySelectorAll('[data-ig]').forEach(function (a) { a.setAttribute('href', c.instagram_url); });
+  }).catch(function () {});
+
   /* ------------------------- ÍCONES DOS SERVIÇOS ------------------------- */
   var S = 'fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"';
   var ICONS = {

@@ -1,0 +1,86 @@
+media:
+  input: assets/img
+  output: /assets/img
+
+content:
+  - name: site
+    label: Definições gerais
+    type: file
+    path: data/site.json
+    fields:
+      - name: hero
+        label: Destaque (topo da página)
+        type: object
+        fields:
+          - { name: eyebrow, label: Etiqueta pequena, type: string }
+          - { name: lead, label: Texto principal, type: text }
+          - { name: image, label: Imagem do destaque, type: image }
+          - { name: badge, label: Selo sobre a imagem, type: string }
+      - name: contacts
+        label: Contactos
+        type: object
+        fields:
+          - { name: phone, label: "Telefone (visível)", type: string }
+          - { name: phone_intl, label: "Telefone (formato internacional, ex.: 351935218857)", type: string }
+          - { name: email, label: Email, type: string }
+          - { name: instagram_url, label: Link do Instagram, type: string }
+          - { name: instagram_handle, label: "Nome do Instagram (ex.: @artstamp...)", type: string }
+          - { name: address_line1, label: "Morada (linha 1)", type: string }
+          - { name: address_line2, label: "Morada (linha 2)", type: string }
+      - { name: owner_name, label: Nome do titular (rodapé legal), type: string }
+
+  - name: services
+    label: Serviços
+    type: file
+    path: data/services.json
+    fields:
+      - name: services
+        label: Lista de serviços
+        type: object
+        list: true
+        fields:
+          - name: icon
+            label: Ícone
+            type: select
+            options:
+              values: [tshirt, hoodie, polo, cap, mug, sticker, dtf, uv, vinyl, banner]
+          - { name: title, label: Título, type: string }
+          - { name: desc, label: Descrição, type: text }
+
+  - name: models
+    label: Modelos base
+    type: file
+    path: data/models.json
+    fields:
+      - { name: intro, label: Texto de introdução, type: text }
+      - name: models
+        label: Modelos
+        type: object
+        list: true
+        fields:
+          - { name: name, label: Nome, type: string }
+          - name: cat
+            label: Categoria
+            type: select
+            options:
+              values: ["T-shirts", "Polos", "Sweats e hoodies", "Casacos e softshell", "Vestuário de trabalho"]
+          - { name: img, label: Imagem, type: image }
+          - { name: tag, label: "Descrição curta", type: string }
+          - { name: gsm, label: "Gramagem (ex.: 190 g/m²)", type: string }
+          - { name: fabric, label: Tecido, type: string }
+          - { name: gender, label: Género, type: string }
+          - { name: sizes, label: "Tamanhos (ex.: XS–5XL)", type: string }
+          - { name: colors, label: "Nº de cores", type: number }
+
+  - name: gallery
+    label: Galeria / Trabalhos
+    type: file
+    path: data/gallery.json
+    fields:
+      - name: items
+        label: Trabalhos
+        type: object
+        list: true
+        fields:
+          - { name: img, label: Imagem, type: image }
+          - { name: cap, label: Legenda, type: string }
