@@ -2,7 +2,7 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "artstamp",
+      "name": "artstamp-v2",
       "runtimeExecutable": "python3",
       "runtimeArgs": ["_source/dev-server.py"],
       "port": 8099
