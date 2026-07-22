@@ -3,48 +3,96 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Art Stamp Creations — Personalização e Estampagem</title>
-  <meta name="description" content="Damos vida às tuas ideias. Personalização de t-shirts, sweats, canecas, autocolantes, DTF, vinil e muito mais. Você imagina, nós criamos." />
+  <title>Art Stamp Creations — Personalização e Estampagem | Você imagina, nós criamos</title>
+  <meta name="description" content="Damos vida às tuas ideias. Personalização de t-shirts, sweats, polos, bonés, canecas, autocolantes, DTF têxtil e UV, vinil, lonas e banners. Para particulares, empresas, eventos e marcas." />
+  <meta name="theme-color" content="#1A8CE4" />
+  <link rel="icon" type="image/png" href="assets/img/favicon.png" />
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Art Stamp Creations — Você imagina, nós criamos" />
+  <meta property="og:description" content="Personalização e estampagem de produtos únicos. T-shirts, sweats, canecas, autocolantes, DTF, vinil e muito mais." />
+  <meta property="og:image" content="assets/img/og.jpg" />
+  <meta property="og:locale" content="pt_PT" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="preload" as="font" type="font/woff2" href="assets/fonts/fredoka-var.woff2" crossorigin />
   <link rel="preload" as="font" type="font/woff2" href="assets/fonts/mulish-var.woff2" crossorigin />
   <link rel="stylesheet" href="assets/css/fonts.css" />
   <link rel="stylesheet" href="assets/css/base.css" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
 <body>
   <a class="skip-link" href="#conteudo">Saltar para o conteúdo</a>
-  <main id="conteudo">
 
-    <!-- PROVA DE DESIGN (temporária — substituída no Bloco 3) -->
-    <section class="section">
-      <div class="container">
-        <span class="eyebrow">Prova de design · Bloco 1</span>
-        <h1 class="section-title">Damos vida às tuas <span class="text-accent">ideias</span>.</h1>
-        <p class="section-lead">Você imagina, nós criamos. Personalizamos as suas ideias em produtos exclusivos — com atenção ao detalhe, qualidade e dedicação.</p>
+  <!-- ================= HEADER / NAVBAR ================= -->
+  <header id="site-header" class="site-header" data-header>
+    <div class="container nav">
+      <a class="nav__brand" href="#inicio" aria-label="Art Stamp Creations — início">
+        <img class="nav__logo" src="assets/img/logo.png" alt="Art Stamp Creations" width="859" height="865" fetchpriority="high" />
+      </a>
+      <div class="nav__spacer"></div>
+      <nav class="nav__links" aria-label="Navegação principal">
+        <a href="#inicio">Início</a>
+        <a href="#servicos">Serviços</a>
+        <a href="#modelos">Modelos</a>
+        <a href="#trabalhos">Trabalhos</a>
+        <a href="#como">Como funciona</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+      <div class="nav__actions">
+        <a class="btn btn--primary btn--sm nav__cta" href="https://wa.me/351935218857?text=Ol%C3%A1%21%20Gostaria%20de%20um%20or%C3%A7amento." target="_blank" rel="noopener">Pedir orçamento</a>
+        <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" data-menu-open aria-label="Abrir menu">
+          <span class="nav__burger" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+  </header>
 
-        <div style="display:flex;gap:.8rem;flex-wrap:wrap;margin-top:1.8rem">
-          <a class="btn btn--primary btn--lg" href="#">Pedir orçamento</a>
-          <a class="btn btn--accent btn--lg" href="#">Ver trabalhos</a>
-          <a class="btn btn--dark" href="#">Escuro</a>
-          <a class="btn btn--outline" href="#">Contorno</a>
-          <a class="btn btn--wa" href="#">WhatsApp</a>
-        </div>
-
-        <div style="display:flex;gap:.6rem;flex-wrap:wrap;margin-top:1.6rem">
-          <button class="chip" aria-pressed="true">Todos</button>
-          <button class="chip" aria-pressed="false">T-shirts</button>
-          <button class="chip" aria-pressed="false">Sweats</button>
-          <button class="chip" aria-pressed="false">Canecas</button>
-        </div>
-
-        <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:2rem">
-          <span style="width:110px;height:76px;border-radius:14px;background:var(--blue);color:#fff;display:flex;align-items:end;padding:8px;font:600 .8rem var(--font-head)">#1A8CE4</span>
-          <span style="width:110px;height:76px;border-radius:14px;background:var(--ink);color:#fff;display:flex;align-items:end;padding:8px;font:600 .8rem var(--font-head)">#26261A</span>
-          <span style="width:110px;height:76px;border-radius:14px;background:var(--orange);color:var(--ink);display:flex;align-items:end;padding:8px;font:600 .8rem var(--font-head)">#FA9431</span>
-          <span style="width:110px;height:76px;border-radius:14px;background:var(--red);color:#fff;display:flex;align-items:end;padding:8px;font:600 .8rem var(--font-head)">#E4231A</span>
+  <!-- ================= MENU MOBILE (ECRÃ INTEIRO) ================= -->
+  <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
+    <div class="mobile-menu__inner">
+      <div class="mobile-menu__top">
+        <img class="mobile-menu__logo" src="assets/img/logo.png" alt="Art Stamp Creations" width="859" height="865" />
+        <button class="mobile-menu__close" type="button" data-menu-close aria-label="Fechar menu">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <nav class="mobile-menu__nav" aria-label="Navegação mobile">
+        <ul>
+          <li><a href="#inicio" data-menu-link><span>01</span> Início</a></li>
+          <li><a href="#servicos" data-menu-link><span>02</span> Serviços</a></li>
+          <li><a href="#modelos" data-menu-link><span>03</span> Modelos</a></li>
+          <li><a href="#trabalhos" data-menu-link><span>04</span> Trabalhos</a></li>
+          <li><a href="#como" data-menu-link><span>05</span> Como funciona</a></li>
+          <li><a href="#contacto" data-menu-link><span>06</span> Contacto</a></li>
+        </ul>
+      </nav>
+      <div class="mobile-menu__footer">
+        <a class="btn btn--wa btn--lg" href="https://wa.me/351935218857?text=Ol%C3%A1%21%20Gostaria%20de%20um%20or%C3%A7amento." target="_blank" rel="noopener" data-menu-link>Pedir orçamento (WhatsApp)</a>
+        <div class="mobile-menu__contact">
+          <a href="tel:+351935218857">935 218 857</a>
+          <small class="call-note">(Chamada para a rede móvel nacional)</small>
+          <a href="mailto:geralartstamp@gmail.com">geralartstamp@gmail.com</a>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
 
+  <main id="conteudo">
+    <!-- Placeholder temporário (Bloco 3) — hero real entra no Bloco 4 -->
+    <section id="inicio" style="min-height:92vh;display:flex;align-items:center;background:var(--grad-blue);color:#fff">
+      <div class="container">
+        <span class="eyebrow" style="color:#fff">Bloco 3 · navbar</span>
+        <h1 style="color:#fff;max-width:16ch">Damos vida às tuas ideias.</h1>
+        <p class="section-lead" style="color:rgba(255,255,255,.9)">Placeholder para testar a navbar (logo que encolhe) e o menu mobile. O hero real entra a seguir.</p>
+      </div>
+    </section>
+    <section id="servicos" class="section"><div class="container"><h2>Serviços</h2><p class="section-lead">(em construção)</p></div></section>
+    <section id="modelos" class="section section--soft"><div class="container"><h2>Modelos</h2><p class="section-lead">(em construção)</p></div></section>
+    <section id="trabalhos" class="section"><div class="container"><h2>Trabalhos</h2><p class="section-lead">(em construção)</p></div></section>
+    <section id="como" class="section section--soft"><div class="container"><h2>Como funciona</h2><p class="section-lead">(em construção)</p></div></section>
+    <section id="contacto" class="section"><div class="container"><h2>Contacto</h2><p class="section-lead">(em construção)</p></div></section>
   </main>
+
+  <script src="assets/js/main.js" defer></script>
 </body>
 </html>
