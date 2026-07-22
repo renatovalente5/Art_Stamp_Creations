@@ -1,0 +1,7 @@
+# Materiais em bruto (catálogos/fotos do fornecedor) — não vão para o site publicado
+_source/
+
+# Sistema
+.DS_Store
+Thumbs.db
+*.log

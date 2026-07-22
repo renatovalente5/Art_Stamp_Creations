@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "artstamp",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["_source/dev-server.py"],
+      "port": 8099
+    }
+  ]
+}
