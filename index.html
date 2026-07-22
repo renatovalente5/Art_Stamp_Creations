@@ -133,6 +133,7 @@
           <p class="section-lead">Da peça única à produção para empresas e eventos. Escolhe o produto — nós tratamos da arte, da estampagem e do acabamento.</p>
         </div>
         <div class="services__grid" id="services-grid"><p class="muted">A carregar serviços…</p></div>
+        <div class="more-wrap"><button class="btn btn--outline more-btn" type="button" id="more-services" hidden>Ver mais</button></div>
       </div>
     </section>
     <!-- ================= MODELOS BASE (THCLOTHES) ================= -->
@@ -145,6 +146,7 @@
         </div>
         <div class="filters" id="models-filters" role="tablist" aria-label="Filtrar modelos por categoria"></div>
         <div class="models__grid" id="models-grid"><p class="muted">A carregar modelos…</p></div>
+        <div class="more-wrap"><button class="btn btn--outline more-btn" type="button" id="more-models" hidden>Ver mais</button></div>
       </div>
     </section>
     <!-- ================= TRABALHOS / PORTFÓLIO ================= -->
@@ -156,6 +158,7 @@
           <p class="section-lead">Uma amostra de personalizações que já criámos — para particulares, empresas, clubes e eventos.</p>
         </div>
         <div class="gallery" id="gallery-grid"><p class="muted">A carregar trabalhos…</p></div>
+        <div class="more-wrap"><button class="btn btn--outline more-btn" type="button" id="more-gallery" hidden>Ver mais</button></div>
       </div>
     </section>
     <!-- ================= COMO FUNCIONA ================= -->
@@ -299,8 +302,13 @@
                 <div><small>Onde estamos</small><b>Av. Abade Tagilde 1011<br>4815-429 Vizela</b></div>
               </div>
             </div>
-            <div class="contact__map">
-              <iframe title="Localização — Vizela" src="https://www.openstreetmap.org/export/embed.html?bbox=-8.3159%2C41.3714%2C-8.2959%2C41.3814&amp;layer=mapnik&amp;marker=41.3764%2C-8.3059" loading="lazy" referrerpolicy="no-referrer"></iframe>
+            <div class="contact__map" id="map-box" data-embed="https://maps.google.com/maps?q=Av.%20Abade%20Tagilde%201011%2C%204815-429%20Vizela&amp;z=15&amp;hl=pt&amp;output=embed">
+              <button class="map-facade" type="button" data-map-load aria-label="Carregar mapa do Google Maps">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-5.6 7-12a7 7 0 10-14 0c0 6.4 7 12 7 12z"/><circle cx="12" cy="10" r="2.6"/></svg>
+                <span class="map-facade__t">Ver localização no mapa</span>
+                <span class="map-facade__s">Av. Abade Tagilde 1011, 4815-429 Vizela</span>
+                <span class="map-facade__n">Carrega o mapa do Google Maps (que pode usar cookies).</span>
+              </button>
             </div>
           </div>
         </div>
@@ -336,9 +344,9 @@
       <div class="footer__col">
         <h3>Contacto</h3>
         <div class="footer__contact">
-          <span><a href="tel:+351935218857" data-site="contacts.phone" data-tel>935 218 857</a><br><small class="call-note">(Chamada para a rede móvel nacional)</small></span>
-          <a href="mailto:geralartstamp@gmail.com" data-site="contacts.email" data-mail>geralartstamp@gmail.com</a>
-          <span>Av. Abade Tagilde 1011<br>4815-429 Vizela</span>
+          <span class="frow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M4 5c0 8.3 6.7 15 15 15v-3.6l-4-1.2-1.6 1.6a12 12 0 01-5.2-5.2l1.6-1.6L8.6 5H5a1 1 0 00-1 1z"/></svg><span><a href="tel:+351935218857" data-site="contacts.phone" data-tel>935 218 857</a><br><small class="call-note">(Chamada para a rede móvel nacional)</small></span></span>
+          <span class="frow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6" stroke-linecap="round"/></svg><a href="mailto:geralartstamp@gmail.com" data-site="contacts.email" data-mail>geralartstamp@gmail.com</a></span>
+          <span class="frow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-5.6 7-12a7 7 0 10-14 0c0 6.4 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Av. Abade Tagilde 1011<br>4815-429 Vizela</span></span>
         </div>
       </div>
     </div>

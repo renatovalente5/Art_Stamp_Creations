@@ -217,6 +217,17 @@ body.menu-open{overflow:hidden}
 .contact__map iframe{width:100%;height:100%;display:block;border:0}
 @media (max-width:820px){.contact__grid{grid-template-columns:1fr}.form__row{grid-template-columns:1fr}}
 
+/* Facade do mapa Google (carrega só com clique = cookieless por defeito) */
+.map-facade{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.35rem;text-align:center;padding:1.6rem;cursor:pointer;border:0;color:var(--ink);background:radial-gradient(circle at 30% 20%,#eaf1ee,#e0e8e3)}
+.map-facade svg{width:44px;height:44px;color:var(--blue);margin-bottom:.3rem}
+.map-facade__t{font-family:var(--font-head);font-weight:600;font-size:1.12rem;transition:color var(--t-fast)}
+.map-facade:hover .map-facade__t{color:var(--blue)}
+.map-facade__s{font-size:.9rem;color:var(--muted)}
+.map-facade__n{font-size:.75rem;color:var(--muted);opacity:.85;margin-top:.35rem;max-width:30ch}
+
+/* Botão "Ver mais" */
+.more-wrap{text-align:center;margin-top:1.7rem}
+
 /* ---------------- FOOTER ---------------- */
 .footer{background:var(--grad-dark);color:#C9C9BE;padding-top:clamp(2.6rem,5vw,4rem)}
 .footer__grid{display:grid;grid-template-columns:1.4fr 1fr 1.2fr;gap:2rem;padding-bottom:2.4rem}
@@ -230,7 +241,9 @@ body.menu-open{overflow:hidden}
 .footer__col ul{display:flex;flex-direction:column;gap:.5rem}
 .footer__col a{color:#C9C9BE;font-size:.95rem}
 .footer__col a:hover{color:#fff}
-.footer__contact{display:flex;flex-direction:column;gap:.7rem;font-size:.95rem}
+.footer__contact{display:flex;flex-direction:column;gap:.8rem;font-size:.95rem}
+.footer__contact .frow{display:flex;gap:.6rem;align-items:flex-start}
+.footer__contact .frow svg{width:18px;height:18px;color:var(--blue);flex:none;margin-top:3px}
 .footer__contact a{color:#C9C9BE}
 .footer__contact a:hover{color:#fff}
 .footer__bar{display:flex;flex-wrap:wrap;gap:.8rem 1.4rem;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,.12);padding-block:1.3rem;font-size:.83rem}

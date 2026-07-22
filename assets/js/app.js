@@ -24,6 +24,22 @@
     });
   }
 
+  /* Colapsar grelhas grandes: mostra N itens + botão "Ver mais" (menos itens no telemóvel) */
+  function collapsible(grid, btn, itemSelector, desktopN, mobileN) {
+    if (!grid || !btn) return;
+    var N = window.matchMedia('(max-width:600px)').matches ? mobileN : desktopN;
+    var items = grid.querySelectorAll(itemSelector);
+    if (items.length <= N) { btn.hidden = true; items.forEach(function (el) { el.style.display = ''; }); return; }
+    var collapsed = true;
+    function apply() {
+      items.forEach(function (el, i) { el.style.display = (collapsed && i >= N) ? 'none' : ''; });
+      btn.textContent = collapsed ? 'Ver mais' : 'Ver menos';
+    }
+    btn.hidden = false;
+    btn.onclick = function () { collapsed = !collapsed; apply(); if (!collapsed) observeReveals(grid); };
+    apply();
+  }
+
   /* ------------------------- CONTEÚDO EDITÁVEL (data/site.json) ------------------------- */
   getJSON('data/site.json').then(function (site) {
     function val(path) { return path.split('.').reduce(function (o, k) { return o && o[k]; }, site); }
@@ -63,6 +79,7 @@
           '</article>';
       }).join('');
       observeReveals(sgrid);
+      collapsible(sgrid, doc.getElementById('more-services'), '.svc', 6, 4);
     }).catch(function () { sgrid.innerHTML = '<p class="muted">Não foi possível carregar os serviços.</p>'; });
   }
 
@@ -93,6 +110,7 @@
       var list = activeCat === 'Todos' ? allModels : allModels.filter(function (m) { return m.cat === activeCat; });
       mgrid.innerHTML = list.map(modelCard).join('');
       observeReveals(mgrid);
+      collapsible(mgrid, doc.getElementById('more-models'), '.model', 8, 4);
     }
     function buildModelFilters() {
       if (!mfilters) return;
@@ -129,6 +147,7 @@
           '</figure>';
       }).join('');
       observeReveals(ggrid);
+      collapsible(ggrid, doc.getElementById('more-gallery'), '.gitem', 12, 6);
     }).catch(function () { ggrid.innerHTML = '<p class="muted">Não foi possível carregar a galeria.</p>'; });
 
     /* Lightbox */
@@ -182,6 +201,22 @@
       if (contacto) t += ' O meu contacto: ' + contacto + '.';
       t += ' Podem dar-me um orçamento?';
       window.open('https://wa.me/351935218857?text=' + encodeURIComponent(t), '_blank', 'noopener');
+    });
+  }
+
+  /* ------------------------- MAPA GOOGLE (carrega só com consentimento) ------------------------- */
+  var mapBox = doc.getElementById('map-box');
+  if (mapBox) {
+    var mapBtn = mapBox.querySelector('[data-map-load]');
+    if (mapBtn) mapBtn.addEventListener('click', function () {
+      var f = doc.createElement('iframe');
+      f.src = mapBox.getAttribute('data-embed');
+      f.title = 'Mapa Google — Art Stamp Creations, Vizela';
+      f.loading = 'lazy'; f.setAttribute('referrerpolicy', 'no-referrer');
+      f.setAttribute('allowfullscreen', '');
+      f.style.cssText = 'width:100%;height:100%;border:0;display:block';
+      mapBox.innerHTML = '';
+      mapBox.appendChild(f);
     });
   }
 })();
