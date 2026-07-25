@@ -17,6 +17,7 @@
     { "img": "assets/img/trabalhos/tshirt-echovisuals.jpg", "cap": "T-shirt para empresa" },
     { "img": "assets/img/trabalhos/caneca-inox-texto.jpg", "cap": "Caneca inox com mensagem" },
     { "img": "assets/img/trabalhos/capa-telemovel-laranja.jpg", "cap": "Capa de telemóvel com logótipo" },
+    { "img": "assets/img/trabalhos/bracadeira-capitao.jpg", "cap": "Braçadeira de capitão" },
     { "img": "assets/img/trabalhos/casaco-personal-trainer.jpg", "cap": "Casaco para personal trainer" },
     { "img": "assets/img/trabalhos/tshirts-evento.jpg", "cap": "T-shirts para evento" },
     { "img": "assets/img/trabalhos/mangas-sublimadas.jpg", "cap": "Vestuário desportivo sublimado" },
@@ -27,7 +28,6 @@
     { "img": "assets/img/trabalhos/capa-telemovel-fcp.jpg", "cap": "Capa de telemóvel personalizada" },
     { "img": "assets/img/trabalhos/canetas-personalizadas.jpg", "cap": "Canetas personalizadas" },
     { "img": "assets/img/trabalhos/tshirt-texto-humor.jpg", "cap": "T-shirt com frase" },
-    { "img": "assets/img/trabalhos/bracadeira-capitao.jpg", "cap": "Braçadeira de capitão" },
     { "img": "assets/img/trabalhos/autocolantes-bella-donna.jpg", "cap": "Autocolantes para cabeleireiro" }
   ]
 }

@@ -325,7 +325,9 @@
       masonry(ggrid, figs);
       observeReveals(ggrid);
       var moreBtn = doc.getElementById('more-gallery');
-      collapsible(ggrid, moreBtn, figs, 12, 6);
+      /* 13 no desktop (e não 12): com 4 colunas, o 13.º trabalho vai para a coluna
+         mais curta e fecha o vazio que ficava em baixo à esquerda. */
+      collapsible(ggrid, moreBtn, figs, 13, 6);
 
       /* No 1.º render as imagens ainda não têm dimensões, por isso o equilíbrio é
          estimado. Assim que as visíveis carregam, reequilibra UMA vez — e nunca
