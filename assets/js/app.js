@@ -47,8 +47,33 @@
       btn.textContent = collapsed ? 'Ver mais' : 'Ver menos';
     }
     btn.hidden = false;
-    btn.onclick = function () { collapsed = !collapsed; apply(); if (!collapsed) observeReveals(grid); };
+    btn.onclick = function () {
+      /* Ao recolher, a secção encolhe e a página ficava demasiado abaixo. Guardamos
+         a posição do botão no ecrã e compensamos o scroll, para o "Ver mais" nascer
+         onde estava o "Ver menos". Só ao recolher — expandir não desloca nada. */
+      var recolher = !collapsed;
+      var antes = recolher ? btn.getBoundingClientRect().top : 0;
+      collapsed = !collapsed;
+      apply();
+      if (!collapsed) observeReveals(grid);
+      if (recolher) {
+        var delta = btn.getBoundingClientRect().top - antes;
+        if (delta) scrollBySemAnimacao(delta);
+      }
+    };
     apply();
+  }
+
+  /* O CSS tem scroll-behavior:smooth; aqui o ajuste tem de ser instantâneo,
+     senão vê-se o conteúdo saltar e só depois a página deslizar. */
+  function scrollBySemAnimacao(delta) {
+    try { window.scrollBy({ top: delta, left: 0, behavior: 'instant' }); }
+    catch (err) {
+      var html = doc.documentElement, antes = html.style.scrollBehavior;
+      html.style.scrollBehavior = 'auto';
+      window.scrollBy(0, delta);
+      html.style.scrollBehavior = antes;
+    }
   }
 
   /* Galeria em colunas montadas à mão.
