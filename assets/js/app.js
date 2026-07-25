@@ -32,11 +32,14 @@
     if (head.lead) { var l = scope.querySelector('.section-lead'); if (l) l.textContent = head.lead; }
   }
 
-  /* Colapsar grelhas grandes: mostra N itens + botão "Ver mais" (menos itens no telemóvel) */
+  /* Colapsar grelhas grandes: mostra N itens + botão "Ver mais" (menos itens no telemóvel).
+     Aceita um seletor CSS ou uma lista já pela ordem certa (galeria em colunas). */
   function collapsible(grid, btn, itemSelector, desktopN, mobileN) {
     if (!grid || !btn) return;
     var N = window.matchMedia('(max-width:600px)').matches ? mobileN : desktopN;
-    var items = grid.querySelectorAll(itemSelector);
+    var items = (typeof itemSelector === 'string')
+      ? Array.prototype.slice.call(grid.querySelectorAll(itemSelector))
+      : itemSelector;
     if (items.length <= N) { btn.hidden = true; items.forEach(function (el) { el.style.display = ''; }); return; }
     var collapsed = true;
     function apply() {
@@ -46,6 +49,42 @@
     btn.hidden = false;
     btn.onclick = function () { collapsed = !collapsed; apply(); if (!collapsed) observeReveals(grid); };
     apply();
+  }
+
+  /* Galeria em colunas montadas à mão.
+     O CSS multi-column reequilibra as colunas sempre que o nº de itens muda, o que
+     fazia saltar as fotos ao carregar em "Ver mais". Aqui a coluna de cada item é
+     fixa (i % nº de colunas), por isso mostrar mais itens nunca mexe nos anteriores. */
+  function galleryCols(grid) {
+    var mobile = window.matchMedia('(max-width:600px)').matches;
+    var minW = mobile ? 140 : 230, max = mobile ? 2 : 4;
+    var gap = parseFloat(window.getComputedStyle(grid).columnGap) || 16;
+    var w = grid.clientWidth || grid.getBoundingClientRect().width;
+    return Math.max(1, Math.min(max, Math.floor((w + gap) / (minW + gap))));
+  }
+  function masonry(grid, items, force) {
+    var n = galleryCols(grid);
+    if (grid.__cols === n && !force) return;   /* só remonta se as colunas mudarem */
+    grid.__cols = n;
+    var gap = parseFloat(window.getComputedStyle(grid).columnGap) || 16;
+    var colW = ((grid.clientWidth || grid.getBoundingClientRect().width) - gap * (n - 1)) / n;
+    grid.innerHTML = '';
+    var cols = [], h = [];
+    for (var c = 0; c < n; c++) {
+      var col = doc.createElement('div');
+      col.className = 'gallery__col';
+      grid.appendChild(col); cols.push(col); h.push(0);
+    }
+    /* Coluna mais curta primeiro, pela ordem dos itens: como nunca reposicionamos
+       nada, qualquer prefixo (os 12 do "Ver mais" fechado) também fica equilibrado. */
+    items.forEach(function (el) {
+      var img = el.querySelector('img');
+      var ar = (img && img.naturalWidth) ? (img.naturalHeight / img.naturalWidth) : 1.25;
+      var k = 0;
+      for (var j = 1; j < n; j++) { if (h[j] < h[k]) k = j; }
+      cols[k].appendChild(el);
+      h[k] += colW * ar + gap;
+    });
   }
 
   /* ------------------------- CONTEÚDO EDITÁVEL (data/site.json) ------------------------- */
@@ -249,14 +288,45 @@
     getJSON('data/gallery.json').then(function (d) {
       applyHead(doc.getElementById('trabalhos'), d.head);
       gItems = (d && d.items) || [];
-      ggrid.innerHTML = gItems.map(function (it, i) {
-        return '<figure class="gitem" data-i="' + i + '" data-reveal>' +
-          '<img src="' + esc(normImg(it.img)) + '" alt="' + esc(it.cap || 'Trabalho Art Stamp') + '" loading="lazy" />' +
-          '<figcaption>' + esc(it.cap || '') + '</figcaption>' +
-          '</figure>';
-      }).join('');
+      var figs = gItems.map(function (it, i) {
+        var f = doc.createElement('figure');
+        f.className = 'gitem';
+        f.setAttribute('data-i', i);
+        f.setAttribute('data-reveal', '');
+        f.innerHTML = '<img src="' + esc(normImg(it.img)) + '" alt="' + esc(it.cap || 'Trabalho Art Stamp') + '" loading="lazy" />' +
+          '<figcaption>' + esc(it.cap || '') + '</figcaption>';
+        return f;
+      });
+      masonry(ggrid, figs);
       observeReveals(ggrid);
-      collapsible(ggrid, doc.getElementById('more-gallery'), '.gitem', 12, 6);
+      var moreBtn = doc.getElementById('more-gallery');
+      collapsible(ggrid, moreBtn, figs, 12, 6);
+
+      /* No 1.º render as imagens ainda não têm dimensões, por isso o equilíbrio é
+         estimado. Assim que as visíveis carregam, reequilibra UMA vez — e nunca
+         depois de o utilizador carregar em "Ver mais", para não lhe saltar nada. */
+      var reequilibrado = false, expandido = false;
+      if (moreBtn) moreBtn.addEventListener('click', function () { expandido = true; });
+      function rebalance() {
+        if (reequilibrado || expandido) return;
+        var vis = figs.filter(function (f) { return f.style.display !== 'none'; });
+        if (!vis.length) return;
+        var prontas = vis.every(function (f) { var im = f.querySelector('img'); return im.complete && im.naturalWidth; });
+        if (!prontas) return;
+        reequilibrado = true;
+        masonry(ggrid, figs, true);
+      }
+      figs.forEach(function (f) {
+        var im = f.querySelector('img');
+        if (im.complete && im.naturalWidth) rebalance();
+        else im.addEventListener('load', rebalance);
+      });
+
+      var rz;
+      window.addEventListener('resize', function () {
+        clearTimeout(rz);
+        rz = setTimeout(function () { masonry(ggrid, figs); }, 200);
+      });
     }).catch(function () { ggrid.innerHTML = '<p class="muted">Não foi possível carregar a galeria.</p>'; });
 
     /* Lightbox */
