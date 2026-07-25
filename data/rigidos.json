@@ -1,0 +1,179 @@
+{
+  "head": {
+    "eyebrow": "Artigos Rígidos",
+    "title": "Personalizamos em qualquer superfície",
+    "lead": "Artigos rígidos para sublimação e personalização — canecas, garrafas, ímans, placas e muito mais. Escolhe o artigo, nós tratamos da tua imagem. Muitos mais formatos disponíveis a pedido."
+  },
+  "cats": ["Todos", "Canecas e garrafas", "Ímans", "Placas e decoração"],
+  "products": [
+    {
+      "name": "Caneca",
+      "cat": "Canecas e garrafas",
+      "imgs": [
+        "assets/img/rigidos/caneca-1.jpg",
+        "assets/img/rigidos/caneca-2.jpg",
+        "assets/img/rigidos/caneca-3.jpg",
+        "assets/img/rigidos/caneca-4.jpg"
+      ],
+      "specs": [
+        { "label": "Material", "value": "Cerâmica" },
+        { "label": "Capacidade", "value": "300 ml" },
+        { "label": "Medidas", "value": "Ø 8 × 9,5 cm" },
+        { "label": "Personalização", "value": "Full-colour" }
+      ]
+    },
+    {
+      "name": "Caneca Aço Inox",
+      "cat": "Canecas e garrafas",
+      "imgs": [
+        "assets/img/rigidos/caneca-inox-1.jpg",
+        "assets/img/rigidos/caneca-inox-2.jpg",
+        "assets/img/rigidos/caneca-inox-3.jpg",
+        "assets/img/rigidos/caneca-inox-4.jpg",
+        "assets/img/rigidos/caneca-inox-5.jpg"
+      ],
+      "specs": [
+        { "label": "Material", "value": "Aço inoxidável" },
+        { "label": "Capacidade", "value": "300 ml" },
+        { "label": "Medidas", "value": "Ø 7,5 × 9 cm" },
+        { "label": "Pega", "value": "Mosquetão" }
+      ]
+    },
+    {
+      "name": "Caneca Mágica Preto Mate",
+      "cat": "Canecas e garrafas",
+      "imgs": [
+        "assets/img/rigidos/caneca-magica-1.jpg",
+        "assets/img/rigidos/caneca-magica-2.jpg",
+        "assets/img/rigidos/caneca-magica-3.jpg",
+        "assets/img/rigidos/caneca-magica-4.jpg"
+      ],
+      "specs": [
+        { "label": "Material", "value": "Cerâmica" },
+        { "label": "Capacidade", "value": "300 ml" },
+        { "label": "Medidas", "value": "Ø 8 × 9,5 cm" },
+        { "label": "Efeito", "value": "Revela com o calor" }
+      ]
+    },
+    {
+      "name": "Garrafa Térmica",
+      "cat": "Canecas e garrafas",
+      "imgs": [
+        "assets/img/rigidos/garrafa-1.jpg",
+        "assets/img/rigidos/garrafa-2.jpg",
+        "assets/img/rigidos/garrafa-3.jpg",
+        "assets/img/rigidos/garrafa-4.jpg",
+        "assets/img/rigidos/garrafa-5.jpg"
+      ],
+      "specs": [
+        { "label": "Material", "value": "Aço inoxidável" },
+        { "label": "Capacidade", "value": "500 ml" },
+        { "label": "Isolamento", "value": "Parede dupla" }
+      ]
+    },
+    {
+      "name": "Íman Magnético — Acrílico",
+      "cat": "Ímans",
+      "imgs": [
+        "assets/img/rigidos/iman-acrilico-1.jpg",
+        "assets/img/rigidos/iman-acrilico-2.jpg",
+        "assets/img/rigidos/iman-acrilico-3.jpg",
+        "assets/img/rigidos/iman-acrilico-4.jpg",
+        "assets/img/rigidos/iman-acrilico-5.jpg"
+      ],
+      "specs": [
+        { "label": "Material", "value": "Acrílico" },
+        { "label": "Fixação", "value": "Magnética" },
+        { "label": "Acabamento", "value": "Brilhante" }
+      ]
+    },
+    {
+      "name": "Íman Magnético — Cerâmica",
+      "cat": "Ímans",
+      "imgs": [
+        "assets/img/rigidos/iman-ceramica-1.jpg",
+        "assets/img/rigidos/iman-ceramica-2.jpg",
+        "assets/img/rigidos/iman-ceramica-3.jpg",
+        "assets/img/rigidos/iman-ceramica-4.jpg",
+        "assets/img/rigidos/iman-ceramica-5.jpg"
+      ],
+      "specs": [
+        { "label": "Material", "value": "Cerâmica" },
+        { "label": "Fixação", "value": "Magnética" },
+        { "label": "Formatos", "value": "Vários" }
+      ]
+    },
+    {
+      "name": "Íman Magnético — MDF",
+      "cat": "Ímans",
+      "imgs": [
+        "assets/img/rigidos/iman-mdf-1.jpg",
+        "assets/img/rigidos/iman-mdf-2.jpg",
+        "assets/img/rigidos/iman-mdf-3.jpg",
+        "assets/img/rigidos/iman-mdf-4.jpg",
+        "assets/img/rigidos/iman-mdf-5.jpg",
+        "assets/img/rigidos/iman-mdf-6.jpg"
+      ],
+      "specs": [
+        { "label": "Material", "value": "MDF" },
+        { "label": "Fixação", "value": "Magnética" },
+        { "label": "Formatos", "value": "Vários" }
+      ]
+    },
+    {
+      "name": "Íman Magnético — Plástico",
+      "cat": "Ímans",
+      "imgs": [
+        "assets/img/rigidos/iman-plastico-1.jpg",
+        "assets/img/rigidos/iman-plastico-2.jpg",
+        "assets/img/rigidos/iman-plastico-3.jpg",
+        "assets/img/rigidos/iman-plastico-4.jpg"
+      ],
+      "specs": [
+        { "label": "Material", "value": "Plástico" },
+        { "label": "Fixação", "value": "Magnética" },
+        { "label": "Formatos", "value": "Vários" }
+      ]
+    },
+    {
+      "name": "Placa de Rua em Alumínio",
+      "cat": "Placas e decoração",
+      "imgs": [
+        "assets/img/rigidos/placa-rua-1.jpg"
+      ],
+      "specs": [
+        { "label": "Material", "value": "Alumínio" },
+        { "label": "Proteção", "value": "Anti-UV" },
+        { "label": "Uso", "value": "Interior e exterior" }
+      ]
+    },
+    {
+      "name": "Pedra de Xisto",
+      "cat": "Placas e decoração",
+      "imgs": [
+        "assets/img/rigidos/pedra-xisto-1.jpg",
+        "assets/img/rigidos/pedra-xisto-2.jpg",
+        "assets/img/rigidos/pedra-xisto-3.jpg",
+        "assets/img/rigidos/pedra-xisto-4.jpg"
+      ],
+      "specs": [
+        { "label": "Material", "value": "Xisto natural" },
+        { "label": "Peça", "value": "Única (natural)" },
+        { "label": "Suporte", "value": "Inclui cavalete" }
+      ]
+    },
+    {
+      "name": "Puzzle 70 peças",
+      "cat": "Placas e decoração",
+      "imgs": [
+        "assets/img/rigidos/puzzle-1.jpg",
+        "assets/img/rigidos/puzzle-2.jpg"
+      ],
+      "specs": [
+        { "label": "Peças", "value": "70" },
+        { "label": "Dimensões", "value": "29 × 21 cm" },
+        { "label": "Material", "value": "Cartão" }
+      ]
+    }
+  ]
+}

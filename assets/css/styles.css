@@ -144,7 +144,15 @@ body.menu-open{overflow:hidden}
 .model__specs li{display:flex;justify-content:space-between;gap:.8rem;border-bottom:1px dashed var(--line);padding-bottom:.3rem}
 .model__specs span{color:var(--muted)}
 .model__specs b{color:var(--ink);text-align:right;font-weight:600}
-.model__cta{margin-top:auto;align-self:flex-start}
+.model__cta{margin-top:auto;align-self:flex-start;white-space:normal;line-height:1.2;text-align:center}
+/* Artigos rígidos: imagem de produto em formato quadrado + carrossel */
+#rigidos-grid .model__media{aspect-ratio:1/1}
+.rig__nav{position:absolute;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;border:0;background:rgba(255,255,255,.85);color:var(--ink);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.18);cursor:pointer;transition:background var(--t-fast),transform var(--t-fast);z-index:2}
+.rig__nav svg{width:18px;height:18px}
+.rig__nav--prev{left:8px}
+.rig__nav--next{right:8px}
+.rig__nav:hover{background:#fff;transform:translateY(-50%) scale(1.08)}
+.rig__count{position:absolute;bottom:8px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.55);color:#fff;font-size:.72rem;font-weight:600;padding:.15em .6em;border-radius:var(--radius-pill);z-index:2;pointer-events:none}
 @media (max-width:600px){
   .models__grid{grid-template-columns:1fr 1fr;gap:.7rem}
   .model__body{padding:.8rem .8rem .95rem;gap:.5rem}
@@ -155,7 +163,7 @@ body.menu-open{overflow:hidden}
   .model__specs li{gap:.4rem;padding-bottom:.28rem}
   .model__specs b{font-size:.73rem}
   .model__cat{font-size:.65rem;padding:.28em .6em}
-  .model__cta{width:100%;align-self:stretch;padding:.62em .4em;font-size:.82rem}
+  .model__cta{width:100%;align-self:stretch;padding:.7em .3em;font-size:.72rem;letter-spacing:-.01em}
 }
 
 /* ---------------- GALERIA / PORTFÓLIO ---------------- */
@@ -281,6 +289,8 @@ body.menu-open{overflow:hidden}
 .footer__contact a:hover{color:#fff}
 .footer__bar{display:flex;flex-wrap:wrap;gap:.8rem 1.4rem;align-items:center;justify-content:space-between;border-top:1px solid rgba(255,255,255,.12);padding-block:1.3rem;font-size:.83rem}
 .footer__legal{color:#9C9C90;max-width:70ch}
+.footer__admin{color:#6b6b62;text-decoration:none}
+.footer__admin:hover{color:#C9C9BE;text-decoration:underline}
 .footer__links{display:flex;flex-wrap:wrap;gap:.5rem 1.1rem}
 .footer__links a{color:#C9C9BE}
 .footer__links a:hover{color:#fff;text-decoration:underline}

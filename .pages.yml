@@ -35,12 +35,13 @@ content:
           - { name: address_line1, label: "Morada (linha 1)", type: string }
           - { name: address_line2, label: "Morada (linha 2)", type: string }
       - name: contacto
-        label: Secção Contacto (títulos)
+        label: Secção Contacto (títulos + formulário)
         type: object
         fields:
           - { name: eyebrow, label: Etiqueta, type: string }
           - { name: title, label: Título, type: string }
           - { name: lead, label: Subtítulo, type: text }
+          - { name: form_options, label: "Opções do formulário (O que precisas?)", type: string, list: true }
       - name: b2b
         label: Faixa Empresas / B2B
         type: object
@@ -132,6 +133,36 @@ content:
           - { name: gender, label: Género, type: string }
           - { name: sizes, label: "Tamanhos (ex.: XS–5XL)", type: string }
           - { name: colors, label: "Nº de cores", type: number }
+
+  # ---------------- ARTIGOS RÍGIDOS ----------------
+  - name: rigidos
+    label: Artigos Rígidos
+    type: file
+    path: data/rigidos.json
+    fields:
+      - name: head
+        label: Títulos da secção
+        type: object
+        fields:
+          - { name: eyebrow, label: Etiqueta, type: string }
+          - { name: title, label: Título, type: string }
+          - { name: lead, label: Subtítulo / introdução, type: text }
+      - { name: cats, label: "Categorias / filtros (começa por 'Todos')", type: string, list: true }
+      - name: products
+        label: Artigos
+        type: object
+        list: true
+        fields:
+          - { name: name, label: Nome, type: string }
+          - { name: cat, label: "Categoria (igual a uma das de cima)", type: string }
+          - { name: imgs, label: "Imagens (a 1ª é a principal)", type: image, list: true }
+          - name: specs
+            label: Características
+            type: object
+            list: true
+            fields:
+              - { name: label, label: "Nome (ex.: Material)", type: string }
+              - { name: value, label: "Valor (ex.: Cerâmica)", type: string }
 
   # ---------------- COMO FUNCIONA ----------------
   - name: steps

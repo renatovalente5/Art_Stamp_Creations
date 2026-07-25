@@ -23,7 +23,8 @@
   "contacto": {
     "eyebrow": "Contacto",
     "title": "Vamos dar vida à tua ideia?",
-    "lead": "Pede o teu orçamento sem compromisso. Respondemos rápido, por WhatsApp."
+    "lead": "Pede o teu orçamento sem compromisso. Respondemos rápido, por WhatsApp.",
+    "form_options": ["T-shirts", "Sweats e hoodies", "Polos", "Bonés", "Canecas", "Autocolantes", "DTF Têxtil / UV", "Vinil", "Lonas e banners", "Artigos rígidos", "Merchandising / empresa", "Outro"]
   },
   "b2b": {
     "eyebrow": "Empresas · Eventos · Marcas",

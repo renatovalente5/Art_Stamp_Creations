@@ -57,6 +57,19 @@
     if (c.phone_intl) doc.querySelectorAll('[data-tel]').forEach(function (a) { a.setAttribute('href', 'tel:+' + c.phone_intl); });
     if (c.email) doc.querySelectorAll('[data-mail]').forEach(function (a) { a.setAttribute('href', 'mailto:' + c.email); });
     if (c.instagram_url) doc.querySelectorAll('[data-ig]').forEach(function (a) { a.setAttribute('href', c.instagram_url); });
+    // WhatsApp: todos os botões seguem o telefone editável (preserva o ?text=)
+    if (c.phone_intl) doc.querySelectorAll('a[href*="wa.me/"]').forEach(function (a) { a.setAttribute('href', a.getAttribute('href').replace(/wa\.me\/\d+/, 'wa.me/' + c.phone_intl)); });
+    // Morada → texto do mapa + URL do embed (e recarrega o mapa se já estiver aberto)
+    var a1 = c.address_line1 || '', a2 = c.address_line2 || '', addrFull = (a1 + ' ' + a2).trim();
+    if (addrFull) {
+      var fs = doc.querySelector('.map-facade__s'); if (fs) fs.textContent = a1 + (a2 ? ', ' + a2 : '');
+      var mb = doc.getElementById('map-box');
+      if (mb) {
+        var murl = 'https://maps.google.com/maps?q=' + encodeURIComponent(addrFull) + '&z=15&hl=pt&output=embed';
+        mb.setAttribute('data-embed', murl);
+        var ifr = mb.querySelector('iframe'); if (ifr) ifr.src = murl;
+      }
+    }
     // Hero: título com palavra destacada + público-alvo
     var h = site.hero || {};
     var ht = doc.getElementById('hero-title');
@@ -65,6 +78,15 @@
     if (aud && h.audience && h.audience.length) aud.innerHTML = h.audience.map(function (a) { return '<li>' + esc(a) + '</li>'; }).join('');
     // Cabeçalho da secção de Contacto
     applyHead(doc.getElementById('contacto'), site.contacto);
+    // Opções do formulário ("O que precisas?") — editáveis, mantendo o placeholder
+    var sel = doc.getElementById('f-servico');
+    var fopts = site.contacto && site.contacto.form_options;
+    if (sel && fopts && fopts.length) {
+      var ph = sel.querySelector('option[value=""]');
+      sel.innerHTML = '';
+      sel.appendChild(ph || (function () { var o = doc.createElement('option'); o.value = ''; o.textContent = 'Escolhe…'; return o; })());
+      fopts.forEach(function (t) { var o = doc.createElement('option'); o.textContent = t; sel.appendChild(o); });
+    }
     // Faixa B2B (Empresas)
     var b = site.b2b || {};
     applyHead(doc.getElementById('b2b'), b);
@@ -125,7 +147,7 @@
             '<li><span>Tamanhos</span><b>' + esc(m.sizes) + '</b></li>' +
             '<li><span>Cores</span><b>' + esc(m.colors) + ' disponíveis</b></li>' +
           '</ul>' +
-          '<a class="btn btn--primary btn--sm model__cta" href="' + ask + '" target="_blank" rel="noopener">Pedir com personalização</a>' +
+          '<a class="btn btn--primary btn--sm model__cta" href="' + ask + '" target="_blank" rel="noopener">Pedir personalização</a>' +
         '</div>' +
       '</article>';
     }
@@ -154,6 +176,70 @@
       buildModelFilters();
       renderModels();
     }).catch(function () { mgrid.innerHTML = '<p class="muted">Não foi possível carregar os modelos.</p>'; });
+  }
+
+  /* ------------------------- ARTIGOS RÍGIDOS ------------------------- */
+  var rgrid = doc.getElementById('rigidos-grid');
+  var rfilters = doc.getElementById('rigidos-filters');
+  if (rgrid) {
+    var RWA = 'https://wa.me/351932938467?text=';
+    var allRig = [], rigCats = ['Todos'], activeRig = 'Todos';
+    function rigCard(p) {
+      var ask = RWA + encodeURIComponent('Olá! Tenho interesse no artigo ' + p.name + ' para personalizar. Podem dar-me um orçamento?');
+      var specs = (p.specs || []).map(function (s) { return '<li><span>' + esc(s.label) + '</span><b>' + esc(s.value) + '</b></li>'; }).join('');
+      var imgs = (p.imgs && p.imgs.length) ? p.imgs : (p.img ? [p.img] : []);
+      imgs = imgs.map(normImg);
+      var nav = imgs.length > 1 ?
+        '<button class="rig__nav rig__nav--prev" type="button" data-dir="-1" aria-label="Imagem anterior"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>' +
+        '<button class="rig__nav rig__nav--next" type="button" data-dir="1" aria-label="Imagem seguinte"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>' +
+        '<span class="rig__count">1/' + imgs.length + '</span>' : '';
+      return '<article class="model" data-cat="' + esc(p.cat) + '" data-reveal>' +
+        '<div class="model__media">' +
+          '<img class="rig__img" src="' + esc(imgs[0] || '') + '" data-imgs="' + esc(imgs.join('|')) + '" data-i="0" alt="' + esc(p.name) + '" loading="lazy" />' +
+          '<span class="model__cat">' + esc(p.cat) + '</span>' + nav +
+        '</div>' +
+        '<div class="model__body">' +
+          '<div class="model__head"><h3 class="model__name">' + esc(p.name) + '</h3></div>' +
+          '<ul class="model__specs">' + specs + '</ul>' +
+          '<a class="btn btn--primary btn--sm model__cta" href="' + ask + '" target="_blank" rel="noopener">Pedir personalização</a>' +
+        '</div>' +
+      '</article>';
+    }
+    rgrid.addEventListener('click', function (e) {
+      var nav = e.target.closest('.rig__nav'); if (!nav) return;
+      var media = nav.closest('.model__media'); var img = media.querySelector('.rig__img');
+      var list = (img.getAttribute('data-imgs') || '').split('|').filter(Boolean);
+      if (list.length < 2) return;
+      var i = ((parseInt(img.getAttribute('data-i'), 10) || 0) + parseInt(nav.getAttribute('data-dir'), 10) + list.length) % list.length;
+      img.setAttribute('data-i', i); img.src = list[i];
+      var c = media.querySelector('.rig__count'); if (c) c.textContent = (i + 1) + '/' + list.length;
+    });
+    function renderRig() {
+      var list = activeRig === 'Todos' ? allRig : allRig.filter(function (p) { return p.cat === activeRig; });
+      rgrid.innerHTML = list.map(rigCard).join('');
+      observeReveals(rgrid);
+      collapsible(rgrid, doc.getElementById('more-rigidos'), '.model', 8, 4);
+    }
+    function buildRigFilters() {
+      if (!rfilters) return;
+      var cats = rigCats.filter(function (c) { return c === 'Todos' || allRig.some(function (p) { return p.cat === c; }); });
+      rfilters.innerHTML = cats.map(function (c) {
+        return '<button class="chip" role="tab" aria-pressed="' + (c === activeRig ? 'true' : 'false') + '" data-cat="' + esc(c) + '">' + esc(c) + '</button>';
+      }).join('');
+      rfilters.addEventListener('click', function (e) {
+        var b = e.target.closest('.chip'); if (!b) return;
+        activeRig = b.getAttribute('data-cat');
+        rfilters.querySelectorAll('.chip').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+        renderRig();
+      });
+    }
+    getJSON('data/rigidos.json').then(function (d) {
+      allRig = (d && d.products) || [];
+      if (d && d.cats && d.cats.length) rigCats = d.cats;
+      applyHead(doc.getElementById('rigidos'), d.head);
+      buildRigFilters();
+      renderRig();
+    }).catch(function () { rgrid.innerHTML = '<p class="muted">Não foi possível carregar os artigos rígidos.</p>'; });
   }
 
   /* ------------------------- GALERIA / PORTFÓLIO + LIGHTBOX ------------------------- */

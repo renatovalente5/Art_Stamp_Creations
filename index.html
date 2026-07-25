@@ -51,7 +51,7 @@
         <a href="#inicio">Início</a>
         <a href="#servicos">Serviços</a>
         <a href="#trabalhos">Trabalhos</a>
-        <a href="#como">Como funciona</a>
+        <a href="#rigidos">Artigos Rígidos</a>
         <a href="#modelos">Catálogo Têxtil</a>
         <a href="#contacto">Contacto</a>
       </nav>
@@ -78,7 +78,7 @@
           <li><a href="#inicio" data-menu-link><span>01</span> Início</a></li>
           <li><a href="#servicos" data-menu-link><span>02</span> Serviços</a></li>
           <li><a href="#trabalhos" data-menu-link><span>03</span> Trabalhos</a></li>
-          <li><a href="#como" data-menu-link><span>04</span> Como funciona</a></li>
+          <li><a href="#rigidos" data-menu-link><span>04</span> Artigos Rígidos</a></li>
           <li><a href="#modelos" data-menu-link><span>05</span> Catálogo Têxtil</a></li>
           <li><a href="#contacto" data-menu-link><span>06</span> Contacto</a></li>
         </ul>
@@ -192,6 +192,20 @@
       </div>
     </section>
 
+    <!-- ================= ARTIGOS RÍGIDOS ================= -->
+    <section id="rigidos" class="section">
+      <div class="container">
+        <div class="section-head section-head--center" data-reveal>
+          <span class="eyebrow">Artigos Rígidos</span>
+          <h2 class="section-title">Personalizamos em qualquer superfície</h2>
+          <p class="section-lead">Artigos rígidos para sublimação e personalização — canecas, garrafas, ímans, placas e muito mais.</p>
+        </div>
+        <div class="filters" id="rigidos-filters" role="tablist" aria-label="Filtrar por categoria"></div>
+        <div class="models__grid" id="rigidos-grid"><p class="muted">A carregar artigos…</p></div>
+        <div class="more-wrap"><button class="btn btn--outline more-btn" type="button" id="more-rigidos" hidden>Ver mais</button></div>
+      </div>
+    </section>
+
     <!-- ================= CATÁLOGO TÊXTIL (THCLOTHES) ================= -->
     <section id="modelos" class="section section--soft">
       <div class="container">
@@ -287,7 +301,7 @@
               </div>
               <div class="contact__row">
                 <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 22s7-5.6 7-12a7 7 0 10-14 0c0 6.4 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
-                <div><small>Onde estamos</small><b>Av. Abade Tagilde 1011<br>4815-429 Vizela</b></div>
+                <div><small>Onde estamos</small><b><span data-site="contacts.address_line1">Av. Abade Tagilde 1011</span><br><span data-site="contacts.address_line2">4815-429 Vizela</span></b></div>
               </div>
             </div>
             <div class="contact__map" id="map-box" data-embed="https://maps.google.com/maps?q=Av.%20Abade%20Tagilde%201011%2C%204815-429%20Vizela&amp;z=15&amp;hl=pt&amp;output=embed">
@@ -325,6 +339,7 @@
           <li><a href="#servicos">Serviços</a></li>
           <li><a href="#trabalhos">Trabalhos</a></li>
           <li><a href="#como">Como funciona</a></li>
+          <li><a href="#rigidos">Artigos Rígidos</a></li>
           <li><a href="#modelos">Catálogo Têxtil</a></li>
           <li><a href="#contacto">Contacto</a></li>
         </ul>
@@ -334,12 +349,12 @@
         <div class="footer__contact">
           <span class="frow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M4 5c0 8.3 6.7 15 15 15v-3.6l-4-1.2-1.6 1.6a12 12 0 01-5.2-5.2l1.6-1.6L8.6 5H5a1 1 0 00-1 1z"/></svg><span><a href="tel:+351932938467" data-site="contacts.phone" data-tel>932 938 467</a><br><small class="call-note">(Chamada para a rede móvel nacional)</small></span></span>
           <span class="frow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6" stroke-linecap="round"/></svg><a href="mailto:geralartstamp@gmail.com" data-site="contacts.email" data-mail>geralartstamp@gmail.com</a></span>
-          <span class="frow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-5.6 7-12a7 7 0 10-14 0c0 6.4 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Av. Abade Tagilde 1011<br>4815-429 Vizela</span></span>
+          <span class="frow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-5.6 7-12a7 7 0 10-14 0c0 6.4 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg><span><span data-site="contacts.address_line1">Av. Abade Tagilde 1011</span><br><span data-site="contacts.address_line2">4815-429 Vizela</span></span></span>
         </div>
       </div>
     </div>
     <div class="container footer__bar">
-      <p class="footer__legal">© <span data-year>2026</span> Art Stamp Creations · NIF 248790226</p>
+      <p class="footer__legal">© <span data-year>2026</span> Art Stamp Creations · NIF 248790226 · <a class="footer__admin" href="https://app.pagescms.org/" target="_blank" rel="noopener" title="Área de gestão do site">Gestão</a></p>
       <ul class="footer__links">
         <li><a href="legal/privacidade.html">Política de Privacidade</a></li>
         <li><a href="legal/termos.html">Termos e Condições</a></li>
