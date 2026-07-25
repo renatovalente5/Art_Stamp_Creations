@@ -1,6 +1,8 @@
 media:
   input: assets/img
-  output: /assets/img
+  # Sem barra inicial: o site vive numa subpasta (…/Art_Stamp_Creations/) e todos
+  # os dados usam caminhos relativos. "/assets/…" apontaria para a raiz do domínio.
+  output: assets/img
 
 content:
   # ---------------- GERAL / HERO / CONTACTOS / B2B / RODAPÉ ----------------
@@ -125,18 +127,19 @@ content:
             label: Categoria
             type: select
             options:
-              values: ["T-shirts", "Polos", "Sweats e hoodies", "Casacos e softshell", "Vestuário de trabalho"]
+              values: ["T-shirts", "Polos", "Sweats e hoodies", "Casacos e softshell", "Vestuário de trabalho", "Sacos e acessórios"]
           - { name: img, label: Imagem, type: image }
           - { name: tag, label: "Descrição curta", type: string }
           - { name: gsm, label: "Gramagem (ex.: 190 g/m²)", type: string }
           - { name: fabric, label: Tecido, type: string }
           - { name: gender, label: Género, type: string }
-          - { name: sizes, label: "Tamanhos (ex.: XS–5XL)", type: string }
+          - { name: sizes_label, label: "Etiqueta do 3.º campo (por defeito 'Tamanhos'; ex.: 'Capacidade')", type: string }
+          - { name: sizes, label: "Tamanhos / valor do 3.º campo (ex.: XS–5XL ou 8 L)", type: string }
           - { name: colors, label: "Nº de cores", type: number }
 
-  # ---------------- ARTIGOS RÍGIDOS ----------------
+  # ---------------- CATÁLOGO RÍGIDOS ----------------
   - name: rigidos
-    label: Artigos Rígidos
+    label: Catálogo Rígidos
     type: file
     path: data/rigidos.json
     fields:

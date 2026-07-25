@@ -18,6 +18,7 @@
     { "name": "Zagreb Work", "cat": "Vestuário de trabalho", "img": "assets/img/modelos/zagreb_work.jpg", "tag": "Softshell alta-visibilidade", "gsm": "300 g/m²", "fabric": "100% poliéster (3 camadas)", "gender": "Unissexo", "sizes": "S–XXL", "colors": 2 },
     { "name": "Alexandria", "cat": "Vestuário de trabalho", "img": "assets/img/modelos/alexandria.jpg", "tag": "Colete de segurança", "gsm": "120 g/m²", "fabric": "100% poliéster (malha rede)", "gender": "Unissexo", "sizes": "M/L · XL/XXL", "colors": 2 },
     { "name": "Pixel", "cat": "Vestuário de trabalho", "img": "assets/img/modelos/pixel.jpg", "tag": "Colete multifunções", "gsm": "200 g/m²", "fabric": "65% poliéster · 35% algodão (sarja)", "gender": "Unissexo", "sizes": "S–XXXL", "colors": 4 },
-    { "name": "Vaduz", "cat": "Vestuário de trabalho", "img": "assets/img/modelos/vaduz.jpg", "tag": "Avental 2 em 1", "gsm": "190 g/m²", "fabric": "80% poliéster · 20% algodão", "gender": "Unissexo", "sizes": "Único", "colors": 3 }
+    { "name": "Vaduz", "cat": "Vestuário de trabalho", "img": "assets/img/modelos/vaduz.jpg", "tag": "Avental 2 em 1", "gsm": "190 g/m²", "fabric": "80% poliéster · 20% algodão", "gender": "Unissexo", "sizes": "Único", "colors": 3 },
+    { "name": "Saco de alças", "cat": "Sacos e acessórios", "img": "assets/img/modelos/tote-bag.jpg", "tag": "Alças longas · costuras reforçadas", "gsm": "135 g/m²", "fabric": "Canvas · 100% algodão", "gender": "Unissexo", "sizes_label": "Capacidade", "sizes": "8 L", "colors": 4 }
   ]
 }

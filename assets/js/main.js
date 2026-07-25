@@ -59,6 +59,17 @@
     if (menu && mq.matches && menu.classList.contains('is-open')) closeMenu();
   });
 
+  /* ---------- Dropdown de catálogos (navbar) ---------- */
+  doc.querySelectorAll('[data-dd]').forEach(function (dd) {
+    var t = dd.querySelector('.nav__dd-toggle'); if (!t) return;
+    function close() { dd.classList.remove('is-open'); t.setAttribute('aria-expanded', 'false'); }
+    function open() { dd.classList.add('is-open'); t.setAttribute('aria-expanded', 'true'); }
+    t.addEventListener('click', function (e) { e.stopPropagation(); dd.classList.contains('is-open') ? close() : open(); });
+    dd.querySelectorAll('.nav__dd-menu a').forEach(function (a) { a.addEventListener('click', close); });
+    doc.addEventListener('click', function (e) { if (!dd.contains(e.target)) close(); });
+    doc.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+  });
+
   /* ---------- Scrollspy ---------- */
   var navLinks = Array.prototype.slice.call(doc.querySelectorAll('.nav__links a'));
   var sections = navLinks.map(function (a) { var hr = a.getAttribute('href') || ''; return hr.charAt(0) === '#' ? doc.querySelector(hr) : null; }).filter(Boolean);
@@ -68,6 +79,8 @@
         if (en.isIntersecting) {
           var id = en.target.id;
           navLinks.forEach(function (a) { a.classList.toggle('is-current', a.getAttribute('href') === '#' + id); });
+          var ddT = doc.querySelector('.nav__dd-toggle');
+          if (ddT) ddT.classList.toggle('is-current', id === 'rigidos' || id === 'modelos');
         }
       });
     }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });

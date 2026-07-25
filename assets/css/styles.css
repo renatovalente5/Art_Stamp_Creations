@@ -40,6 +40,17 @@
 
 .nav__actions{display:flex;align-items:center;gap:.6rem}
 
+/* Dropdown de catálogos (navbar) */
+.nav__dd{position:relative;display:inline-flex}
+.nav__dd-toggle{display:inline-flex;align-items:center;gap:.3em;font-family:var(--font-head);font-weight:500;font-size:1rem;color:var(--ink);padding:.5em .85em;border-radius:10px;background:none;border:0;cursor:pointer;transition:color var(--t-fast)}
+.nav__dd-toggle:hover,.nav__dd.is-open .nav__dd-toggle,.nav__dd-toggle.is-current{color:var(--blue)}
+.nav__dd-caret{width:.85em;height:.85em;transition:transform var(--t)}
+.nav__dd.is-open .nav__dd-caret{transform:rotate(180deg)}
+.nav__dd-menu{position:absolute;top:calc(100% + 6px);left:0;min-width:212px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 18px 44px -22px rgba(0,0,0,.45);padding:.4rem;display:flex;flex-direction:column;gap:.1rem;opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity var(--t),transform var(--t),visibility var(--t);z-index:120}
+.nav__dd:hover .nav__dd-menu,.nav__dd:focus-within .nav__dd-menu,.nav__dd.is-open .nav__dd-menu{opacity:1;visibility:visible;transform:none}
+.nav__dd-menu a{display:block;font-family:var(--font-head);font-weight:500;font-size:.98rem;color:var(--ink);padding:.6em .8em;border-radius:9px;white-space:nowrap;transition:background var(--t-fast),color var(--t-fast)}
+.nav__dd-menu a:hover{background:rgba(26,140,228,.09);color:var(--blue)}
+
 /* Hamburger */
 .nav__toggle{display:none;width:48px;height:48px;border-radius:12px;border:1.5px solid var(--line-2);align-items:center;justify-content:center;background:#fff;transition:border-color var(--t-fast)}
 .nav__toggle:hover{border-color:var(--ink)}
@@ -144,7 +155,7 @@ body.menu-open{overflow:hidden}
 .model__specs li{display:flex;justify-content:space-between;gap:.8rem;border-bottom:1px dashed var(--line);padding-bottom:.3rem}
 .model__specs span{color:var(--muted)}
 .model__specs b{color:var(--ink);text-align:right;font-weight:600}
-.model__cta{margin-top:auto;align-self:flex-start;white-space:normal;line-height:1.2;text-align:center}
+.model__cta{margin-top:auto;align-self:center;white-space:normal;line-height:1.2;text-align:center}
 /* Artigos rígidos: imagem de produto em formato quadrado + carrossel */
 #rigidos-grid .model__media{aspect-ratio:1/1}
 .rig__nav{position:absolute;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;border:0;background:rgba(255,255,255,.85);color:var(--ink);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.18);cursor:pointer;transition:background var(--t-fast),transform var(--t-fast);z-index:2}

@@ -17,7 +17,7 @@ O site é **totalmente editável**. No menu do lado esquerdo encontra:
 - **Geral (hero, contactos, empresas, rodapé)** — o topo da página (etiqueta, título, palavra destacada, texto, imagem, selo, botões e público-alvo); todos os **contactos** (telefone, email, Instagram, morada) que se atualizam em **todo o site**; os títulos da secção Contacto; a faixa **Empresas/B2B** (textos, lista, botão e imagem); a frase do **rodapé**; e o nome do titular (para as páginas legais).
 - **Serviços (O que fazemos)** — títulos da secção + a lista de serviços (ícone, título, descrição). Pode adicionar, remover e reordenar.
 - **Trabalhos (galeria)** — títulos da secção + as fotografias de trabalhos com legenda. Adicione e remova à vontade.
-- **Artigos Rígidos** — títulos da secção + as categorias (filtros) + os artigos (nome, categoria, **várias imagens** — a 1.ª é a principal — e as características: nome + valor, ex.: "Material / Cerâmica"). Pode adicionar e remover artigos, imagens e características.
+- **Catálogo Rígidos** — títulos da secção + as categorias (filtros) + os artigos (nome, categoria, **várias imagens** — a 1.ª é a principal — e as características: nome + valor, ex.: "Material / Cerâmica"). Pode adicionar e remover artigos, imagens e características.
 - **Catálogo Têxtil** — títulos da secção + os modelos de roupa (nome, categoria, imagem, gramagem, tecido, género, tamanhos, nº de cores).
 - **Como funciona (passos)** — títulos da secção + os passos (título e descrição). A numeração é automática.
 - **Perguntas frequentes** — títulos da secção + todas as perguntas e respostas. Adicione, edite ou remova.

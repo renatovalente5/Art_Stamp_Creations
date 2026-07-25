@@ -1,10 +1,10 @@
 {
   "head": {
-    "eyebrow": "Artigos Rígidos",
+    "eyebrow": "Catálogo Rígidos",
     "title": "Personalizamos em qualquer superfície",
     "lead": "Artigos rígidos para sublimação e personalização — canecas, garrafas, ímans, placas e muito mais. Escolhe o artigo, nós tratamos da tua imagem. Muitos mais formatos disponíveis a pedido."
   },
-  "cats": ["Todos", "Canecas e garrafas", "Ímans", "Placas e decoração"],
+  "cats": ["Todos", "Canecas e garrafas", "Ímans", "Placas e decoração", "Sacos e bolsas"],
   "products": [
     {
       "name": "Caneca",
@@ -173,6 +173,31 @@
         { "label": "Peças", "value": "70" },
         { "label": "Dimensões", "value": "29 × 21 cm" },
         { "label": "Material", "value": "Cartão" }
+      ]
+    },
+    {
+      "name": "Saco de Algodão",
+      "cat": "Sacos e bolsas",
+      "imgs": [
+        "assets/img/rigidos/saco-algodao.jpg"
+      ],
+      "specs": [
+        { "label": "Material", "value": "100% algodão" },
+        { "label": "Gramagem", "value": "140 g/m²" },
+        { "label": "Medidas", "value": "38 × 42 cm" },
+        { "label": "Alças", "value": "Longas" }
+      ]
+    },
+    {
+      "name": "Bolsa Lyrixon em Cortiça",
+      "cat": "Sacos e bolsas",
+      "imgs": [
+        "assets/img/rigidos/bolsa-cortica.jpg"
+      ],
+      "specs": [
+        { "label": "Material", "value": "Cortiça natural" },
+        { "label": "Resistência", "value": "Até 8 kg" },
+        { "label": "Asas", "value": "Reforçadas" }
       ]
     }
   ]

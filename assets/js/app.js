@@ -132,7 +132,7 @@
   var mgrid = doc.getElementById('models-grid');
   var mfilters = doc.getElementById('models-filters');
   var WA = 'https://wa.me/351932938467?text=';
-  var CAT_ORDER = ['Todos', 'T-shirts', 'Polos', 'Sweats e hoodies', 'Casacos e softshell', 'Vestuário de trabalho'];
+  var CAT_ORDER = ['Todos', 'T-shirts', 'Polos', 'Sweats e hoodies', 'Casacos e softshell', 'Vestuário de trabalho', 'Sacos e acessórios'];
   if (mgrid) {
     var allModels = [], activeCat = 'Todos';
     function modelCard(m) {
@@ -144,7 +144,7 @@
           '<ul class="model__specs">' +
             '<li><span>Gramagem</span><b>' + esc(m.gsm) + '</b></li>' +
             '<li><span>Tecido</span><b>' + esc(m.fabric) + '</b></li>' +
-            '<li><span>Tamanhos</span><b>' + esc(m.sizes) + '</b></li>' +
+            '<li><span>' + esc(m.sizes_label || 'Tamanhos') + '</span><b>' + esc(m.sizes) + '</b></li>' +
             '<li><span>Cores</span><b>' + esc(m.colors) + ' disponíveis</b></li>' +
           '</ul>' +
           '<a class="btn btn--primary btn--sm model__cta" href="' + ask + '" target="_blank" rel="noopener">Pedir personalização</a>' +
