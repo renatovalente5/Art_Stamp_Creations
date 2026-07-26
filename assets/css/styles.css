@@ -137,15 +137,17 @@ body.menu-open{overflow:hidden}
 .svc:nth-child(3n+2){rotate:1.3deg}
 .svc:nth-child(3n+3){rotate:-.7deg}
 .svc:hover{transform:translate(-2px,-2px);box-shadow:var(--sticker-lg);rotate:0deg}
-/* um em cada quatro sai cheio de cor, para dar ritmo sem cansar */
-.svc:nth-child(4n+2){background:var(--blue);color:#fff}
-.svc:nth-child(4n+4){background:var(--orange);color:var(--ink)}
+/* A cor é atribuída em JS pela posição real na grelha (ver pintarAutocolantes):
+   uma regra nth-child de período par alinhava com as colunas e no telemóvel
+   punha os coloridos todos do mesmo lado. */
+.svc--azul{background:var(--blue);color:#fff}
+.svc--laranja{background:var(--orange);color:var(--ink)}
 .svc__icon{display:inline-flex;align-items:center;justify-content:center;flex:none;
  width:36px;height:36px;border-radius:50%;
  background:var(--blue-050);color:var(--blue);border:1.5px solid rgba(22,22,15,.13)}
 .svc__icon svg{width:21px;height:21px}
-.svc:nth-child(4n+2) .svc__icon{background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.4)}
-.svc:nth-child(4n+4) .svc__icon{background:rgba(38,38,26,.13);color:var(--ink);border-color:rgba(22,22,15,.2)}
+.svc--azul .svc__icon{background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.4)}
+.svc--laranja .svc__icon{background:rgba(38,38,26,.13);color:var(--ink);border-color:rgba(22,22,15,.2)}
 /* o título é um h3: anular os tamanhos herdados do base.css */
 /* sem nowrap: um nome comprido escrito no backoffice passava dos limites do
    autocolante. flex:0 0 auto impede-os de encolher uns por causa dos outros. */

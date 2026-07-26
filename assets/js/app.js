@@ -64,6 +64,26 @@
     apply();
   }
 
+  /* Pinta os autocolantes pela posição REAL na grelha, em diagonal.
+     Com uma regra nth-child de período par, no telemóvel (2 por fila) os
+     coloridos caíam todos na mesma coluna e fazia-se uma risca. Somando a fila
+     ao índice dentro da fila, a cor anda na diagonal e nunca alinha, seja qual
+     for a largura do ecrã ou o nº de serviços. */
+  function pintarAutocolantes(grid) {
+    var visiveis = Array.prototype.slice.call(grid.querySelectorAll('.svc'))
+      .filter(function (el) { return el.style.display !== 'none'; });
+    var fila = -1, topoAnterior = null, indice = 0;
+    visiveis.forEach(function (el) {
+      var topo = el.offsetTop;
+      if (topo !== topoAnterior) { fila++; indice = 0; topoAnterior = topo; }
+      el.classList.remove('svc--azul', 'svc--laranja');
+      var n = (indice + fila) % 4;                 /* 0 e 2 ficam brancos */
+      if (n === 1) el.classList.add('svc--azul');
+      else if (n === 3) el.classList.add('svc--laranja');
+      indice++;
+    });
+  }
+
   /* Colapsar por FILAS reais (não por colunas): a folha de autocolantes tem
      larguras variáveis, por isso o corte é medido pelo offsetTop de cada item. */
   function colapsarPorFilas(grid, btn, filasDesktop, filasMobile) {
@@ -90,6 +110,7 @@
       itens.forEach(function (el, i) { el.style.display = i < n ? '' : 'none'; });
       btn.hidden = !aberto && n >= itens.length;
       btn.textContent = aberto ? 'Ver menos' : 'Ver mais';
+      pintarAutocolantes(grid);          /* as filas mudaram: recolorir */
     }
 
     btn.onclick = function () {
@@ -107,7 +128,7 @@
     var t;
     window.addEventListener('resize', function () {
       clearTimeout(t);
-      t = setTimeout(function () { if (!aberto) aplicar(); }, 200);
+      t = setTimeout(function () { if (aberto) pintarAutocolantes(grid); else aplicar(); }, 200);
     });
     aplicar();
   }
