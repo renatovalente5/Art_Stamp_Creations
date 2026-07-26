@@ -167,6 +167,36 @@ content:
               - { name: label, label: "Nome (ex.: Material)", type: string }
               - { name: value, label: "Valor (ex.: Cerâmica)", type: string }
 
+  # ---------------- CATÁLOGO LONAS E VINIL ----------------
+  - name: lonas
+    label: Catálogo Lonas e Vinil
+    type: file
+    path: data/lonas.json
+    fields:
+      - name: head
+        label: Títulos da secção
+        type: object
+        fields:
+          - { name: eyebrow, label: Etiqueta, type: string }
+          - { name: title, label: Título, type: string }
+          - { name: lead, label: Subtítulo / introdução, type: text }
+      - { name: cats, label: "Categorias / filtros (começa por 'Todos')", type: string, list: true }
+      - name: products
+        label: Artigos
+        type: object
+        list: true
+        fields:
+          - { name: name, label: Nome, type: string }
+          - { name: cat, label: "Categoria (igual a uma das de cima)", type: string }
+          - { name: imgs, label: "Imagens (a 1ª é a principal)", type: image, list: true }
+          - name: specs
+            label: Características
+            type: object
+            list: true
+            fields:
+              - { name: label, label: "Nome (ex.: Material)", type: string }
+              - { name: value, label: "Valor (ex.: Lona PVC)", type: string }
+
   # ---------------- COMO FUNCIONA ----------------
   - name: steps
     label: Como funciona (passos)

@@ -100,7 +100,7 @@
           var id = en.target.id;
           navLinks.forEach(function (a) { a.classList.toggle('is-current', a.getAttribute('href') === '#' + id); });
           var ddT = doc.querySelector('.nav__dd-toggle');
-          if (ddT) ddT.classList.toggle('is-current', id === 'rigidos' || id === 'modelos');
+          if (ddT) ddT.classList.toggle('is-current', id === 'rigidos' || id === 'modelos' || id === 'lonas');
         }
       });
     }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });

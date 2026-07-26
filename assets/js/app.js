@@ -242,14 +242,18 @@
     }).catch(function () { mgrid.innerHTML = '<p class="muted">Não foi possível carregar os modelos.</p>'; });
   }
 
-  /* ------------------------- ARTIGOS RÍGIDOS ------------------------- */
-  var rgrid = doc.getElementById('rigidos-grid');
-  var rfilters = doc.getElementById('rigidos-filters');
-  if (rgrid) {
-    var RWA = 'https://wa.me/351932938467?text=';
-    var allRig = [], rigCats = ['Todos'], activeRig = 'Todos';
-    function rigCard(p) {
-      var ask = RWA + encodeURIComponent('Olá! Tenho interesse no artigo ' + p.name + ' para personalizar. Podem dar-me um orçamento?');
+  /* ------------------------- CATÁLOGOS COM GALERIA (rígidos, lonas e vinil) -------------------------
+     Mesma grelha para os dois: filtros por categoria, várias imagens por artigo
+     com setas, e "Ver mais". Só muda o ficheiro de dados e os ids. */
+  function catalogoGaleria(cfg) {
+    var grid = doc.getElementById(cfg.grid);
+    if (!grid) return;
+    var filtros = doc.getElementById(cfg.filtros);
+    var CWA = 'https://wa.me/351932938467?text=';
+    var todos = [], cats = ['Todos'], ativa = 'Todos';
+
+    function cartao(p) {
+      var ask = CWA + encodeURIComponent('Olá! Tenho interesse ' + cfg.artigo + ' ' + p.name + '. Podem dar-me um orçamento?');
       var specs = (p.specs || []).map(function (s) { return '<li><span>' + esc(s.label) + '</span><b>' + esc(s.value) + '</b></li>'; }).join('');
       var imgs = (p.imgs && p.imgs.length) ? p.imgs : (p.img ? [p.img] : []);
       imgs = imgs.map(normImg);
@@ -265,11 +269,12 @@
         '<div class="model__body">' +
           '<div class="model__head"><h3 class="model__name">' + esc(p.name) + '</h3></div>' +
           '<ul class="model__specs">' + specs + '</ul>' +
-          '<a class="btn btn--primary btn--sm model__cta" href="' + ask + '" target="_blank" rel="noopener">Pedir personalização</a>' +
+          '<a class="btn btn--primary btn--sm model__cta" href="' + ask + '" target="_blank" rel="noopener">Pedir orçamento</a>' +
         '</div>' +
       '</article>';
     }
-    rgrid.addEventListener('click', function (e) {
+
+    grid.addEventListener('click', function (e) {
       var nav = e.target.closest('.rig__nav'); if (!nav) return;
       var media = nav.closest('.model__media'); var img = media.querySelector('.rig__img');
       var list = (img.getAttribute('data-imgs') || '').split('|').filter(Boolean);
@@ -278,33 +283,43 @@
       img.setAttribute('data-i', i); img.src = list[i];
       var c = media.querySelector('.rig__count'); if (c) c.textContent = (i + 1) + '/' + list.length;
     });
-    function renderRig() {
-      var list = activeRig === 'Todos' ? allRig : allRig.filter(function (p) { return p.cat === activeRig; });
-      rgrid.innerHTML = list.map(rigCard).join('');
-      observeReveals(rgrid);
-      collapsible(rgrid, doc.getElementById('more-rigidos'), '.model', 8, 4);
+
+    function render() {
+      var lista = ativa === 'Todos' ? todos : todos.filter(function (p) { return p.cat === ativa; });
+      grid.innerHTML = lista.map(cartao).join('');
+      observeReveals(grid);
+      collapsible(grid, doc.getElementById(cfg.mais), '.model', 8, 4);
     }
-    function buildRigFilters() {
-      if (!rfilters) return;
-      var cats = rigCats.filter(function (c) { return c === 'Todos' || allRig.some(function (p) { return p.cat === c; }); });
-      rfilters.innerHTML = cats.map(function (c) {
-        return '<button class="chip" role="tab" aria-pressed="' + (c === activeRig ? 'true' : 'false') + '" data-cat="' + esc(c) + '">' + esc(c) + '</button>';
+    function construirFiltros() {
+      if (!filtros) return;
+      var uteis = cats.filter(function (c) { return c === 'Todos' || todos.some(function (p) { return p.cat === c; }); });
+      filtros.innerHTML = uteis.map(function (c) {
+        return '<button class="chip" role="tab" aria-pressed="' + (c === ativa ? 'true' : 'false') + '" data-cat="' + esc(c) + '">' + esc(c) + '</button>';
       }).join('');
-      rfilters.addEventListener('click', function (e) {
+      filtros.addEventListener('click', function (e) {
         var b = e.target.closest('.chip'); if (!b) return;
-        activeRig = b.getAttribute('data-cat');
-        rfilters.querySelectorAll('.chip').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
-        renderRig();
+        ativa = b.getAttribute('data-cat');
+        filtros.querySelectorAll('.chip').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+        render();
       });
     }
-    getJSON('data/rigidos.json').then(function (d) {
-      allRig = (d && d.products) || [];
-      if (d && d.cats && d.cats.length) rigCats = d.cats;
-      applyHead(doc.getElementById('rigidos'), d.head);
-      buildRigFilters();
-      renderRig();
-    }).catch(function () { rgrid.innerHTML = '<p class="muted">Não foi possível carregar os artigos rígidos.</p>'; });
+    getJSON(cfg.json).then(function (d) {
+      todos = (d && d.products) || [];
+      if (d && d.cats && d.cats.length) cats = d.cats;
+      applyHead(doc.getElementById(cfg.seccao), d.head);
+      construirFiltros();
+      render();
+    }).catch(function () { grid.innerHTML = '<p class="muted">' + cfg.erro + '</p>'; });
   }
+
+  catalogoGaleria({
+    seccao: 'rigidos', grid: 'rigidos-grid', filtros: 'rigidos-filters', mais: 'more-rigidos',
+    json: 'data/rigidos.json', artigo: 'no artigo', erro: 'Não foi possível carregar os artigos rígidos.'
+  });
+  catalogoGaleria({
+    seccao: 'lonas', grid: 'lonas-grid', filtros: 'lonas-filters', mais: 'more-lonas',
+    json: 'data/lonas.json', artigo: 'em', erro: 'Não foi possível carregar as lonas e vinil.'
+  });
 
   /* ------------------------- GALERIA / PORTFÓLIO + LIGHTBOX ------------------------- */
   var ggrid = doc.getElementById('gallery-grid');

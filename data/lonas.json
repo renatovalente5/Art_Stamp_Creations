@@ -1,0 +1,86 @@
+{
+  "head": {
+    "eyebrow": "Catálogo Lonas e Vinil",
+    "title": "Grande formato que se vê de longe",
+    "lead": "Lonas, banners e vinil para montras, viaturas e paredes. Tudo à medida do teu espaço — dá-nos as medidas e a arte, tratamos do resto."
+  },
+  "cats": ["Todos", "Lonas e banners", "Vinil"],
+  "products": [
+    {
+      "name": "Lona Publicitária",
+      "cat": "Lonas e banners",
+      "imgs": ["assets/img/lonas/lona-publicitaria.jpg"],
+      "specs": [
+        { "label": "Material", "value": "Lona PVC" },
+        { "label": "Impressão", "value": "Full-colour" },
+        { "label": "Acabamento", "value": "Bainha e ilhós" },
+        { "label": "Medidas", "value": "À medida" }
+      ]
+    },
+    {
+      "name": "Roll-up",
+      "cat": "Lonas e banners",
+      "imgs": ["assets/img/lonas/rollup.jpg"],
+      "specs": [
+        { "label": "Estrutura", "value": "Alumínio" },
+        { "label": "Medidas", "value": "85 × 200 cm" },
+        { "label": "Inclui", "value": "Bolsa de transporte" },
+        { "label": "Montagem", "value": "Sem ferramentas" }
+      ]
+    },
+    {
+      "name": "Lona para Estaleiro",
+      "cat": "Lonas e banners",
+      "imgs": ["assets/img/lonas/lona-obra.jpg"],
+      "specs": [
+        { "label": "Material", "value": "Lona PVC" },
+        { "label": "Fixação", "value": "Ilhós e abraçadeiras" },
+        { "label": "Uso", "value": "Exterior" },
+        { "label": "Medidas", "value": "À medida" }
+      ]
+    },
+    {
+      "name": "Vinil de Montra",
+      "cat": "Vinil",
+      "imgs": [
+        "assets/img/trabalhos/vinil-montra-speranza.jpg",
+        "assets/img/trabalhos/vinil-montra-cafe.jpg"
+      ],
+      "specs": [
+        { "label": "Aplicação", "value": "Vidro" },
+        { "label": "Técnica", "value": "Corte ou impressão" },
+        { "label": "Medidas", "value": "À medida" }
+      ]
+    },
+    {
+      "name": "Vinil de Viatura",
+      "cat": "Vinil",
+      "imgs": ["assets/img/lonas/vinil-viatura.jpg"],
+      "specs": [
+        { "label": "Aplicação", "value": "Viaturas" },
+        { "label": "Cobertura", "value": "Parcial ou total" },
+        { "label": "Técnica", "value": "Corte ou impressão" }
+      ]
+    },
+    {
+      "name": "Vinil Microperfurado",
+      "cat": "Vinil",
+      "imgs": ["assets/img/lonas/vinil-microperfurado.jpg"],
+      "specs": [
+        { "label": "Aplicação", "value": "Vidros e montras" },
+        { "label": "Efeito", "value": "Vê-se de dentro para fora" },
+        { "label": "Impressão", "value": "Full-colour" }
+      ]
+    },
+    {
+      "name": "Vinil Decorativo de Parede",
+      "cat": "Vinil",
+      "imgs": ["assets/img/lonas/vinil-parede.jpg"],
+      "specs": [
+        { "label": "Aplicação", "value": "Paredes e interiores" },
+        { "label": "Técnica", "value": "Corte" },
+        { "label": "Medidas", "value": "À medida" }
+      ]
+    }
+  ]
+}

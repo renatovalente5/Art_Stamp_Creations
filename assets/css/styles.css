@@ -156,8 +156,9 @@ body.menu-open{overflow:hidden}
 .model__specs span{color:var(--muted)}
 .model__specs b{color:var(--ink);text-align:right;font-weight:600}
 .model__cta{margin-top:auto;align-self:center;white-space:normal;line-height:1.2;text-align:center}
-/* Artigos rígidos: imagem de produto em formato quadrado + carrossel */
-#rigidos-grid .model__media{aspect-ratio:1/1}
+/* Rígidos e lonas/vinil: imagem de produto quadrada + carrossel */
+#rigidos-grid .model__media,
+#lonas-grid .model__media{aspect-ratio:1/1}
 .rig__nav{position:absolute;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;border:0;background:rgba(255,255,255,.85);color:var(--ink);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.18);cursor:pointer;transition:background var(--t-fast),transform var(--t-fast);z-index:2}
 .rig__nav svg{width:18px;height:18px}
 .rig__nav--prev{left:8px}
