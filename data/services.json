@@ -5,15 +5,80 @@
     "lead": "Da peça única à produção para empresas e eventos. Escolhe o produto — nós tratamos da arte, da estampagem e do acabamento."
   },
   "services": [
-    { "icon": "tshirt", "title": "T-shirts personalizadas", "desc": "Estampagem de alta qualidade em t-shirts para todas as ocasiões — do exemplar único à produção para eventos." },
-    { "icon": "hoodie", "title": "Sweats e hoodies", "desc": "Sweatshirts e hoodies personalizados, confortáveis e resistentes, com a sua arte ou logótipo." },
-    { "icon": "polo", "title": "Polos", "desc": "Polos elegantes para equipas, empresas e uniformes, com estampagem ou vinil." },
-    { "icon": "cap", "title": "Bonés", "desc": "Bonés personalizados para marcas, eventos e equipas — o detalhe que completa o look." },
-    { "icon": "mug", "title": "Canecas", "desc": "Canecas com fotografias, frases ou logótipos. Presentes únicos que ficam para sempre." },
-    { "icon": "sticker", "title": "Autocolantes", "desc": "Autocolantes e etiquetas em qualquer forma e tamanho — para produtos, montras e brindes." },
-    { "icon": "dtf", "title": "DTF Têxtil", "desc": "Transfers DTF de cores vivas e grande durabilidade, ideais para designs detalhados em tecido." },
-    { "icon": "uv", "title": "DTF UV", "desc": "Autocolantes DTF UV com relevo e acabamento premium para copos, capas, brindes e superfícies rígidas." },
-    { "icon": "vinyl", "title": "Vinil", "desc": "Corte de vinil para montras, viaturas, paredes e decoração — impacto visual garantido." },
-    { "icon": "banner", "title": "Lonas e banners", "desc": "Lonas e banners de grande formato para eventos, campanhas e sinalética." }
+    {
+      "icon": "tshirt",
+      "title": "T-shirts personalizadas",
+      "desc": "Estampagem de alta qualidade em t-shirts para todas as ocasiões — do exemplar único à produção para eventos."
+    },
+    {
+      "icon": "hoodie",
+      "title": "Sweats e hoodies",
+      "desc": "Sweatshirts e hoodies personalizados, confortáveis e resistentes, com a sua arte ou logótipo."
+    },
+    {
+      "icon": "polo",
+      "title": "Polos",
+      "desc": "Polos elegantes para equipas, empresas e uniformes, com estampagem ou vinil."
+    },
+    {
+      "icon": "cap",
+      "title": "Bonés",
+      "desc": "Bonés personalizados para marcas, eventos e equipas — o detalhe que completa o look."
+    },
+    {
+      "icon": "mug",
+      "title": "Canecas",
+      "desc": "Canecas com fotografias, frases ou logótipos. Presentes únicos que ficam para sempre."
+    },
+    {
+      "icon": "sticker",
+      "title": "Autocolantes",
+      "desc": "Autocolantes e etiquetas em qualquer forma e tamanho — para produtos, montras e brindes."
+    },
+    {
+      "icon": "dtf",
+      "title": "DTF Têxtil",
+      "desc": "Transfers DTF de cores vivas e grande durabilidade, ideais para designs detalhados em tecido."
+    },
+    {
+      "icon": "uv",
+      "title": "DTF UV",
+      "desc": "Autocolantes DTF UV com relevo e acabamento premium para copos, capas, brindes e superfícies rígidas."
+    },
+    {
+      "icon": "vinyl",
+      "title": "Vinil",
+      "desc": "Corte de vinil para montras, viaturas, paredes e decoração — impacto visual garantido."
+    },
+    {
+      "icon": "banner",
+      "title": "Lonas e banners",
+      "desc": "Lonas e banners de grande formato para eventos, campanhas e sinalética."
+    },
+    {
+      "icon": "merch",
+      "title": "Merchandising e fardamento",
+      "desc": "Fardas, uniformes e brindes com a tua marca, para empresas, clubes e eventos."
+    },
+    {
+      "icon": "gift",
+      "title": "Brindes e artigos rígidos",
+      "desc": "Ímans, placas, puzzles, garrafas e outros artigos para sublimação."
+    },
+    {
+      "icon": "work",
+      "title": "Vestuário de trabalho",
+      "desc": "Coletes, softshell de alta visibilidade e aventais, com o teu logótipo."
+    },
+    {
+      "icon": "bag",
+      "title": "Sacos e bolsas",
+      "desc": "Sacos de algodão, totes e bolsas em cortiça personalizados à tua medida."
+    },
+    {
+      "icon": "phone",
+      "title": "Capas de telemóvel",
+      "desc": "Capas com fotografia, logótipo ou arte, em acabamento premium."
+    }
   ]
 }

@@ -79,9 +79,24 @@ content:
             label: Ícone
             type: select
             options:
-              values: [tshirt, hoodie, polo, cap, mug, sticker, dtf, uv, vinyl, banner]
-          - { name: title, label: Título, type: string }
-          - { name: desc, label: Descrição, type: text }
+              values:
+                - { value: tshirt,  label: "T-shirt" }
+                - { value: hoodie,  label: "Sweat / hoodie" }
+                - { value: polo,    label: "Polo" }
+                - { value: cap,     label: "Boné" }
+                - { value: mug,     label: "Caneca" }
+                - { value: sticker, label: "Autocolante" }
+                - { value: dtf,     label: "DTF têxtil (camadas)" }
+                - { value: uv,      label: "DTF UV (gota)" }
+                - { value: vinyl,   label: "Vinil (rolo)" }
+                - { value: banner,  label: "Lona / bandeira" }
+                - { value: merch,   label: "Merchandising (saco com estrela)" }
+                - { value: gift,    label: "Brinde (embrulho)" }
+                - { value: work,    label: "Vestuário de trabalho (colete)" }
+                - { value: bag,     label: "Saco / bolsa" }
+                - { value: phone,   label: "Capa de telemóvel" }
+          - { name: title, label: "Nome do serviço (é o que aparece no autocolante)", type: string }
+          - { name: desc, label: "Descrição — NÃO aparece no site, é usada só no catálogo em PDF", type: text }
 
   # ---------------- TRABALHOS / GALERIA ----------------
   - name: gallery

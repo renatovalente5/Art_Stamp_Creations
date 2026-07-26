@@ -64,6 +64,54 @@
     apply();
   }
 
+  /* Colapsar por FILAS reais (não por colunas): a folha de autocolantes tem
+     larguras variáveis, por isso o corte é medido pelo offsetTop de cada item. */
+  function colapsarPorFilas(grid, btn, filasDesktop, filasMobile) {
+    if (!grid || !btn) return;
+    var itens = Array.prototype.slice.call(grid.querySelectorAll('.svc'));
+    var aberto = false;
+
+    function corte() {
+      itens.forEach(function (el) { el.style.display = ''; });   /* medir com tudo visível */
+      var maxFilas = window.matchMedia('(max-width:600px)').matches ? filasMobile : filasDesktop;
+      var tops = [];
+      for (var i = 0; i < itens.length; i++) {
+        var t = itens[i].offsetTop;
+        if (tops.indexOf(t) === -1) {
+          if (tops.length === maxFilas) return i;                /* começou a fila a mais */
+          tops.push(t);
+        }
+      }
+      return itens.length;
+    }
+
+    function aplicar() {
+      var n = aberto ? itens.length : corte();
+      itens.forEach(function (el, i) { el.style.display = i < n ? '' : 'none'; });
+      btn.hidden = !aberto && n >= itens.length;
+      btn.textContent = aberto ? 'Ver menos' : 'Ver mais';
+    }
+
+    btn.onclick = function () {
+      var recolher = aberto;
+      var antes = recolher ? btn.getBoundingClientRect().top : 0;
+      aberto = !aberto;
+      aplicar();
+      if (aberto) observeReveals(grid);
+      if (recolher) {
+        var delta = btn.getBoundingClientRect().top - antes;
+        if (delta) scrollBySemAnimacao(delta);
+      }
+    };
+
+    var t;
+    window.addEventListener('resize', function () {
+      clearTimeout(t);
+      t = setTimeout(function () { if (!aberto) aplicar(); }, 200);
+    });
+    aplicar();
+  }
+
   /* O CSS tem scroll-behavior:smooth; aqui o ajuste tem de ser instantâneo,
      senão vê-se o conteúdo saltar e só depois a página deslizar. */
   function scrollBySemAnimacao(delta) {
@@ -171,7 +219,12 @@
     dtf: '<svg viewBox="0 0 24 24" ' + S + '><path d="m12 3 8 4-8 4-8-4Z"/><path d="m4 12 8 4 8-4"/><path d="m4 16 8 4 8-4"/></svg>',
     uv: '<svg viewBox="0 0 24 24" ' + S + '><path d="M12 3s5 5.4 5 9.2A5 5 0 0 1 7 12.2C7 8.4 12 3 12 3Z"/><path d="M9.6 12.4a2.4 2.4 0 0 0 4.8 0"/></svg>',
     vinyl: '<svg viewBox="0 0 24 24" ' + S + '><ellipse cx="12" cy="6.5" rx="8" ry="3"/><path d="M4 6.5v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/><circle cx="12" cy="6.5" r="1.3"/></svg>',
-    banner: '<svg viewBox="0 0 24 24" ' + S + '><path d="M6 3v18"/><path d="M6 4.5h13l-3 4 3 4H6"/></svg>'
+    banner: '<svg viewBox="0 0 24 24" ' + S + '><path d="M6 3v18"/><path d="M6 4.5h13l-3 4 3 4H6"/></svg>',
+    merch: '<svg viewBox="0 0 24 24" ' + S + '><path d="M4 8h16l-1.2 12H5.2Z"/><path d="M8.5 8V6a3.5 3.5 0 0 1 7 0v2"/><path d="m12 11.5 1 2 2.2.3-1.6 1.5.4 2.2-2-1-2 1 .4-2.2L8.8 13.8l2.2-.3Z"/></svg>',
+    gift: '<svg viewBox="0 0 24 24" ' + S + '><rect x="3.5" y="9" width="17" height="11.5" rx="1.6"/><path d="M2.5 9h19"/><path d="M12 9v11.5"/><path d="M12 9C9.8 9 8 8 8 6.4A2.4 2.4 0 0 1 12 5a2.4 2.4 0 0 1 4 1.4C16 8 14.2 9 12 9Z"/></svg>',
+    work: '<svg viewBox="0 0 24 24" ' + S + '><path d="M9 3.5 5 5.5v15h14v-15l-4-2"/><path d="m9 3.5 3 4 3-4"/><path d="M5 11h4M15 11h4"/><path d="M5 14.5h4M15 14.5h4"/></svg>',
+    bag: '<svg viewBox="0 0 24 24" ' + S + '><path d="M5 7.5h14l-1 13H6Z"/><path d="M9 7.5V6a3 3 0 0 1 6 0v1.5"/></svg>',
+    phone: '<svg viewBox="0 0 24 24" ' + S + '><rect x="6.5" y="2.5" width="11" height="19" rx="2.6"/><path d="M10.5 5.5h3"/></svg>'
   };
 
   /* ------------------------- SERVIÇOS ------------------------- */
@@ -181,14 +234,15 @@
       applyHead(doc.getElementById('servicos'), d.head);
       var items = (d && d.services) || [];
       sgrid.innerHTML = items.map(function (s) {
+        /* só ícone + nome — a descrição continua no JSON (o catálogo PDF usa-a) */
         return '<article class="svc" data-reveal>' +
           '<span class="svc__icon" aria-hidden="true">' + (ICONS[s.icon] || ICONS.tshirt) + '</span>' +
           '<h3 class="svc__title">' + esc(s.title) + '</h3>' +
-          '<p class="svc__desc">' + esc(s.desc) + '</p>' +
           '</article>';
       }).join('');
       observeReveals(sgrid);
-      collapsible(sgrid, doc.getElementById('more-services'), '.svc', 8, 4);
+      /* "Ver mais" a partir de 2 filas no computador e 3 no telemóvel */
+      colapsarPorFilas(sgrid, doc.getElementById('more-services'), 2, 3);
     }).catch(function () { sgrid.innerHTML = '<p class="muted">Não foi possível carregar os serviços.</p>'; });
   }
 

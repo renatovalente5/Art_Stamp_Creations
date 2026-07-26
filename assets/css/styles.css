@@ -120,22 +120,43 @@ body.menu-open{overflow:hidden}
 
 /* ---------------- SERVIÇOS ---------------- */
 .muted{color:var(--muted)}
-.services__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(232px,1fr));gap:1.1rem;margin-top:.5rem}
-.svc{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:1.5rem 1.4rem;box-shadow:var(--shadow-sm);transition:transform var(--t),box-shadow var(--t),border-color var(--t)}
-.svc:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:var(--line-2)}
-.svc__icon{display:inline-flex;align-items:center;justify-content:center;width:54px;height:54px;border-radius:15px;background:var(--blue-050);color:var(--blue);margin-bottom:1rem}
-.svc__icon svg{width:30px;height:30px}
-.svc:nth-child(3n+2) .svc__icon{background:#FDEEDD;color:var(--orange-600)}
-.svc:nth-child(3n+3) .svc__icon{background:#EAF4FD;color:var(--blue)}
-.svc__title{font-size:1.12rem}
-.svc__desc{margin-top:.5rem;color:var(--muted);font-size:.95rem}
+/* Folha de autocolantes: o negócio é estampagem, por isso cada serviço é um
+   autocolante — largura natural do texto, contorno e sombra sólida da casa, e
+   ligeiramente torto. Endireita-se ao passar o rato. Sem grelha fixa: o
+   flex-wrap centra-se e adapta-se sozinho a qualquer largura. */
+.services__grid{display:flex;flex-wrap:wrap;justify-content:center;
+ gap:.9rem .7rem;margin:1.4rem auto 0;max-width:62rem}
+.svc{display:inline-flex;align-items:center;gap:.5em;flex:0 0 auto;max-width:100%;
+ padding:.5em 1.1em .5em .5em;border-radius:var(--radius-pill);
+ background:#fff;color:var(--ink);
+ border:var(--stroke-w) solid var(--stroke);box-shadow:var(--sticker);
+ transition:transform var(--t),box-shadow var(--t),rotate var(--t)}
+/* a rotação usa a propriedade rotate (e não transform) para o :hover poder
+   deslocar o autocolante sem lhe anular o ângulo */
+.svc:nth-child(3n+1){rotate:-1.8deg}
+.svc:nth-child(3n+2){rotate:1.3deg}
+.svc:nth-child(3n+3){rotate:-.7deg}
+.svc:hover{transform:translate(-2px,-2px);box-shadow:var(--sticker-lg);rotate:0deg}
+/* um em cada quatro sai cheio de cor, para dar ritmo sem cansar */
+.svc:nth-child(4n+2){background:var(--blue);color:#fff}
+.svc:nth-child(4n+4){background:var(--orange);color:var(--ink)}
+.svc__icon{display:inline-flex;align-items:center;justify-content:center;flex:none;
+ width:36px;height:36px;border-radius:50%;
+ background:var(--blue-050);color:var(--blue);border:1.5px solid rgba(22,22,15,.13)}
+.svc__icon svg{width:21px;height:21px}
+.svc:nth-child(4n+2) .svc__icon{background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.4)}
+.svc:nth-child(4n+4) .svc__icon{background:rgba(38,38,26,.13);color:var(--ink);border-color:rgba(22,22,15,.2)}
+/* o título é um h3: anular os tamanhos herdados do base.css */
+/* sem nowrap: um nome comprido escrito no backoffice passava dos limites do
+   autocolante. flex:0 0 auto impede-os de encolher uns por causa dos outros. */
+.svc__title{font-family:var(--font-head);font-weight:600;font-size:1rem;line-height:1.15;
+ color:inherit;letter-spacing:0;min-width:0}
 @media (max-width:600px){
-  .services__grid{grid-template-columns:1fr 1fr;gap:.7rem}
-  .svc{padding:1.15rem 1rem}
-  .svc__icon{width:46px;height:46px;margin-bottom:.7rem}
-  .svc__icon svg{width:25px;height:25px}
-  .svc__title{font-size:1rem}
-  .svc__desc{font-size:.85rem}
+  .services__grid{gap:.65rem .5rem;margin-top:1.1rem}
+  .svc{padding:.42em .9em .42em .42em;gap:.42em}
+  .svc__icon{width:30px;height:30px}
+  .svc__icon svg{width:18px;height:18px}
+  .svc__title{font-size:.88rem}
 }
 
 /* ---------------- MODELOS BASE ---------------- */
