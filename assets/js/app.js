@@ -241,8 +241,9 @@
           '</article>';
       }).join('');
       observeReveals(sgrid);
-      /* "Ver mais" a partir de 2 filas no computador e 3 no telemóvel */
-      colapsarPorFilas(sgrid, doc.getElementById('more-services'), 2, 3);
+      /* "Ver mais" a partir de 2 filas no computador e 5 no telemóvel (no
+         telemóvel os autocolantes empilham, e 3 filas mostravam poucos) */
+      colapsarPorFilas(sgrid, doc.getElementById('more-services'), 2, 5);
     }).catch(function () { sgrid.innerHTML = '<p class="muted">Não foi possível carregar os serviços.</p>'; });
   }
 
