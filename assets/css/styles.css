@@ -280,6 +280,29 @@ body.menu-open{overflow:hidden}
 .cookie__btns{display:flex;gap:.6rem;flex:none}
 @media (max-width:520px){.cookie__btns{width:100%}.cookie__btns .btn{flex:1}}
 
+/* ---------------- BOTÃO FLUTUANTE DE WHATSAPP ---------------- */
+/* Herda o aspeto "sticker" de .btn/.btn--wa; aqui só a posição e a entrada.
+   A entrada usa a propriedade translate (e não transform) para não anular o
+   translate(-2px,-2px) do :hover de .btn. --fab-sobe é acertado pelo main.js
+   quando o banner de cookies está visível, para não ficarem sobrepostos. */
+.wa-fab{
+  position:fixed;right:var(--gutter);z-index:120;
+  width:64px;height:64px;padding:0;border-radius:50%;
+  bottom:calc(var(--gutter) + var(--fab-sobe, 0px));
+  opacity:0;visibility:hidden;translate:0 14px;
+  transition:opacity var(--t),translate var(--t),visibility var(--t),
+             bottom var(--t),transform var(--t),box-shadow var(--t);
+}
+.wa-fab svg{width:30px;height:30px}
+.wa-fab.is-on{opacity:1;visibility:visible;translate:0 0}
+/* fora do caminho quando o menu ou a lightbox estão abertos */
+body.menu-open .wa-fab{opacity:0;visibility:hidden;pointer-events:none}
+@media (max-width:600px){
+  .wa-fab{width:58px;height:58px}
+  .wa-fab svg{width:27px;height:27px}
+}
+@media (prefers-reduced-motion:reduce){.wa-fab{transition:opacity .01s}}
+
 /* ---------------- FOOTER ---------------- */
 .footer{position:relative;background:var(--grad-dark);color:#C9C9BE;padding-top:clamp(2.8rem,5vw,4.2rem)}
 .footer::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--blue),var(--orange))}

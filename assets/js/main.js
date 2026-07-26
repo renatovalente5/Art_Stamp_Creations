@@ -70,6 +70,26 @@
     doc.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
   });
 
+  /* ---------- Botão flutuante de WhatsApp ---------- */
+  (function () {
+    var fab = doc.querySelector('[data-wa-fab]');
+    if (!fab) return;
+    var banner = doc.getElementById('cookie-banner');
+    function atualizar() {
+      /* só depois de passar o destaque, para não competir com o botão do topo */
+      fab.classList.toggle('is-on', window.scrollY > window.innerHeight * 0.6);
+      /* sobe acima do banner de cookies enquanto ele estiver visível */
+      var h = (banner && !banner.hidden) ? banner.getBoundingClientRect().height : 0;
+      fab.style.setProperty('--fab-sobe', h ? h + 'px' : '0px');
+    }
+    atualizar();
+    window.addEventListener('scroll', atualizar, { passive: true });
+    window.addEventListener('resize', atualizar);
+    if (banner && 'MutationObserver' in window) {
+      new MutationObserver(atualizar).observe(banner, { attributes: true, attributeFilter: ['hidden'] });
+    }
+  })();
+
   /* ---------- Scrollspy ---------- */
   var navLinks = Array.prototype.slice.call(doc.querySelectorAll('.nav__links a'));
   var sections = navLinks.map(function (a) { var hr = a.getAttribute('href') || ''; return hr.charAt(0) === '#' ? doc.querySelector(hr) : null; }).filter(Boolean);
