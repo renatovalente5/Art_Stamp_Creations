@@ -50,4 +50,4 @@ O site é **totalmente editável**. No menu do lado esquerdo encontra:
 - Qualquer dúvida, contacte quem desenvolveu o site.
 
 ---
-**Site:** https://renatovalente5.github.io/Art_Stamp_Creations/
+**Site:** https://artstampcreations.pt/
