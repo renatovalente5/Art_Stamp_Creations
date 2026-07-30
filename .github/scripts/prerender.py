@@ -619,6 +619,23 @@ def main():
     resumo.append('contactos: %s' % (', '.join('%s×%d' % (k, v) for k, v in sorted(contas.items()))
                                      or 'já em dia (%d nós data-site)' % esperado))
 
+    # As páginas legais são estáticas — não têm app.js a corrigi-las em runtime.
+    # A identificação do titular (DL 7/2004) e o NAP estavam escritos à mão, e o
+    # campo "Nome do titular" existia no backoffice sem estar ligado a nada.
+    try:
+        dados_site = ler_json(os.path.join(RAIZ, 'data', 'site.json'), 'data/site.json')
+    except ValueError as e:
+        return travar(e)
+    for nome in ('privacidade', 'termos', 'cookies'):
+        alvo = os.path.join(RAIZ, 'legal', '%s.html' % nome)
+        if not os.path.exists(alvo):
+            continue
+        antes_txt = open(alvo, encoding='utf-8').read()
+        depois_txt, _ = aplicar_site(antes_txt, dados_site)
+        if depois_txt != antes_txt:
+            open(alvo, 'w', encoding='utf-8').write(depois_txt)
+            resumo.append('legal/%s.html: identificação actualizada' % nome)
+
     # etiquetas/títulos/subtítulos das 9 secções
     try:
         novo, n_heads = aplicar_cabecalhos(novo, RAIZ)

@@ -55,10 +55,14 @@ content:
         type: object
         list: true
         description: >-
-          Uma linha por bloco de horário. Ex.: linha 1 = Segunda a Sexta, 09:00–19:00;
-          linha 2 = Sábado, 09:00–13:00. Dias que não constem ficam como fechado.
-          Deixar vazio é melhor do que pôr um horário errado. Põe aqui o MESMO
-          horário que estiver no perfil de empresa do Google.
+          Só preencher se a loja tiver horário fixo. Uma linha por bloco: ex.
+          linha 1 = Segunda a Sexta, 09:00–19:00; linha 2 = Sábado, 09:00–13:00.
+          Dias que não constem ficam como fechado.
+          SE ABRIR POR MARCAÇÃO — quando o cliente vem levantar — deixar VAZIO,
+          e no perfil de empresa do Google escolher "Aberto sem horário principal".
+          Vazio é melhor do que um horário errado: o Google mostra-o a quem
+          pesquisa e uma porta fechada à hora anunciada gera avaliações negativas.
+          Se preencher, pôr o MESMO horário que estiver no perfil do Google.
         fields:
           - name: days
             label: Dias
