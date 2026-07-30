@@ -1,0 +1,61 @@
+name: Pré-render para os motores de busca
+
+# O site desenha as secções em JavaScript a partir de data/*.json. O index.html
+# guarda uma cópia estática desse resultado, para os rastreadores que não correm
+# JS verem o conteúdo todo. Sempre que o cliente edita conteúdo no backoffice,
+# essa cópia tem de ser regenerada — é isso que este workflow faz.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/**'
+      - 'assets/js/**'
+      - 'assets/css/**'
+      - '.github/scripts/prerender.py'
+  workflow_dispatch:        # permite correr à mão a partir do separador Actions
+
+# Se o cliente gravar várias edições seguidas no backoffice, só interessa a última
+concurrency:
+  group: prerender
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  prerender:
+    # O próprio commit deste workflow não pode voltar a disparar o workflow
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Instalar o Chrome
+        uses: browser-actions/setup-chrome@v1
+        id: chrome
+        with:
+          chrome-version: stable
+
+      - name: Gerar o HTML estático
+        env:
+          CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
+        run: python3 .github/scripts/prerender.py
+
+      - name: Carimbar a versão dos assets
+        run: python3 .github/scripts/versionar_assets.py
+
+      - name: Publicar se houve alterações
+        run: |
+          if git diff --quiet -- index.html legal/; then
+            echo "Nada a fazer — o HTML já estava em dia."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html legal/
+          git commit -m "Pré-render: atualiza o HTML estático a partir de data/*.json
+
+          Gerado automaticamente depois de uma edição no backoffice.
+          Sem este passo, os motores de busca continuariam a ver a versão anterior."
+          git push

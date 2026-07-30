@@ -8,7 +8,7 @@
   var doc = document;
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
   function normImg(p) { if (!p) return ''; if (/^https?:\/\//.test(p)) return p; return p.replace(/^\/+/, ''); }
-  function getJSON(url) { return fetch(url, { cache: 'no-cache' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }); }
+  function getJSON(url) { return fetch(url, { cache: 'default' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }); }
 
   /* Reveal para conteúdo injetado dinamicamente */
   var revIO = ('IntersectionObserver' in window) ? new IntersectionObserver(function (en, o) {
@@ -185,7 +185,16 @@
   getJSON('data/site.json').then(function (site) {
     function val(path) { return path.split('.').reduce(function (o, k) { return o && o[k]; }, site); }
     doc.querySelectorAll('[data-site]').forEach(function (el) { var v = val(el.getAttribute('data-site')); if (v != null && v !== '') el.textContent = v; });
-    doc.querySelectorAll('[data-site-src]').forEach(function (el) { var v = val(el.getAttribute('data-site-src')); if (v) el.setAttribute('src', normImg(v)); });
+    doc.querySelectorAll('[data-site-src]').forEach(function (el) {
+      var v = val(el.getAttribute('data-site-src'));
+      if (!v) return;
+      v = normImg(v);
+      /* Se o backoffice apontar para outra foto, o srcset (que descreve as
+         variantes da foto antiga) tem de sair, senão o browser preferia-o e
+         continuava a mostrar a imagem errada. */
+      if (el.hasAttribute('srcset') && el.getAttribute('src') !== v) el.removeAttribute('srcset');
+      el.setAttribute('src', v);
+    });
     var c = site.contacts || {};
     if (c.phone_intl) doc.querySelectorAll('[data-tel]').forEach(function (a) { a.setAttribute('href', 'tel:+' + c.phone_intl); });
     if (c.email) doc.querySelectorAll('[data-mail]').forEach(function (a) { a.setAttribute('href', 'mailto:' + c.email); });
@@ -265,7 +274,7 @@
       /* "Ver mais" a partir de 2 filas no computador e 5 no telemóvel (no
          telemóvel os autocolantes empilham, e 3 filas mostravam poucos) */
       colapsarPorFilas(sgrid, doc.getElementById('more-services'), 2, 5);
-    }).catch(function () { sgrid.innerHTML = '<p class="muted">Não foi possível carregar os serviços.</p>'; });
+    }).catch(function () { /* deixa o conteúdo pré-renderizado de pé */ });
   }
 
   /* ------------------------- MODELOS BASE (THCLOTHES) ------------------------- */
@@ -301,7 +310,7 @@
       if (!mfilters) return;
       var cats = CAT_ORDER.filter(function (c) { return c === 'Todos' || allModels.some(function (m) { return m.cat === c; }); });
       mfilters.innerHTML = cats.map(function (c) {
-        return '<button class="chip" role="tab" aria-pressed="' + (c === activeCat ? 'true' : 'false') + '" data-cat="' + esc(c) + '">' + esc(c) + '</button>';
+        return '<button class="chip" aria-pressed="' + (c === activeCat ? 'true' : 'false') + '" data-cat="' + esc(c) + '">' + esc(c) + '</button>';
       }).join('');
       mfilters.addEventListener('click', function (e) {
         var b = e.target.closest('.chip'); if (!b) return;
@@ -315,7 +324,7 @@
       applyHead(doc.getElementById('modelos'), d.head);
       buildModelFilters();
       renderModels();
-    }).catch(function () { mgrid.innerHTML = '<p class="muted">Não foi possível carregar os modelos.</p>'; });
+    }).catch(function () { /* deixa o conteúdo pré-renderizado de pé */ });
   }
 
   /* ------------------------- CATÁLOGOS COM GALERIA (rígidos, lonas e vinil) -------------------------
@@ -339,7 +348,7 @@
         '<span class="rig__count">1/' + imgs.length + '</span>' : '';
       return '<article class="model" data-cat="' + esc(p.cat) + '" data-reveal>' +
         '<div class="model__media">' +
-          '<img class="rig__img" src="' + esc(imgs[0] || '') + '" data-imgs="' + esc(imgs.join('|')) + '" data-i="0" alt="' + esc(p.name) + '" loading="lazy" />' +
+          '<img class="rig__img" src="' + esc(imgs[0] || '') + '" data-imgs="' + esc(imgs.join('|')) + '" data-i="0" alt="' + esc(p.name) + ' personalizado — Art Stamp Creations, Vizela' + (imgs.length > 1 ? ' (foto 1 de ' + imgs.length + ')' : '') + '" loading="lazy" />' +
           '<span class="model__cat">' + esc(p.cat) + '</span>' + nav +
         '</div>' +
         '<div class="model__body">' +
@@ -357,6 +366,8 @@
       if (list.length < 2) return;
       var i = ((parseInt(img.getAttribute('data-i'), 10) || 0) + parseInt(nav.getAttribute('data-dir'), 10) + list.length) % list.length;
       img.setAttribute('data-i', i); img.src = list[i];
+      /* o alt tem de acompanhar a foto, senão descreve a anterior */
+      img.alt = img.alt.replace(/\(foto \d+ de (\d+)\)/, '(foto ' + (i + 1) + ' de $1)');
       var c = media.querySelector('.rig__count'); if (c) c.textContent = (i + 1) + '/' + list.length;
     });
 
@@ -370,7 +381,7 @@
       if (!filtros) return;
       var uteis = cats.filter(function (c) { return c === 'Todos' || todos.some(function (p) { return p.cat === c; }); });
       filtros.innerHTML = uteis.map(function (c) {
-        return '<button class="chip" role="tab" aria-pressed="' + (c === ativa ? 'true' : 'false') + '" data-cat="' + esc(c) + '">' + esc(c) + '</button>';
+        return '<button class="chip" aria-pressed="' + (c === ativa ? 'true' : 'false') + '" data-cat="' + esc(c) + '">' + esc(c) + '</button>';
       }).join('');
       filtros.addEventListener('click', function (e) {
         var b = e.target.closest('.chip'); if (!b) return;
@@ -385,16 +396,16 @@
       applyHead(doc.getElementById(cfg.seccao), d.head);
       construirFiltros();
       render();
-    }).catch(function () { grid.innerHTML = '<p class="muted">' + cfg.erro + '</p>'; });
+    }).catch(function () { /* deixa o conteúdo pré-renderizado de pé */ });
   }
 
   catalogoGaleria({
     seccao: 'rigidos', grid: 'rigidos-grid', filtros: 'rigidos-filters', mais: 'more-rigidos',
-    json: 'data/rigidos.json', artigo: 'no artigo', erro: 'Não foi possível carregar os artigos rígidos.'
+    json: 'data/rigidos.json', artigo: 'no artigo'
   });
   catalogoGaleria({
     seccao: 'lonas', grid: 'lonas-grid', filtros: 'lonas-filters', mais: 'more-lonas',
-    json: 'data/lonas.json', artigo: 'em', erro: 'Não foi possível carregar as lonas e vinil.'
+    json: 'data/lonas.json', artigo: 'em'
   });
 
   /* ------------------------- GALERIA / PORTFÓLIO + LIGHTBOX ------------------------- */
@@ -409,7 +420,7 @@
         f.className = 'gitem';
         f.setAttribute('data-i', i);
         f.setAttribute('data-reveal', '');
-        f.innerHTML = '<img src="' + esc(normImg(it.img)) + '" alt="' + esc(it.cap || 'Trabalho Art Stamp') + '" loading="lazy" />' +
+        f.innerHTML = '<img src="' + esc(normImg(it.img)) + '" alt="' + esc(it.cap || 'Trabalho') + ' — trabalho da Art Stamp Creations' + '" loading="lazy" />' +
           '<figcaption>' + esc(it.cap || '') + '</figcaption>';
         return f;
       });
@@ -445,7 +456,7 @@
         clearTimeout(rz);
         rz = setTimeout(function () { masonry(ggrid, figs); }, 200);
       });
-    }).catch(function () { ggrid.innerHTML = '<p class="muted">Não foi possível carregar a galeria.</p>'; });
+    }).catch(function () { /* deixa o conteúdo pré-renderizado de pé */ });
 
     /* Lightbox */
     var lb = doc.getElementById('lightbox');
