@@ -88,6 +88,21 @@ PREPARAR = r"""
     await dorme(250);
   }
 
+  // A galeria é distribuída pelo masonry conforme as proporções das imagens JÁ
+  // carregadas nesse instante — uma corrida que dava colunas diferentes a cada
+  // execução. Aqui redistribuímos por índice, de forma determinística. O
+  // app.js volta a fazer o masonry a sério em runtime.
+  const galeria = document.getElementById('gallery-grid');
+  if (galeria) {
+    const colunas = [...galeria.querySelectorAll('.gallery__col')];
+    const figuras = [...galeria.querySelectorAll('.gitem')]
+      .sort((a, b) => (+a.dataset.i) - (+b.dataset.i));
+    if (colunas.length && figuras.length) {
+      colunas.forEach(c => { c.innerHTML = ''; });
+      figuras.forEach((f, i) => colunas[i %% colunas.length].appendChild(f));
+    }
+  }
+
   // limpar estado de runtime que não faz sentido no HTML servido
   document.querySelectorAll('[style*="display"]').forEach(el => {
     if (el.style.display === 'none') el.style.removeProperty('display');
@@ -212,6 +227,12 @@ def main():
     chrome = None
     try:
         chrome = Chrome(porta=porta_livre())
+        # Janela fixa: a cor dos autocolantes, o nº de colunas da galeria e o
+        # corte do "Ver mais" dependem todos da largura. Sem isto, a saída
+        # mudava entre a minha máquina e a do GitHub, gerando commits de ruído
+        # a cada execução.
+        chrome.cmd('Emulation.setDeviceMetricsOverride', width=1280, height=900,
+                   deviceScaleFactor=1, mobile=False)
         chrome.abrir('http://127.0.0.1:%d/' % porta, espera=2.5)
         import json as _json
         bruto = chrome.js(PREPARAR)
