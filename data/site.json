@@ -9,7 +9,12 @@
     "badge": "✦ Produtos únicos",
     "cta_primary": "Pedir orçamento",
     "cta_secondary": "Ver portfólio",
-    "audience": ["Particulares", "Empresas", "Eventos", "Marcas"]
+    "audience": [
+      "Particulares",
+      "Empresas",
+      "Eventos",
+      "Marcas"
+    ]
   },
   "contacts": {
     "phone": "932 938 467",
@@ -24,13 +29,32 @@
     "eyebrow": "Contacto",
     "title": "Vamos dar vida à tua ideia?",
     "lead": "Pede o teu orçamento sem compromisso. Respondemos rápido, por WhatsApp.",
-    "form_options": ["T-shirts", "Sweats e hoodies", "Polos", "Bonés", "Canecas", "Autocolantes", "DTF Têxtil / UV", "Vinil", "Lonas e banners", "Artigos rígidos", "Merchandising / empresa", "Outro"]
+    "form_options": [
+      "T-shirts",
+      "Sweats e hoodies",
+      "Polos",
+      "Bonés",
+      "Canecas",
+      "Autocolantes",
+      "DTF Têxtil / UV",
+      "Vinil",
+      "Lonas e banners",
+      "Artigos rígidos",
+      "Merchandising / empresa",
+      "Outro"
+    ]
   },
   "b2b": {
     "eyebrow": "Empresas · Eventos · Marcas",
     "title": "Merchandising e fardamento que representam a tua marca",
     "lead": "Equipa a tua empresa, cria brindes memoráveis ou veste o teu evento. Tratamos de tudo, do design à produção.",
-    "list": ["Fardamento e uniformes", "Merchandising", "Brindes personalizados", "Materiais para eventos", "Vinil, lonas e banners"],
+    "list": [
+      "Fardas e uniformes",
+      "Merchandising",
+      "Brindes personalizados",
+      "Materiais para eventos",
+      "Vinil, lonas e banners"
+    ],
     "cta_label": "Falar sobre o meu projeto",
     "image": "assets/img/trabalhos/merchandising.jpg"
   },
