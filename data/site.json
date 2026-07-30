@@ -1,6 +1,6 @@
 {
   "hero": {
-    "eyebrow": "Art Stamp Creations",
+    "eyebrow": "ArtStampCreations",
     "title": "Damos vida às tuas",
     "highlight": "ideias",
     "title_end": ".",
@@ -23,8 +23,11 @@
     "instagram_url": "https://www.instagram.com/artstampcreationpersonalizados",
     "instagram_handle": "@artstampcreationpersonalizados",
     "address_line1": "Av. Abade Tagilde 1011",
-    "address_line2": "4815-429 Vizela"
+    "address_line2": "4815-429 Vizela",
+    "maps_url": "https://maps.app.goo.gl/Ldxvx7jcarjanmXb6",
+    "facebook_url": ""
   },
+  "hours": [],
   "contacto": {
     "eyebrow": "Contacto",
     "title": "Vamos dar vida à tua ideia?",

@@ -35,7 +35,47 @@ content:
           - { name: instagram_url, label: Link do Instagram, type: string }
           - { name: instagram_handle, label: "Nome do Instagram (ex.: @artstamp...)", type: string }
           - { name: address_line1, label: "Morada (linha 1)", type: string }
-          - { name: address_line2, label: "Morada (linha 2)", type: string }
+          - name: address_line2
+            label: "Morada (linha 2) — código postal e localidade"
+            type: string
+            description: >-
+              Tem de ser código postal seguido da localidade, ex.: 4815-429 Vizela.
+              É daqui que sai a morada que o Google lê; noutro formato a publicação falha.
+          - name: maps_url
+            label: "Link do Google Maps da loja"
+            type: string
+            description: >-
+              No perfil de empresa do Google, botão Partilhar, copiar o link
+              (fica algo como https://maps.app.goo.gl/...). Liga o site ao perfil.
+          - name: facebook_url
+            label: "Link do Facebook (se existir)"
+            type: string
+      - name: hours
+        label: "Horário de funcionamento (não aparece no site — vai para o Google)"
+        type: object
+        list: true
+        description: >-
+          Uma linha por bloco de horário. Ex.: linha 1 = Segunda a Sexta, 09:00–19:00;
+          linha 2 = Sábado, 09:00–13:00. Dias que não constem ficam como fechado.
+          Deixar vazio é melhor do que pôr um horário errado. Põe aqui o MESMO
+          horário que estiver no perfil de empresa do Google.
+        fields:
+          - name: days
+            label: Dias
+            type: select
+            options:
+              multiple: true
+              values:
+                - { value: Monday,    label: Segunda }
+                - { value: Tuesday,   label: Terça }
+                - { value: Wednesday, label: Quarta }
+                - { value: Thursday,  label: Quinta }
+                - { value: Friday,    label: Sexta }
+                - { value: Saturday,  label: Sábado }
+                - { value: Sunday,    label: Domingo }
+          - { name: opens, label: "Abre (24h, ex.: 09:00)", type: string }
+          - { name: closes, label: "Fecha (24h, ex.: 19:00)", type: string }
+
       - name: contacto
         label: Secção Contacto (títulos + formulário)
         type: object
@@ -77,26 +117,20 @@ content:
         fields:
           - name: icon
             label: Ícone
-            type: select
-            options:
-              values:
-                - { value: tshirt,  label: "T-shirt" }
-                - { value: hoodie,  label: "Sweat / hoodie" }
-                - { value: polo,    label: "Polo" }
-                - { value: cap,     label: "Boné" }
-                - { value: mug,     label: "Caneca" }
-                - { value: sticker, label: "Autocolante" }
-                - { value: dtf,     label: "DTF têxtil (camadas)" }
-                - { value: uv,      label: "DTF UV (gota)" }
-                - { value: vinyl,   label: "Vinil (rolo)" }
-                - { value: banner,  label: "Lona / bandeira" }
-                - { value: merch,   label: "Merchandising (saco com estrela)" }
-                - { value: gift,    label: "Brinde (embrulho)" }
-                - { value: work,    label: "Vestuário de trabalho (colete)" }
-                - { value: bag,     label: "Saco / bolsa" }
-                - { value: phone,   label: "Capa de telemóvel" }
+            type: string
+            default: generico
+            description: >-
+              Escreve o nome do ícone. Já existem estes desenhos:
+              tshirt (t-shirt), hoodie (sweat), polo, cap (boné), mug (caneca),
+              sticker (autocolante), dtf (DTF têxtil), uv (DTF UV), vinyl (vinil),
+              banner (lona), merch (merchandising), gift (brinde),
+              work (vestuário de trabalho), bag (saco), phone (capa de telemóvel),
+              generico (estrela — serve para tudo).
+              Podes escrever um nome novo à vontade: enquanto não existir o desenho
+              desse nome, o site mostra a estrela do "generico". Pede-me o desenho
+              novo e eu acrescento-o com o nome que escolheste.
           - { name: title, label: "Nome do serviço (é o que aparece no autocolante)", type: string }
-          - { name: desc, label: "Descrição — NÃO aparece no site, é usada só no catálogo em PDF", type: text }
+          - { name: desc, label: "Descrição — não aparece no site, mas é usada no catálogo em PDF e nos dados que o Google lê (escreve como se fosse para o cliente ler)", type: text }
 
   # ---------------- TRABALHOS / GALERIA ----------------
   - name: gallery

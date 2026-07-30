@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://artstampcreations.pt/sitemap.xml
+Sitemap: https://artstampcreations.pt/sitemap-imagens.xml

@@ -1,4 +1,4 @@
-# Guia do Backoffice — Art Stamp Creations
+# Guia do Backoffice — ArtStampCreations
 
 Este site foi feito para **poder ser gerido por si, sem programação**. Pode alterar textos, imagens, serviços, modelos e a galeria de trabalhos através de um painel simples e gratuito chamado **Pages CMS**.
 
@@ -15,7 +15,11 @@ Este site foi feito para **poder ser gerido por si, sem programação**. Pode al
 O site é **totalmente editável**. No menu do lado esquerdo encontra:
 
 - **Geral (hero, contactos, empresas, rodapé)** — o topo da página (etiqueta, título, palavra destacada, texto, imagem, selo, botões e público-alvo); todos os **contactos** (telefone, email, Instagram, morada) que se atualizam em **todo o site**; os títulos da secção Contacto; a faixa **Empresas/B2B** (textos, lista, botão e imagem); a frase do **rodapé**; e o nome do titular (para as páginas legais).
-- **Serviços (O que fazemos)** — títulos da secção + a lista de serviços. Pode adicionar, remover e reordenar à vontade. Cada serviço tem um **ícone** (escolhido de uma lista), um **nome** — é o que aparece no autocolante do site — e uma **descrição**, que **não aparece no site**: serve apenas para o catálogo em PDF. Os serviços aparecem pela ordem em que estão na lista; os primeiros são os que se veem sem carregar em "Ver mais".
+  - A **morada (linha 2)** tem de ser sempre *código postal e depois a localidade* — por exemplo `4815-429 Vizela`. É desta linha que sai a morada que o Google lê. Noutro formato, a publicação para com um aviso em vez de publicar uma morada errada.
+  - **Link do Google Maps da loja** — no perfil de empresa do Google, botão *Partilhar*, copiar o link. É o que diz ao Google que o site e o perfil são a mesma empresa.
+- **Horário de funcionamento** — não aparece no site; vai para o Google. Uma linha por bloco: por exemplo, uma linha com Segunda a Sexta e 09:00–19:00, outra com Sábado e 09:00–13:00. Os dias que não estiverem em nenhuma linha ficam como fechado. As horas têm de ser no formato 24 horas com dois pontos (`09:00`, não `9h`). **Ponha aqui o mesmo horário que tem no perfil de empresa do Google** — se os dois disserem coisas diferentes, o Google desconfia dos dois.
+- **Serviços (O que fazemos)** — títulos da secção + a lista de serviços. Pode adicionar, remover e reordenar à vontade. Cada serviço tem um **ícone**, um **nome** — é o que aparece no autocolante do site — e uma **descrição**, que não aparece no site mas é usada no catálogo em PDF e nos dados que o Google lê (escreva-a como se fosse para o cliente ler). Os serviços aparecem pela ordem em que estão na lista; os primeiros são os que se veem sem carregar em "Ver mais".
+  - O campo do **ícone** é texto livre. Os desenhos que já existem são: `tshirt`, `hoodie`, `polo`, `cap`, `mug`, `sticker`, `dtf`, `uv`, `vinyl`, `banner`, `merch`, `gift`, `work`, `bag`, `phone` e `generico` (uma estrela, que serve para tudo). Pode escrever um nome novo à vontade — enquanto não existir o desenho desse nome, o site mostra a estrela do `generico`. Peça-me o desenho e eu acrescento-o com o nome que escolheu.
 - **Trabalhos (galeria)** — títulos da secção + as fotografias de trabalhos com legenda. Adicione e remova à vontade.
 - **Catálogo Rígidos** — títulos da secção + as categorias (filtros) + os artigos (nome, categoria, **várias imagens** — a 1.ª é a principal — e as características: nome + valor, ex.: "Material / Cerâmica"). Pode adicionar e remover artigos, imagens e características.
 - **Catálogo Têxtil** — títulos da secção + os modelos de roupa (nome, categoria, imagem, gramagem, tecido, género, tamanhos, nº de cores).

@@ -1,6 +1,6 @@
-# Art Stamp Creations — Website
+# ArtStampCreations — Website
 
-Site institucional (montra + pedido de orçamento) da **Art Stamp Creations**, personalização e estampagem (t-shirts, sweats, polos, bonés, canecas, autocolantes, DTF têxtil/UV, vinil, lonas e banners).
+Site institucional (montra + pedido de orçamento) da **ArtStampCreations**, personalização e estampagem (t-shirts, sweats, polos, bonés, canecas, autocolantes, DTF têxtil/UV, vinil, lonas e banners).
 
 - **Stack:** site estático (HTML/CSS/JS), sem framework. Alojado em **GitHub Pages**.
 - **Backoffice:** Pages CMS — o cliente edita textos, imagens, serviços, modelos e galeria sem tocar em código. Ver `GUIA-BACKOFFICE.md`.

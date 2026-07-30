@@ -10,6 +10,58 @@
   function normImg(p) { if (!p) return ''; if (/^https?:\/\//.test(p)) return p; return p.replace(/^\/+/, ''); }
   function getJSON(url) { return fetch(url, { cache: 'default' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }); }
 
+  /* Dimensões reais de cada ficheiro de imagem, geradas no build por
+     .github/scripts/dimensoes.py. Servem para emitir width/height nos <img>: sem
+     elas o browser não reserva espaço, as fotos da galeria colapsam todas dentro
+     do primeiro ecrã e o loading="lazy" deixa de adiar nada (4,2 MB medidos numa
+     primeira carga a 1280px). Se o ficheiro faltar, nada rebenta — volta-se ao
+     comportamento antigo. */
+  var DIMS = {};
+  var dimsProntas = getJSON('data/_dimensoes.json')
+    .then(function (d) { DIMS = d || {}; })
+    .catch(function () { /* sem dimensões: o masonry volta a estimar */ });
+  function dimDe(src) { return DIMS[String(src).replace(/^\/+/, '').split('?')[0]] || null; }
+  function attrsDim(src) {
+    var d = dimDe(src);
+    return d ? ' width="' + d[0] + '" height="' + d[1] + '"' : '';
+  }
+
+  /* Variantes WebP pequenas, geradas no build por .github/scripts/webp.py.
+     Só se anunciam as que EXISTEM de facto — e sabemos quais existem porque o
+     _dimensoes.json lista todos os ficheiros de imagem do repositório. Assim, se
+     o cliente puser uma foto nova no backoffice antes de a Action correr, o site
+     serve o JPEG original em vez de apontar para um WebP que ainda não existe. */
+  function srcsetWebp(src) {
+    var limpo = String(src).replace(/^\/+/, '').split('?')[0];
+    var m = limpo.match(/^(.*)\/([^/]+)\.(jpe?g|png)$/i);
+    if (!m) return '';
+    /* Inclui a variante à largura do original. É o tecto de resolução: com
+       descritores `w`, o atributo src deixa de ser candidato, portanto sem ela
+       nenhum ecrã chegava à nitidez do ficheiro original. Um telemóvel grande a
+       DPR 3 pede ~1050 px de imagem — mais do que 760. */
+    var orig = dimDe(limpo);
+    var larguras = [480, 760];
+    if (orig && larguras.indexOf(orig[0]) === -1) larguras.push(orig[0]);
+    larguras.sort(function (a, b) { return a - b; });
+    var cands = larguras.map(function (w) {
+      var v = m[1] + '/webp/' + m[2] + '-' + w + '.webp';
+      return DIMS[v] ? v + ' ' + w + 'w' : null;
+    }).filter(Boolean);
+    return cands.length ? cands.join(', ') : '';
+  }
+
+  /* Larguras da coluna da galeria, MEDIDAS no browser de 20 em 20 px entre 320 e
+     1920 (o masonry decide as colunas em galleryCols, não há aqui nada de
+     redondo). Pior caso de cada regime, arredondado para cima:
+        até  375px  1 coluna   76,1vw
+        376–790px   2 colunas  45,1vw   <- eu tinha escrito 30vw: 33% a menos,
+        791–1050px  3 colunas  29,8vw      o browser escolhia a variante abaixo
+        acima       4 colunas  22,4vw      e a foto saía esticada
+     Declarar a menos custa nitidez; a mais custa bytes. Por isso vai o pior caso
+     de cada faixa, e não uma média. */
+  var SIZES_GALERIA = '(max-width:375px) 77vw, (max-width:790px) 46vw, '
+    + '(max-width:1050px) 30vw, 23vw';
+
   /* Reveal para conteúdo injetado dinamicamente */
   var revIO = ('IntersectionObserver' in window) ? new IntersectionObserver(function (en, o) {
     en.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); o.unobserve(e.target); } });
@@ -64,23 +116,74 @@
     apply();
   }
 
-  /* Pinta os autocolantes pela posição REAL na grelha, em diagonal.
-     Com uma regra nth-child de período par, no telemóvel (2 por fila) os
-     coloridos caíam todos na mesma coluna e fazia-se uma risca. Somando a fila
-     ao índice dentro da fila, a cor anda na diagonal e nunca alinha, seja qual
-     for a largura do ecrã ou o nº de serviços. */
+  /* Pinta os autocolantes na sequência de leitura — branco, azul, branco,
+     laranja — e só desvia um item quando ele fecharia uma coluna de cor
+     repetida. Assim a folha lê-se como um padrão sem fazer riscas verticais.
+
+     Porquê as duas coisas ao mesmo tempo: a sequência pura (i % 4) alinha com
+     filas de 4 e a 768px empilhava 3 azuis na mesma coluna; a diagonal pura
+     ((indice+fila)%4) não empilhava nada mas quebrava a sequência ao mudar de
+     fila — era o que punha "Capas de telemóvel" a laranja quando a leitura
+     pedia branco.
+
+     Não é possível ter as duas coisas perfeitas em todas as larguras: com filas
+     de 4, um período de 4 põe sempre a mesma cor na mesma coluna, logo algo tem
+     de ceder. Medido nas 22 larguras de 360 a 1920px, isto dá sequência exacta
+     em todas as larguras de computador e nenhuma coluna com 3 acentos. */
+  var PALETA = [null, 'svc--azul', null, 'svc--laranja'];   /* null = branco */
+
   function pintarAutocolantes(grid) {
     var visiveis = Array.prototype.slice.call(grid.querySelectorAll('.svc'))
       .filter(function (el) { return el.style.display !== 'none'; });
-    var fila = -1, topoAnterior = null, indice = 0;
-    visiveis.forEach(function (el) {
-      var topo = el.offsetTop;
-      if (topo !== topoAnterior) { fila++; indice = 0; topoAnterior = topo; }
-      el.classList.remove('svc--azul', 'svc--laranja');
-      var n = (indice + fila) % 4;                 /* 0 e 2 ficam brancos */
-      if (n === 1) el.classList.add('svc--azul');
-      else if (n === 3) el.classList.add('svc--laranja');
-      indice++;
+
+    /* agrupar por fila real: as pastilhas têm larguras diferentes, por isso a
+       fila mede-se pelo offsetTop e não por um nº fixo de colunas */
+    var filas = [], topoAnterior = null;
+    visiveis.forEach(function (el, i) {
+      if (el.offsetTop !== topoAnterior) { filas.push([]); topoAnterior = el.offsetTop; }
+      filas[filas.length - 1].push({
+        el: el, n: i % 4,
+        esq: el.offsetLeft, dir: el.offsetLeft + el.offsetWidth
+      });
+    });
+
+    /* dois itens estão "um sobre o outro" se se cruzarem em mais de 40% do mais
+       estreito — abaixo disso a vizinhança não se lê como coluna */
+    function sobrepoe(a, b) {
+      var cruz = Math.min(a.dir, b.dir) - Math.max(a.esq, b.esq);
+      var menor = Math.min(a.dir - a.esq, b.dir - b.esq);
+      return menor > 0 && cruz / menor > 0.4;
+    }
+
+    /* Quantas iguais se toleram numa coluna antes de se ler como risca. O
+       branco é a cor base da pastilha e não salta à vista, por isso aguenta
+       mais; o azul e o laranja são acentos e três seguidos fazem risca. Quanto
+       mais alto o limite, menos desvios à sequência de leitura. */
+    function limite(n) { return PALETA[n] ? 2 : 3; }
+
+    function corridaAcima(it, anterior) {
+      var maior = 0;
+      anterior.forEach(function (cima) {
+        if (sobrepoe(it, cima) && PALETA[cima.n] === PALETA[it.n] && cima.corrida > maior) {
+          maior = cima.corrida;
+        }
+      });
+      return maior;
+    }
+
+    filas.forEach(function (fila, f) {
+      var anterior = f > 0 ? filas[f - 1] : [];
+      fila.forEach(function (it) {
+        /* avança na paleta até deixar de fechar uma corrida grande demais (3
+           passos bastam para percorrer as cores todas) */
+        for (var passo = 0; passo < 3; passo++) {
+          if (corridaAcima(it, anterior) < limite(it.n)) break;
+          it.n = (it.n + 1) % 4;
+        }
+        it.corrida = corridaAcima(it, anterior) + 1;
+        it.el.classList.remove('svc--azul', 'svc--laranja');
+        if (PALETA[it.n]) it.el.classList.add(PALETA[it.n]);
+      });
     });
   }
 
@@ -173,7 +276,12 @@
        nada, qualquer prefixo (os 12 do "Ver mais" fechado) também fica equilibrado. */
     items.forEach(function (el) {
       var img = el.querySelector('img');
-      var ar = (img && img.naturalWidth) ? (img.naturalHeight / img.naturalWidth) : 1.25;
+      /* proporção: primeiro os atributos width/height (conhecidos antes de a foto
+         chegar, e é isso que faz o masonry acertar à primeira), depois a imagem
+         já carregada, e só em último recurso a estimativa antiga */
+      var aw = img && +img.getAttribute('width'), ah = img && +img.getAttribute('height');
+      var ar = (aw && ah) ? (ah / aw)
+        : (img && img.naturalWidth) ? (img.naturalHeight / img.naturalWidth) : 1.25;
       var k = 0;
       for (var j = 1; j < n; j++) { if (h[j] < h[k]) k = j; }
       cols[k].appendChild(el);
@@ -254,8 +362,24 @@
     gift: '<svg viewBox="0 0 24 24" ' + S + '><rect x="3.5" y="9" width="17" height="11.5" rx="1.6"/><path d="M2.5 9h19"/><path d="M12 9v11.5"/><path d="M12 9C9.8 9 8 8 8 6.4A2.4 2.4 0 0 1 12 5a2.4 2.4 0 0 1 4 1.4C16 8 14.2 9 12 9Z"/></svg>',
     work: '<svg viewBox="0 0 24 24" ' + S + '><path d="M9 3.5 5 5.5v15h14v-15l-4-2"/><path d="m9 3.5 3 4 3-4"/><path d="M5 11h4M15 11h4"/><path d="M5 14.5h4M15 14.5h4"/></svg>',
     bag: '<svg viewBox="0 0 24 24" ' + S + '><path d="M5 7.5h14l-1 13H6Z"/><path d="M9 7.5V6a3 3 0 0 1 6 0v1.5"/></svg>',
-    phone: '<svg viewBox="0 0 24 24" ' + S + '><rect x="6.5" y="2.5" width="11" height="19" rx="2.6"/><path d="M10.5 5.5h3"/></svg>'
+    phone: '<svg viewBox="0 0 24 24" ' + S + '><rect x="6.5" y="2.5" width="11" height="19" rx="2.6"/><path d="M10.5 5.5h3"/></svg>',
+    /* reserva: o campo "Ícone" no backoffice é texto livre, portanto o cliente
+       pode escrever um nome para o qual ainda não há desenho. Mostrar uma
+       estrela neutra é honesto; mostrar uma t-shirt seria enganador. */
+    generico: '<svg viewBox="0 0 24 24" ' + S + '><path d="m12 3.5 2.6 5.4 5.9.8-4.3 4.2 1 5.9-5.2-2.8-5.2 2.8 1-5.9L3.5 9.7l5.9-.8Z"/></svg>'
   };
+
+  /* O nome do ícone vem de um campo de texto livre do backoffice, portanto
+     ICONS[nome] é uma indexação de objecto com texto de fora. Sem o
+     hasOwnProperty, nomes como "constructor", "toString" ou "__proto__" devolvem
+     propriedades herdadas do Object — e o autocolante mostrava
+     "function Object() { [native code] }" em vez de um ícone. O `|| generico`
+     não protegia: esses valores são truthy. */
+  function icone(nome) {
+    return (typeof nome === 'string'
+      && Object.prototype.hasOwnProperty.call(ICONS, nome)
+      && typeof ICONS[nome] === 'string') ? ICONS[nome] : ICONS.generico;
+  }
 
   /* ------------------------- SERVIÇOS ------------------------- */
   var sgrid = doc.getElementById('services-grid');
@@ -266,7 +390,7 @@
       sgrid.innerHTML = items.map(function (s) {
         /* só ícone + nome — a descrição continua no JSON (o catálogo PDF usa-a) */
         return '<article class="svc" data-reveal>' +
-          '<span class="svc__icon" aria-hidden="true">' + (ICONS[s.icon] || ICONS.tshirt) + '</span>' +
+          '<span class="svc__icon" aria-hidden="true">' + icone(s.icon) + '</span>' +
           '<h3 class="svc__title">' + esc(s.title) + '</h3>' +
           '</article>';
       }).join('');
@@ -348,7 +472,7 @@
         '<span class="rig__count">1/' + imgs.length + '</span>' : '';
       return '<article class="model" data-cat="' + esc(p.cat) + '" data-reveal>' +
         '<div class="model__media">' +
-          '<img class="rig__img" src="' + esc(imgs[0] || '') + '" data-imgs="' + esc(imgs.join('|')) + '" data-i="0" alt="' + esc(p.name) + ' personalizado — Art Stamp Creations, Vizela' + (imgs.length > 1 ? ' (foto 1 de ' + imgs.length + ')' : '') + '" loading="lazy" />' +
+          '<img class="rig__img" src="' + esc(imgs[0] || '') + '" data-imgs="' + esc(imgs.join('|')) + '" data-i="0" alt="' + esc(p.name) + ' personalizado — ArtStampCreations, Vizela' + (imgs.length > 1 ? ' (foto 1 de ' + imgs.length + ')' : '') + '" loading="lazy" />' +
           '<span class="model__cat">' + esc(p.cat) + '</span>' + nav +
         '</div>' +
         '<div class="model__body">' +
@@ -412,15 +536,22 @@
   var ggrid = doc.getElementById('gallery-grid');
   if (ggrid) {
     var gItems = [];
-    getJSON('data/gallery.json').then(function (d) {
+    /* espera pelas dimensões antes de desenhar: emitir os <img> sem width/height
+       e só depois corrigir seria exactamente o salto que se quer evitar */
+    Promise.all([getJSON('data/gallery.json'), dimsProntas]).then(function (r) {
+      var d = r[0];
       applyHead(doc.getElementById('trabalhos'), d.head);
       gItems = (d && d.items) || [];
       var figs = gItems.map(function (it, i) {
         var f = doc.createElement('figure');
+        var src = normImg(it.img);
         f.className = 'gitem';
         f.setAttribute('data-i', i);
         f.setAttribute('data-reveal', '');
-        f.innerHTML = '<img src="' + esc(normImg(it.img)) + '" alt="' + esc(it.cap || 'Trabalho') + ' — trabalho da Art Stamp Creations' + '" loading="lazy" />' +
+        var ss = srcsetWebp(src);
+        f.innerHTML = '<img src="' + esc(src) + '"' +
+          (ss ? ' srcset="' + esc(ss) + '" sizes="' + SIZES_GALERIA + '"' : '') +
+          ' alt="' + esc(it.cap || 'Trabalho') + ' — trabalho da ArtStampCreations' + '" loading="lazy"' + attrsDim(src) + ' />' +
           '<figcaption>' + esc(it.cap || '') + '</figcaption>';
         return f;
       });
@@ -431,13 +562,19 @@
          mais curta e fecha o vazio que ficava em baixo à esquerda. */
       collapsible(ggrid, moreBtn, figs, 13, 6);
 
-      /* No 1.º render as imagens ainda não têm dimensões, por isso o equilíbrio é
-         estimado. Assim que as visíveis carregam, reequilibra UMA vez — e nunca
-         depois de o utilizador carregar em "Ver mais", para não lhe saltar nada. */
+      /* Rede de segurança para quando falte a dimensão de alguma foto (ficheiro
+         novo antes de a Action correr): aí o equilíbrio é estimado e corrige-se
+         uma vez, quando as visíveis carregarem. Com as dimensões todas conhecidas
+         isto nunca dispara — e é esse o objectivo, porque era este segundo
+         masonry o salto que se via. Nunca depois de "Ver mais". */
       var reequilibrado = false, expandido = false;
+      var faltamDims = figs.some(function (f) {
+        var im = f.querySelector('img');
+        return !(+im.getAttribute('width') && +im.getAttribute('height'));
+      });
       if (moreBtn) moreBtn.addEventListener('click', function () { expandido = true; });
       function rebalance() {
-        if (reequilibrado || expandido) return;
+        if (reequilibrado || expandido || !faltamDims) return;
         var vis = figs.filter(function (f) { return f.style.display !== 'none'; });
         if (!vis.length) return;
         var prontas = vis.every(function (f) { var im = f.querySelector('img'); return im.complete && im.naturalWidth; });
@@ -544,7 +681,7 @@
       if (!mapBox || mapBox.querySelector('iframe')) return;
       var f = doc.createElement('iframe');
       f.src = mapBox.getAttribute('data-embed');
-      f.title = 'Mapa Google — Art Stamp Creations, Vizela';
+      f.title = 'Mapa Google — ArtStampCreations, Vizela';
       f.loading = 'lazy'; f.setAttribute('referrerpolicy', 'no-referrer'); f.setAttribute('allowfullscreen', '');
       f.style.cssText = 'width:100%;height:100%;border:0;display:block';
       mapBox.innerHTML = ''; mapBox.appendChild(f);
