@@ -17,6 +17,10 @@ on:
       - 'assets/js/**'
       - 'assets/css/**'
       - '.github/scripts/**'
+      # As peças legais comuns (o Livro, a nota da chamada, o RAL, a privacidade).
+      - '.github/legal.mjs'
+      - 'legal-comum/**'
+      - 'legal/**'
   workflow_dispatch:        # permite correr à mão a partir do separador Actions
   schedule:
     # Ronda diária: confirma que o HTML servido continua a bater com os dados.
@@ -47,6 +51,15 @@ jobs:
         with:
           fetch-depth: 0          # o <lastmod> do sitemap vem do histórico do git
 
+      # As peças legais comuns (biblioteca legal-comum, cópia em legal-comum/):
+      # a ligação ao Livro de Reclamações, a nota do custo da chamada junto de
+      # cada número, os centros de arbitragem e os destinatários e direitos da
+      # política de privacidade, escritos entre os marcadores
+      # <!-- legal-comum:… -->. Corre antes do prerender.py, que congela o
+      # index.html. A guarda da identificação só avisa (::warning).
+      - name: Escrever as peças legais
+        run: node .github/legal.mjs
+
       - name: Instalar o Pillow
         run: python3 -m pip install --quiet --disable-pip-version-check Pillow
 
@@ -74,7 +87,7 @@ jobs:
         id: publicar
         run: |
           set -euo pipefail
-          ALVOS="index.html legal/ sitemap.xml sitemap-imagens.xml data/_dimensoes.json assets/img"
+          ALVOS="index.html legal/ sitemap.xml sitemap-imagens.xml data/_dimensoes.json assets/img assets/css/styles.css"
           if git diff --quiet -- $ALVOS && [ -z "$(git status --porcelain -- $ALVOS)" ]; then
             echo "Nada a fazer — o HTML já estava em dia."
             echo "publicado=false" >> "$GITHUB_OUTPUT"
@@ -104,11 +117,13 @@ jobs:
           publicado=false
           for tentativa in 1 2 3; do
             if git pull --rebase --autostash origin main; then
-              if ! ( python3 .github/scripts/webp.py --verificar \
+              if ! ( node .github/legal.mjs --verificar \
+                  && python3 .github/scripts/webp.py --verificar \
                   && python3 .github/scripts/dimensoes.py --verificar \
                   && CHROME_PATH="${{ steps.chrome.outputs.chrome-path }}" \
                      python3 .github/scripts/prerender.py --verificar ); then
                 echo "O rebase trouxe dados novos — a regenerar."
+                node .github/legal.mjs
                 python3 .github/scripts/webp.py
                 python3 .github/scripts/dimensoes.py
                 CHROME_PATH="${{ steps.chrome.outputs.chrome-path }}" \

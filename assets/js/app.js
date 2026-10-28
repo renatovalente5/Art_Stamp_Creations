@@ -677,8 +677,10 @@
     var mapBox = doc.getElementById('map-box');
     function get() { try { return localStorage.getItem(KEY); } catch (e) { return null; } }
     function set(v) { try { localStorage.setItem(KEY, v); } catch (e) {} }
+    var fachada = null;   // o botão «Ver localização no mapa», para o repor ao retirar
     function loadMap() {
       if (!mapBox || mapBox.querySelector('iframe')) return;
+      fachada = mapBox.innerHTML;
       var f = doc.createElement('iframe');
       f.src = mapBox.getAttribute('data-embed');
       f.title = 'Mapa Google — ArtStampCreations, Vizela';
@@ -686,18 +688,37 @@
       f.style.cssText = 'width:100%;height:100%;border:0;display:block';
       mapBox.innerHTML = ''; mapBox.appendChild(f);
     }
-    function show() { if (banner) banner.hidden = false; }
-    function hide() { if (banner) banner.hidden = true; }
+    /* Retirar a autorização tem de ser tão fácil como dá-la (Lei 41/2004,
+       art. 5.º): «Recusar» em «Gerir cookies» tira o mapa na hora e repõe o
+       botão, sem esperar por um recarregamento. */
+    function unloadMap() {
+      if (!mapBox || !mapBox.querySelector('iframe') || fachada === null) return;
+      mapBox.innerHTML = fachada;
+    }
+    /* O aviso fica preso ao fundo do ecrã e, sem mais nada, tapava o fim da
+       página — o rodapé, com a ligação ao Livro de Reclamações, que a lei quer
+       «visível» (DL 156/2005, art. 5.º-B). Enquanto está aberto, a página
+       ganha por baixo a altura dele (--cookie-alto, no CSS). */
+    function medir() {
+      if (!banner || banner.hidden) return;
+      doc.documentElement.style.setProperty('--cookie-alto', banner.offsetHeight + 'px');
+    }
+    window.addEventListener('resize', medir);
+    function show() { if (banner) { banner.hidden = false; medir(); } }
+    function hide() { if (banner) banner.hidden = true; doc.documentElement.style.removeProperty('--cookie-alto'); }
     var cur = get();
     if (cur === 'accepted') loadMap();
     else if (cur !== 'rejected') show();
     if (banner) banner.addEventListener('click', function (e) {
       var b = e.target.closest('[data-consent]'); if (!b) return;
       var v = b.getAttribute('data-consent'); set(v); hide();
-      if (v === 'accepted') loadMap();
+      if (v === 'accepted') loadMap(); else unloadMap();
     });
-    var mapBtn = mapBox && mapBox.querySelector('[data-map-load]');
-    if (mapBtn) mapBtn.addEventListener('click', function () { if (get() === 'accepted') loadMap(); else show(); });
+    // delegado na caixa: o botão é recriado quando o mapa é retirado
+    if (mapBox) mapBox.addEventListener('click', function (e) {
+      if (!e.target.closest('[data-map-load]')) return;
+      if (get() === 'accepted') loadMap(); else show();
+    });
     doc.querySelectorAll('[data-cookie-manage]').forEach(function (el) { el.addEventListener('click', function (e) { e.preventDefault(); show(); }); });
   })();
 })();

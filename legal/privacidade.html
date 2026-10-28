@@ -10,7 +10,7 @@
   <link rel="icon" type="image/png" href="../assets/img/favicon.png" />
   <link rel="stylesheet" href="../assets/css/fonts.css?v=86cc8da4" />
   <link rel="stylesheet" href="../assets/css/base.css?v=2c9c2830" />
-  <link rel="stylesheet" href="../assets/css/styles.css?v=5724f2e7" />
+  <link rel="stylesheet" href="../assets/css/styles.css?v=386ab171" />
 </head>
 <body>
   <header class="legalhead">
@@ -22,14 +22,14 @@
 
   <main class="legal">
     <h1>Política de Privacidade</h1>
-    <p class="updated">Última atualização: julho de 2026</p>
+    <p class="updated">Última atualização: outubro de 2026</p>
 
     <p>A presente política explica como a <strong>ArtStampCreations</strong> trata os dados pessoais dos utilizadores deste site, em conformidade com o Regulamento Geral sobre a Proteção de Dados (RGPD — Regulamento (UE) 2016/679) e a legislação portuguesa aplicável.</p>
 
     <h2>1. Responsável pelo tratamento</h2>
     <p><span data-site="owner_name">Vitor Romeu Pereira Martins</span>, Empresário em Nome Individual, que opera sob o nome <strong>ArtStampCreations</strong>.<br />
     NIF: 248790226 · Morada: <span data-site="contacts.address_line1">Av. Abade Tagilde 1011</span>, <span data-site="contacts.address_line2">4815-429 Vizela</span>.<br />
-    Email: <a href="mailto:geralartstamp@gmail.com" data-site="contacts.email">geralartstamp@gmail.com</a> · Telefone: <span data-site="contacts.phone">932 938 467</span> (chamada para a rede móvel nacional).</p>
+    Email: <a href="mailto:geralartstamp@gmail.com" data-site="contacts.email">geralartstamp@gmail.com</a> · Telefone: <span data-site="contacts.phone">932 938 467</span> <!-- legal-comum:nota-chamada v1.1.0 --><small class="call-note">(Chamada para a rede móvel nacional)</small><!-- /legal-comum:nota-chamada -->.</p>
 
     <h2>2. Que dados recolhemos</h2>
     <p>Este site é informativo e <strong>não</strong> tem loja online, registo de conta nem pagamentos. Apenas tratamos os dados que nos fornece voluntariamente ao pedir um orçamento ou ao contactar-nos:</p>
@@ -38,25 +38,67 @@
       <li>Contacto que nos indique (telefone e/ou email);</li>
       <li>Conteúdo da mensagem / descrição do pedido.</li>
     </ul>
-    <p>Não é feita recolha automática de dados de navegação: o site não utiliza cookies de rastreio nem ferramentas de analítica (ver <a href="cookies.html">Política de Cookies</a>).</p>
+    <p>Não fazemos recolha automática de dados de navegação: o site não utiliza cookies de rastreio nem ferramentas de analítica (ver <a href="cookies.html">Política de Cookies</a>). O GitHub, que aloja o site, regista dados técnicos de cada acesso, como o endereço IP (ver o ponto 6).</p>
 
     <h2>3. Finalidade e fundamento</h2>
     <p>Os dados são utilizados exclusivamente para <strong>responder ao seu pedido de orçamento ou contacto</strong> e para as diligências pré-contratuais solicitadas. O fundamento de licitude é o seu consentimento e/ou as diligências pré-contratuais (art. 6.º, n.º 1, als. a) e b) do RGPD).</p>
 
-    <h2>4. Contacto por WhatsApp</h2>
-    <p>O formulário de orçamento abre a aplicação WhatsApp para que seja o próprio utilizador a enviar a mensagem. Ao usar o WhatsApp, os seus dados passam também a ser tratados pela Meta Platforms nos termos da política de privacidade do WhatsApp.</p>
+    <h2>4. Contacto por WhatsApp e por email</h2>
+    <p>O formulário de orçamento não envia nada para um servidor nosso: monta a mensagem e abre a aplicação WhatsApp, para que seja o próprio utilizador a enviá-la. Ao usar o WhatsApp, os seus dados passam também a ser tratados pela Meta, nos termos da política de privacidade do WhatsApp. Se nos escrever por email, a mensagem fica na nossa caixa de correio (Gmail, da Google).</p>
 
     <h2>5. Conservação</h2>
-    <p>Conservamos os dados apenas pelo período necessário para responder ao pedido e para a eventual relação comercial daí resultante, findo o qual são eliminados.</p>
+    <!-- Prazos concretos (RGPD, art. 13.º, n.º 2, al. a)); os da biblioteca legal-comum. -->
+    <ul>
+      <li>Pedidos de orçamento e contactos (WhatsApp, email ou telefone): 12 meses depois da última troca de mensagens.</li>
+      <li>Se o pedido der origem a uma encomenda, os dados da faturação: 10 anos, por obrigação fiscal (CIVA, art. 52.º).</li>
+      <li>Registos técnicos de acesso ao site: são guardados pelo GitHub, que aloja o site, nos prazos da política de privacidade do GitHub; não temos acesso a eles.</li>
+      <li>A sua escolha sobre o mapa: fica guardada só no seu navegador, até a mudar em «Gerir cookies», no rodapé do site, ou apagar os dados do navegador.</li>
+    </ul>
 
-    <h2>6. Partilha com terceiros</h2>
-    <p>Não vendemos nem cedemos os seus dados. O site está alojado em GitHub Pages (GitHub, Inc.), que atua como subcontratante técnico. Não há transmissão de dados para outros terceiros para fins de marketing.</p>
+    <h2>6. Com quem partilhamos os dados</h2>
+    <p>Os serviços que recebem dados a propósito deste site, com o país onde estão e, quando os dados saem da União Europeia, a base dessa transferência:</p>
+    <!-- A tabela sai da biblioteca legal-comum (.github/legal.mjs), com os
+         fornecedores reais do site: o GitHub Pages (alojamento), a Google (o
+         Gmail e o mapa, este só depois do clique) e a Meta (WhatsApp e Instagram). -->
+    <div class="tabela" role="region" tabindex="0" aria-label="Tabela dos destinatários — deslize para o lado para ver tudo">
+<!-- legal-comum:privacidade v1.1.0 -->
+<table class="destinatarios" lang="pt">
+<thead><tr><th scope="col">Quem</th><th scope="col">Para quê</th><th scope="col">Onde</th><th scope="col">Transferência para fora da UE</th></tr></thead>
+<tbody>
+<tr><td>GitHub, Inc.</td><td>alojamento do site (GitHub Pages) e dos seus ficheiros; registos técnicos de acesso</td><td>EUA</td><td>EUA: consta da lista do Data Privacy Framework (decisão de adequação da Comissão Europeia)</td></tr>
+<tr><td>Google LLC (contraente na UE: Google Ireland Ltd.)</td><td>caixa de correio (Gmail/Google Workspace): os emails que nos envia e as respostas; mapa incorporado, carregado só depois do seu clique (endereço IP e cookies da Google)</td><td>EUA / Irlanda</td><td>EUA: consta da lista do Data Privacy Framework (decisão de adequação da Comissão Europeia)</td></tr>
+<tr><td>Meta Platforms, Inc. (contraentes na UE: Meta Platforms Ireland Ltd. e WhatsApp Ireland Ltd.)</td><td>conversas pelo WhatsApp (o seu número e as mensagens); perfil no Instagram e as suas estatísticas (co-responsabilidade «Page Insights»)</td><td>EUA / Irlanda</td><td>EUA: consta da lista do Data Privacy Framework (decisão de adequação da Comissão Europeia)</td></tr>
+</tbody>
+</table>
+<!-- /legal-comum:privacidade -->
+    </div>
+    <p>Não vendemos nem cedemos os seus dados, e não os transmitimos a terceiros para fins de marketing.</p>
+<!-- legal-comum:privacidade-frases v1.1.0 -->
+<p>Temos página no Facebook e/ou perfil no Instagram. As estatísticas dessas páginas («Page Insights») são tratadas em co-responsabilidade com a Meta Platforms Ireland Ltd., nos termos da adenda de co-responsabilidade da Meta: a Meta é a principal responsável e é a ela que pode dirigir os pedidos sobre esses dados. O que publica ou nos envia nessas plataformas segue também a política de privacidade da Meta.</p>
+<p>Os ficheiros deste site estão num repositório público (GitHub), e o histórico desse repositório guarda as versões anteriores das páginas. Por isso não publicamos dados pessoais de clientes nas páginas do site, e o que nos envia por formulário ou email nunca entra no repositório.</p>
+<!-- /legal-comum:privacidade-frases -->
 
     <h2>7. Os seus direitos</h2>
-    <p>Pode, a qualquer momento, exercer os direitos de acesso, retificação, apagamento, limitação, oposição e portabilidade dos seus dados, contactando-nos para <a href="mailto:geralartstamp@gmail.com">geralartstamp@gmail.com</a>. Tem ainda o direito de apresentar reclamação junto da autoridade de controlo, a <strong>Comissão Nacional de Proteção de Dados (CNPD)</strong> — <a href="https://www.cnpd.pt" target="_blank" rel="noopener">www.cnpd.pt</a>.</p>
+    <p>Os direitos dos artigos 15.º a 22.º do RGPD, e como os exercer:</p>
+<!-- legal-comum:direitos v1.1.0 -->
+<div class="direitos" lang="pt">
+<p>Pode exercer os seus direitos por email para <a href="mailto:geralartstamp@gmail.com">geralartstamp@gmail.com</a>. Respondemos no prazo de um mês (RGPD, art. 12.º, n.º 3).</p>
+<ul>
+<li><strong>acesso</strong>: saber que dados seus temos e receber uma cópia</li>
+<li><strong>rectificação</strong>: corrigir dados errados ou incompletos</li>
+<li><strong>apagamento</strong>: pedir que apaguemos os dados, quando já não sejam precisos</li>
+<li><strong>limitação</strong>: pedir que deixemos de os usar enquanto se esclarece um pedido</li>
+<li><strong>portabilidade</strong>: receber os dados que nos deu num formato de uso corrente</li>
+<li><strong>oposição</strong>: opor-se a um tratamento baseado no nosso interesse legítimo</li>
+<li><strong>retirar o consentimento</strong>: a qualquer momento, sem afectar o que foi feito antes</li>
+</ul>
+<p>Se achar que o tratamento não cumpre a lei, pode reclamar à Comissão Nacional de Protecção de Dados: <a href="https://www.cnpd.pt/" target="_blank" rel="noopener">cnpd.pt</a>.</p>
+</div>
+<!-- /legal-comum:direitos -->
   </main>
 
-  <div class="legal__foot">© <span data-year>2026</span> ArtStampCreations · NIF 248790226</div>
+  <!-- O Livro de Reclamações fica só no rodapé, discreto (legal-comum, .github/legal.mjs). -->
+  <div class="legal__foot">© <span data-year>2026</span> ArtStampCreations · NIF 248790226 · <!-- legal-comum:livro v1.1.0 --><a class="lr-discreto" href="https://www.livroreclamacoes.pt/inicio" target="_blank" rel="noopener" lang="pt"><svg class="lr-icone" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false" fill="currentColor"><path fill-rule="evenodd" d="M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2Zm1 0v20h1.2V2H7Zm3.8 5.2h5.4a.8.8 0 0 1 0 1.6h-5.4a.8.8 0 0 1 0-1.6Zm0 4h5.4a.8.8 0 0 1 0 1.6h-5.4a.8.8 0 0 1 0-1.6Zm0 4h3.4a.8.8 0 0 1 0 1.6h-3.4a.8.8 0 0 1 0-1.6Z"/></svg><span>Livro de Reclamações</span><span class="lr-sr"> (abre numa nova janela)</span></a><!-- /legal-comum:livro --></div>
   <script src="../assets/js/main.js?v=c3b2ef28" defer></script>
 </body>
 </html>
