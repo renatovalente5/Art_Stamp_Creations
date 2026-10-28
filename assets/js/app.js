@@ -635,8 +635,6 @@
       var nome = (qf.nome.value || '').trim();
       if (!nome) { qf.nome.setAttribute('aria-invalid', 'true'); qf.nome.focus(); return; }
       qf.nome.removeAttribute('aria-invalid');
-      var consent = doc.getElementById('f-consent');
-      if (consent && !consent.checked) { consent.focus(); return; }
       var contacto = (qf.contacto.value || '').trim();
       var servico = qf.servico.value || '';
       var msg = (qf.mensagem.value || '').trim();
