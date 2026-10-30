@@ -1,57 +1,44 @@
-# Guia do Backoffice — ArtStampCreations
+# Guia do painel — ArtStampCreations
 
-Este site foi feito para **poder ser gerido por si, sem programação**. Pode alterar textos, imagens, serviços, modelos e a galeria de trabalhos através de um painel simples e gratuito chamado **Pages CMS**.
+O site gere-se no painel, sem programação: **https://backoffice.artstampcreations.pt**
+(também em «Gestão», no rodapé do site). Funciona no telemóvel e no computador.
 
-## 1. Entrar no painel
+## 1. Entrar
 
-1. Vá a **https://app.pagescms.org**
-2. Clique em **Sign in with GitHub** e entre com a conta GitHub que tem acesso ao site.
-3. Escolha o repositório **Art_Stamp_Creations**.
+1. Abra o painel e escreva o email da ArtStamp.
+2. Carregue em **Enviar código**. Chega um email com um código de 8 algarismos, que vale
+   15 minutos e só funciona no browser onde o pediu.
+3. Escreva o código. Não há palavra-passe.
 
-> Na primeira vez é preciso autorizar a aplicação "Pages CMS" no GitHub. Isto é feito uma única vez.
+## 2. O que se muda em cada ecrã
 
-## 2. O que pode editar
+- **Trabalhos** — «+ Juntar fotografias»: escolha uma ou várias. Cada uma é um trabalho, e
+  entra no topo da galeria. Toque num trabalho para escrever a legenda.
+- **Catálogos** — Rígidos, Têxtil, e Lonas e Vinil. Em cada artigo: o nome, a categoria, as
+  fotografias (a 1.ª é a capa) e as características. As categorias (os filtros) estão no
+  fim do ecrã.
+- **Serviços** — o nome, o desenho (escolhe-se da lista) e a descrição, que não aparece na
+  página: vai para o Google.
+- **Como funciona** e **Perguntas frequentes**.
+- **Página** — o topo, a faixa das empresas, o pedido de orçamento, os contactos (mudam em
+  todo o site), o horário (não aparece na página: vai para o Google), o rodapé e o nome do
+  titular.
+- **Fotografias** — as que estão no site, e onde é usada cada uma. As que não são usadas
+  podem apagar-se.
 
-O site é **totalmente editável**. No menu do lado esquerdo encontra:
+Para mudar a ordem, arraste pela pega **⠿** à esquerda de cada linha.
 
-- **Geral (hero, contactos, empresas, rodapé)** — o topo da página (etiqueta, título, palavra destacada, texto, imagem, selo, botões e público-alvo); todos os **contactos** (telefone, email, Instagram, morada) que se atualizam em **todo o site**; os títulos da secção Contacto; a faixa **Empresas/B2B** (textos, lista, botão e imagem); a frase do **rodapé**; e o nome do titular (para as páginas legais).
-  - A **morada (linha 2)** tem de ser sempre *código postal e depois a localidade* — por exemplo `4815-429 Vizela`. É desta linha que sai a morada que o Google lê. Noutro formato, a publicação para com um aviso em vez de publicar uma morada errada.
-  - **Link do Google Maps da loja** — no perfil de empresa do Google, botão *Partilhar*, copiar o link. É o que diz ao Google que o site e o perfil são a mesma empresa.
-- **Horário de funcionamento** — não aparece no site; vai para o Google. **Neste momento está vazio de propósito**, porque a loja abre por marcação, quando o cliente vem levantar. Se um dia passar a ter horário fixo, preencha uma linha por bloco (por exemplo, uma linha com Segunda a Sexta e 09:00–19:00, outra com Sábado e 09:00–13:00); os dias que não estiverem em nenhuma linha ficam como fechado, e as horas têm de ser no formato 24 horas com dois pontos (`09:00`, não `9h`). Ponha então o mesmo horário que tiver no perfil de empresa do Google — se os dois disserem coisas diferentes, o Google desconfia dos dois.
-- **Serviços (O que fazemos)** — títulos da secção + a lista de serviços. Pode adicionar, remover e reordenar à vontade. Cada serviço tem um **ícone**, um **nome** — é o que aparece no autocolante do site — e uma **descrição**, que não aparece no site mas é usada no catálogo em PDF e nos dados que o Google lê (escreva-a como se fosse para o cliente ler). Os serviços aparecem pela ordem em que estão na lista; os primeiros são os que se veem sem carregar em "Ver mais".
-  - O campo do **ícone** é texto livre. Os desenhos que já existem são: `tshirt`, `hoodie`, `polo`, `cap`, `mug`, `sticker`, `dtf`, `uv`, `vinyl`, `banner`, `merch`, `gift`, `work`, `bag`, `phone` e `generico` (uma estrela, que serve para tudo). Pode escrever um nome novo à vontade — enquanto não existir o desenho desse nome, o site mostra a estrela do `generico`. Peça-me o desenho e eu acrescento-o com o nome que escolheu.
-- **Trabalhos (galeria)** — títulos da secção + as fotografias de trabalhos com legenda. Adicione e remova à vontade.
-- **Catálogo Rígidos** — títulos da secção + as categorias (filtros) + os artigos (nome, categoria, **várias imagens** — a 1.ª é a principal — e as características: nome + valor, ex.: "Material / Cerâmica"). Pode adicionar e remover artigos, imagens e características.
-- **Catálogo Têxtil** — títulos da secção + os modelos de roupa (nome, categoria, imagem, gramagem, tecido, género, tamanhos, nº de cores).
-- **Como funciona (passos)** — títulos da secção + os passos (título e descrição). A numeração é automática.
-- **Perguntas frequentes** — títulos da secção + todas as perguntas e respostas. Adicione, edite ou remova.
+## 3. Gravar e publicar
 
-> Praticamente todo o texto, imagem e lista do site é editável aqui — sem tocar em código.
+- O que muda fica por gravar neste aparelho até carregar em **Gravar**.
+- Depois de gravar, o site muda em 1 ou 2 minutos. A faixa no topo mostra o caminho:
+  Gravado ✓ → A publicar → Publicado ✓. Se tinha o site aberto, recarregue a página.
+- Se alguma coisa não estiver bem (por exemplo, a morada sem o código postal), o painel diz
+  o quê e onde, antes de gravar.
 
-## 3. Alterar textos
+## 4. Ajuda
 
-1. Clique na secção (ex.: **Definições gerais**).
-2. Altere o texto nos campos.
-3. Clique em **Save** (canto superior direito). As alterações ficam **online em 1–2 minutos**.
-
-## 4. Trocar ou adicionar imagens
-
-- Em qualquer campo de **imagem**, clique para escolher uma imagem já carregada ou para **carregar uma nova** (botão *Upload*).
-- Para melhor desempenho, use imagens até ~1600px de largura e em formato **.jpg**.
-- As imagens ficam guardadas na pasta `assets/img` do site.
-
-## 5. Adicionar um serviço / modelo / trabalho
-
-1. Abra a secção respetiva.
-2. Clique em **Add item** (ou no **+**) no fundo da lista.
-3. Preencha os campos (nos modelos, escolha a **categoria** para aparecer no filtro certo).
-4. **Save**.
-
-## 6. Dicas
-
-- **Nunca fica offline**: se apagar tudo numa lista, essa secção fica simplesmente vazia — basta voltar a adicionar.
-- As alterações passam primeiro pelo GitHub e depois aparecem no site (1–2 min). Se não vir logo, aguarde e atualize a página (Ctrl/Cmd + Shift + R).
-- Qualquer dúvida, contacte quem desenvolveu o site.
+No painel, em **Ajuda**. Se o painel ou o site avariarem, fale com o Renato.
 
 ---
 **Site:** https://artstampcreations.pt/
