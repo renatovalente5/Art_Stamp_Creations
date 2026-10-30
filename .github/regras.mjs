@@ -482,9 +482,13 @@ export function identidadeDaLista(f, partes) {
   if (f === 'site' && c === 'hours') return () => '';
   return null;
 }
-/** O nome de um item, como o cliente o conhece (os ecrãs e as mensagens). */
+/** O nome de um item, como o cliente o conhece (os ecrãs e as mensagens).
+ *  Uma legenda comprida corta-se: o nome é para se reconhecer o item. */
 export function nomeDeItem(f, item, i) {
-  const t = (k) => (eObjecto(item) && typeof item[k] === 'string' && item[k].trim() ? item[k].trim() : '');
+  const t = (k) => {
+    const v = eObjecto(item) && typeof item[k] === 'string' ? item[k].trim().replace(/\s+/g, ' ') : '';
+    return [...v].length > 60 ? `${[...v].slice(0, 57).join('').trimEnd()}…` : v;
+  };
   if (f === 'gallery') return t('cap') || `Trabalho n.º ${i + 1}`;
   if (f === 'services') return t('title') || `Serviço n.º ${i + 1}`;
   if (f === 'models') return t('name') || `Modelo n.º ${i + 1}`;
@@ -765,13 +769,16 @@ export function problemasDasPerguntas(o) {
   const lista = lerLista(juntar, f, o, { max: TAMANHOS.perguntas });
   if (!lista) return out;
   cadaItem(juntar, f, lista, (x, i, { quem, ecra, campo }) => {
+    /* Um campo em falta ou que não é texto pára a publicação, e diz-se uma
+       vez só (sem o «vazio» ou o «não é texto» dos avisos por cima). */
+    const partidos = new Set();
     for (const k of ['q', 'a']) {
-      if (!tem(x, k)) juntar('bloqueia', `${quem}:${k}:falta`, ecra, `Esta pergunta não tem o campo da ${k === 'q' ? 'pergunta' : 'resposta'}: o site não se consegue gerar. Só o Renato o pode corrigir.`, { campo: campo(k) });
-      else if (!ausente(x[k]) && typeof x[k] !== 'string') juntar('bloqueia', `${quem}:${k}:tipo`, ecra, `A ${k === 'q' ? 'pergunta' : 'resposta'} não está escrita como texto: o site não se consegue gerar. Escreva-a outra vez.`, { campo: campo(k) });
+      if (!tem(x, k)) { partidos.add(k); juntar('bloqueia', `${quem}:${k}:falta`, ecra, `Esta pergunta não tem o campo da ${k === 'q' ? 'pergunta' : 'resposta'}: o site não se consegue gerar. Só o Renato o pode corrigir.`, { campo: campo(k) }); }
+      else if (!ausente(x[k]) && typeof x[k] !== 'string') { partidos.add(k); juntar('bloqueia', `${quem}:${k}:tipo`, ecra, `A ${k === 'q' ? 'pergunta' : 'resposta'} não está escrita como texto: o site não se consegue gerar. Escreva-a outra vez.`, { campo: campo(k) }); }
     }
-    conferirTextos(juntar, x, [['q', TAMANHOS.pergunta, 'Pergunta'], ['a', TAMANHOS.resposta, 'Resposta']], { prefixo: `items.${i}.`, chave: quem, ecra });
-    conferirPreciso(juntar, x, 'q', { campo: campo('q'), chave: quem, ecra, mensagem: 'Falta a pergunta.' });
-    conferirPreciso(juntar, x, 'a', { campo: campo('a'), chave: quem, ecra, mensagem: 'Falta a resposta.' });
+    conferirTextos(juntar, x, [['q', TAMANHOS.pergunta, 'Pergunta'], ['a', TAMANHOS.resposta, 'Resposta']].filter(([k]) => !partidos.has(k)), { prefixo: `items.${i}.`, chave: quem, ecra });
+    if (!partidos.has('q')) conferirPreciso(juntar, x, 'q', { campo: campo('q'), chave: quem, ecra, mensagem: 'Falta a pergunta.' });
+    if (!partidos.has('a')) conferirPreciso(juntar, x, 'a', { campo: campo('a'), chave: quem, ecra, mensagem: 'Falta a resposta.' });
   });
   conferirRepetidos(juntar, f, lista, { mensagem: 'Esta pergunta já está na lista.' });
   return out;
@@ -995,14 +1002,18 @@ function eVarianteDe(variante, original) {
 /**
  * ONDE UM ORIGINAL DA BIBLIOTECA É USADO: os campos dos dados que o mostram
  * (o caminho tal e qual) e as partes fixas do index.html (`fixas`:
- * fotografiasFixas — o original ou uma variante dele).
+ * fotografiasFixas — o original ou uma variante dele). A do topo e a da faixa
+ * das empresas estão no index.html E nos dados (o prerender.py escreve-as a
+ * partir deles): com um uso nos dados, a «parte fixa» não se repete. Sem
+ * nenhum (mudou-se a do topo, e o site ainda mostra a antiga), conta: a página
+ * publicada ainda a mostra.
  * → [{ ecra, campo?, f? }] ([] = sem uso)
  */
 export function usosDe(original, usados, fixas = new Set()) {
   const c = noRepositorio(original);
   const out = [];
   for (const u of usados) if (noRepositorio(u.valor) === c) out.push({ ecra: u.ecra, campo: u.campo, f: u.f });
-  if ([...fixas].some((x) => x === c || eVarianteDe(x, c))) out.push({ ecra: 'Uma parte fixa da página' });
+  if (!out.length && [...fixas].some((x) => x === c || eVarianteDe(x, c))) out.push({ ecra: 'Uma parte fixa da página' });
   return out;
 }
 

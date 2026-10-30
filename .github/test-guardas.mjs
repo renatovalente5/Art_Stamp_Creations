@@ -103,6 +103,14 @@ parte('as bibliotecas das fotografias');
   const usados = R.fotografiasDosDados(dados);
   certo(usados.length > 90 && usados.every((u) => existsSync(join(RAIZ, R.noRepositorio(u.valor)))), `as ${usados.length} fotografias dos dados existem`);
   certo(R.usosDe('assets/img/rigidos/caneca-1.jpg', usados).some((u) => u.ecra === 'Catálogo Rígidos › Caneca'), 'uma fotografia de um artigo diz onde é usada');
+  const doTopo = R.usosDe(O, usados, fixas);
+  certo(doTopo.length === 1 && doTopo[0].ecra === 'Página › Topo da página', 'a do topo, nos dados e no index.html, diz-se uma vez: no ecrã onde se muda', doTopo);
+  const daResposta = (x) => R.problemasDasPerguntas({ items: [{ q: 'Fazem envios?', ...x }] }).filter((p) => /:a:/.test(p.chave));
+  certo(daResposta({}).map((p) => `${p.classe} ${p.chave.split(':').pop()}`).join() === 'bloqueia falta' && daResposta({ a: 3 }).map((p) => `${p.classe} ${p.chave.split(':').pop()}`).join() === 'bloqueia tipo',
+    'uma resposta em falta, ou escrita como número, diz-se uma vez só (sem o aviso do «vazio» por cima)', [daResposta({}), daResposta({ a: 3 })]);
+  const longo = R.nomeDeItem('gallery', { cap: `Caneca ${'personalizada '.repeat(12)}` }, 0);
+  certo([...longo].length <= 58 && longo.endsWith('…') && longo.startsWith('Caneca personalizada') && R.nomeDeItem('gallery', { cap: 'Caneca' }, 0) === 'Caneca',
+    'o nome de um item com uma legenda comprida corta-se (é para se reconhecer)', longo);
 }
 
 /* ----------------------------------------------- 3. os casos -- */
