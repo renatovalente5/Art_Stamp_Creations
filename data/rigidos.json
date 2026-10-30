@@ -4,7 +4,13 @@
     "title": "Personalizamos em qualquer superfície",
     "lead": "Artigos rígidos para sublimação e personalização — canecas, garrafas, ímans, placas e muito mais. Escolhe o artigo, nós tratamos da tua imagem. Muitos mais formatos disponíveis a pedido."
   },
-  "cats": ["Todos", "Canecas e garrafas", "Ímans", "Placas e decoração", "Sacos e bolsas"],
+  "cats": [
+    "Todos",
+    "Canecas e garrafas",
+    "Ímans",
+    "Placas e decoração",
+    "Sacos e bolsas"
+  ],
   "products": [
     {
       "name": "Caneca",
@@ -16,10 +22,22 @@
         "assets/img/rigidos/caneca-4.jpg"
       ],
       "specs": [
-        { "label": "Material", "value": "Cerâmica" },
-        { "label": "Capacidade", "value": "300 ml" },
-        { "label": "Medidas", "value": "Ø 8 × 9,5 cm" },
-        { "label": "Personalização", "value": "Full-colour" }
+        {
+          "label": "Material",
+          "value": "Cerâmica"
+        },
+        {
+          "label": "Capacidade",
+          "value": "300 ml"
+        },
+        {
+          "label": "Medidas",
+          "value": "Ø 8 × 9,5 cm"
+        },
+        {
+          "label": "Personalização",
+          "value": "Full-colour"
+        }
       ]
     },
     {
@@ -33,10 +51,22 @@
         "assets/img/rigidos/caneca-inox-5.jpg"
       ],
       "specs": [
-        { "label": "Material", "value": "Aço inoxidável" },
-        { "label": "Capacidade", "value": "300 ml" },
-        { "label": "Medidas", "value": "Ø 7,5 × 9 cm" },
-        { "label": "Pega", "value": "Mosquetão" }
+        {
+          "label": "Material",
+          "value": "Aço inoxidável"
+        },
+        {
+          "label": "Capacidade",
+          "value": "300 ml"
+        },
+        {
+          "label": "Medidas",
+          "value": "Ø 7,5 × 9 cm"
+        },
+        {
+          "label": "Pega",
+          "value": "Mosquetão"
+        }
       ]
     },
     {
@@ -49,10 +79,22 @@
         "assets/img/rigidos/caneca-magica-4.jpg"
       ],
       "specs": [
-        { "label": "Material", "value": "Cerâmica" },
-        { "label": "Capacidade", "value": "300 ml" },
-        { "label": "Medidas", "value": "Ø 8 × 9,5 cm" },
-        { "label": "Efeito", "value": "Revela com o calor" }
+        {
+          "label": "Material",
+          "value": "Cerâmica"
+        },
+        {
+          "label": "Capacidade",
+          "value": "300 ml"
+        },
+        {
+          "label": "Medidas",
+          "value": "Ø 8 × 9,5 cm"
+        },
+        {
+          "label": "Efeito",
+          "value": "Revela com o calor"
+        }
       ]
     },
     {
@@ -66,9 +108,18 @@
         "assets/img/rigidos/garrafa-5.jpg"
       ],
       "specs": [
-        { "label": "Material", "value": "Aço inoxidável" },
-        { "label": "Capacidade", "value": "500 ml" },
-        { "label": "Isolamento", "value": "Parede dupla" }
+        {
+          "label": "Material",
+          "value": "Aço inoxidável"
+        },
+        {
+          "label": "Capacidade",
+          "value": "500 ml"
+        },
+        {
+          "label": "Isolamento",
+          "value": "Parede dupla"
+        }
       ]
     },
     {
@@ -82,9 +133,18 @@
         "assets/img/rigidos/iman-acrilico-5.jpg"
       ],
       "specs": [
-        { "label": "Material", "value": "Acrílico" },
-        { "label": "Fixação", "value": "Magnética" },
-        { "label": "Acabamento", "value": "Brilhante" }
+        {
+          "label": "Material",
+          "value": "Acrílico"
+        },
+        {
+          "label": "Fixação",
+          "value": "Magnética"
+        },
+        {
+          "label": "Acabamento",
+          "value": "Brilhante"
+        }
       ]
     },
     {
@@ -98,9 +158,18 @@
         "assets/img/rigidos/iman-ceramica-5.jpg"
       ],
       "specs": [
-        { "label": "Material", "value": "Cerâmica" },
-        { "label": "Fixação", "value": "Magnética" },
-        { "label": "Formatos", "value": "Vários" }
+        {
+          "label": "Material",
+          "value": "Cerâmica"
+        },
+        {
+          "label": "Fixação",
+          "value": "Magnética"
+        },
+        {
+          "label": "Formatos",
+          "value": "Vários"
+        }
       ]
     },
     {
@@ -115,9 +184,18 @@
         "assets/img/rigidos/iman-mdf-6.jpg"
       ],
       "specs": [
-        { "label": "Material", "value": "MDF" },
-        { "label": "Fixação", "value": "Magnética" },
-        { "label": "Formatos", "value": "Vários" }
+        {
+          "label": "Material",
+          "value": "MDF"
+        },
+        {
+          "label": "Fixação",
+          "value": "Magnética"
+        },
+        {
+          "label": "Formatos",
+          "value": "Vários"
+        }
       ]
     },
     {
@@ -130,9 +208,18 @@
         "assets/img/rigidos/iman-plastico-4.jpg"
       ],
       "specs": [
-        { "label": "Material", "value": "Plástico" },
-        { "label": "Fixação", "value": "Magnética" },
-        { "label": "Formatos", "value": "Vários" }
+        {
+          "label": "Material",
+          "value": "Plástico"
+        },
+        {
+          "label": "Fixação",
+          "value": "Magnética"
+        },
+        {
+          "label": "Formatos",
+          "value": "Vários"
+        }
       ]
     },
     {
@@ -142,9 +229,18 @@
         "assets/img/rigidos/placa-rua-1.jpg"
       ],
       "specs": [
-        { "label": "Material", "value": "Alumínio" },
-        { "label": "Proteção", "value": "Anti-UV" },
-        { "label": "Uso", "value": "Interior e exterior" }
+        {
+          "label": "Material",
+          "value": "Alumínio"
+        },
+        {
+          "label": "Proteção",
+          "value": "Anti-UV"
+        },
+        {
+          "label": "Uso",
+          "value": "Interior e exterior"
+        }
       ]
     },
     {
@@ -157,9 +253,18 @@
         "assets/img/rigidos/pedra-xisto-4.jpg"
       ],
       "specs": [
-        { "label": "Material", "value": "Xisto natural" },
-        { "label": "Peça", "value": "Única (natural)" },
-        { "label": "Suporte", "value": "Inclui cavalete" }
+        {
+          "label": "Material",
+          "value": "Xisto natural"
+        },
+        {
+          "label": "Peça",
+          "value": "Única (natural)"
+        },
+        {
+          "label": "Suporte",
+          "value": "Inclui cavalete"
+        }
       ]
     },
     {
@@ -170,9 +275,18 @@
         "assets/img/rigidos/puzzle-2.jpg"
       ],
       "specs": [
-        { "label": "Peças", "value": "70" },
-        { "label": "Dimensões", "value": "29 × 21 cm" },
-        { "label": "Material", "value": "Cartão" }
+        {
+          "label": "Peças",
+          "value": "70"
+        },
+        {
+          "label": "Dimensões",
+          "value": "29 × 21 cm"
+        },
+        {
+          "label": "Material",
+          "value": "Cartão"
+        }
       ]
     },
     {
@@ -182,10 +296,22 @@
         "assets/img/rigidos/saco-algodao.jpg"
       ],
       "specs": [
-        { "label": "Material", "value": "100% algodão" },
-        { "label": "Gramagem", "value": "140 g/m²" },
-        { "label": "Medidas", "value": "38 × 42 cm" },
-        { "label": "Alças", "value": "Longas" }
+        {
+          "label": "Material",
+          "value": "100% algodão"
+        },
+        {
+          "label": "Gramagem",
+          "value": "140 g/m²"
+        },
+        {
+          "label": "Medidas",
+          "value": "38 × 42 cm"
+        },
+        {
+          "label": "Alças",
+          "value": "Longas"
+        }
       ]
     },
     {
@@ -195,9 +321,18 @@
         "assets/img/rigidos/bolsa-cortica.jpg"
       ],
       "specs": [
-        { "label": "Material", "value": "Cortiça natural" },
-        { "label": "Resistência", "value": "Até 8 kg" },
-        { "label": "Asas", "value": "Reforçadas" }
+        {
+          "label": "Material",
+          "value": "Cortiça natural"
+        },
+        {
+          "label": "Resistência",
+          "value": "Até 8 kg"
+        },
+        {
+          "label": "Asas",
+          "value": "Reforçadas"
+        }
       ]
     }
   ]
