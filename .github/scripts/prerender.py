@@ -125,7 +125,7 @@ def normalizar(html):
     return re.sub(r'\s+', ' ', html).strip()
 
 
-def aplicar_site(html, site):
+def aplicar_site(html, site, dimensoes=None):
     """Escreve no HTML os contactos que o app.js só corrige em runtime.
 
     O telefone e a morada visíveis estavam escritos à mão no index.html; o
@@ -139,6 +139,7 @@ def aplicar_site(html, site):
     """
     contas = {}
     c = site.get('contacts', {})
+    dimensoes = dimensoes or {}
 
     def valor(caminho):
         alvo = site
@@ -151,20 +152,56 @@ def aplicar_site(html, site):
     # [data-site] -> textContent. Nota: se o HTML tiver markup lá dentro e o
     # texto já bater com o JSON, deixa-se estar — achatá-lo só tiraria ênfase
     # ao rastreador sem mudar nada para quem vê a página.
+    #
+    # UM TEXTO APAGADO SAI DO HTML CONGELADO, como sai do ecrã: o app.js
+    # (aplicarTexto) esconde o nó de um valor vazio. Vazio (ou só espaços, ou a
+    # chave nem existe), o nó fica vazio e com hidden; escrito outra vez, volta
+    # e o hidden sai. A mesma regra dos cabeçalhos das secções
+    # (aplicar_cabecalhos); o .github/test-app.mjs confere que o app.js e isto
+    # dizem o mesmo.
     def troca_texto(m):
-        abre, tag, corpo = m.group(0), m.group(1), m.group(3)
+        inteiro, tag, corpo = m.group(0), m.group(1), m.group(3)
+        abre = inteiro[:m.start(3) - m.start(0)]
         v = valor(m.group(2))
-        if v is None or v == '':
-            return abre
-        limpo = re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', '', corpo)).strip()
-        if limpo == re.sub(r'\s+', ' ', str(v)).strip():
-            return abre
-        contas['data-site'] = contas.get('data-site', 0) + 1
-        cabeca = m.group(0)[:m.start(3) - m.start(0)]
-        return cabeca + escapar(str(v)) + '</%s>' % tag
+        texto = '' if v is None else str(v)
+        if not texto.strip():
+            novo = com_hidden(abre) + '</%s>' % tag
+        else:
+            limpo = re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', '', corpo)).strip()
+            igual = limpo == re.sub(r'\s+', ' ', texto).strip()
+            novo = sem_hidden(abre) + (corpo if igual else escapar(texto)) + '</%s>' % tag
+        if novo != inteiro:
+            contas['data-site'] = contas.get('data-site', 0) + 1
+        return novo
 
     html = re.sub(r'<(\w+)[^>]*\bdata-site="([^"]+)"[^>]*>(.*?)</\1>',
                   troca_texto, html, flags=re.S)
+
+    # [data-site-src] -> a fotografia (o topo, a faixa das empresas). O app.js
+    # troca-a quando a página abre; aqui ficava a do dia em que o HTML foi
+    # escrito à mão, e quem lê sem JavaScript (e a primeira pintura) via a
+    # antiga — que o backoffice deixa apagar da biblioteca, por já não estar
+    # nos dados. Com outra fotografia, o srcset e o sizes (que descreviam as
+    # versões da antiga) saem, e as dimensões passam a ser as da nova.
+    def troca_foto(m):
+        tag = m.group(0)
+        v = valor(m.group(1))
+        if not isinstance(v, str) or not v.strip():
+            return tag
+        src = v.strip().lstrip('/')
+        atual = re.search(r'\ssrc="([^"]*)"', tag)
+        if atual and atual.group(1) == src:
+            return tag
+        novo = re.sub(r'\s(?:srcset|sizes)="[^"]*"', '', tag)
+        novo = re.sub(r'\ssrc="[^"]*"', ' src="%s"' % escapar_atributo(src), novo, count=1)
+        d = dimensoes.get(src)
+        if d:
+            novo = re.sub(r'\swidth="\d+"', ' width="%d"' % d[0], novo, count=1)
+            novo = re.sub(r'\sheight="\d+"', ' height="%d"' % d[1], novo, count=1)
+        contas['data-site-src'] = contas.get('data-site-src', 0) + 1
+        return novo
+
+    html = re.sub(r'<img\b[^>]*\bdata-site-src="([^"]+)"[^>]*>', troca_foto, html)
 
     def trocar_href(texto, marcador, href):
         """Põe `href` em todas as âncoras que tenham o atributo `marcador`.
@@ -207,6 +244,21 @@ def escapar(t):
     return (t.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;'))
 
 
+def escapar_atributo(t):
+    return escapar(t).replace('"', '&quot;')
+
+
+def com_hidden(abre):
+    """A tag de abertura com o atributo hidden (uma vez só)."""
+    if re.search(r'\shidden(?=[\s=>])', abre):
+        return abre
+    return abre[:-1] + ' hidden>'
+
+
+def sem_hidden(abre):
+    return re.sub(r'\shidden(?:="[^"]*")?(?=[\s>])', '', abre)
+
+
 # Etiqueta/título/subtítulo de cada secção: que ficheiro os manda. O app.js faz
 # isto em runtime (applyHead, app.js:28); aqui grava-se no ficheiro para o
 # rastreador não ficar com a versão antiga quando o cliente editar.
@@ -225,15 +277,26 @@ CLASSES = [('eyebrow', 'eyebrow'), ('section-title', 'title'), ('section-lead', 
 
 
 def aplicar_cabecalhos(html, raiz):
-    """Escreve os cabeçalhos de secção a partir dos data/*.json."""
-    import json as _js
+    """Escreve os cabeçalhos de secção a partir dos data/*.json.
+
+    UM TEXTO APAGADO SAI DO SITE. Antes só se escrevia quando havia texto: uma
+    etiqueta ou um subtítulo esvaziado no backoffice ficava no HTML com o texto
+    antigo, e o cliente ficava convencido de que o tinha apagado. Agora a
+    etiqueta e o subtítulo vazios (ou só com espaços, ou sem a chave) saem — o
+    elemento fica vazio e com hidden, a regra do app.js (aplicarTexto); escritos
+    outra vez, voltam. O título vazio fica como estava (o painel não o deixa
+    gravar vazio: é o que dá nome à secção). Um head que não existe no ficheiro
+    deixa a secção como está, como o app.js faz. Com os textos preenchidos,
+    escreve exactamente o que escrevia."""
     cache, trocas = {}, 0
 
     for id_seccao, ficheiro, chave in CABECALHOS:
         if ficheiro not in cache:
             cache[ficheiro] = ler_json(os.path.join(raiz, 'data', ficheiro),
                                        'data/' + ficheiro)
-        head = (cache[ficheiro] or {}).get(chave) or {}
+        head = (cache[ficheiro] or {}).get(chave)
+        if not isinstance(head, dict):
+            continue
         m = re.search(r'\bid="%s"' % re.escape(id_seccao), html)
         if not m:
             print('AVISO: secção %s não existe no HTML' % id_seccao)
@@ -244,18 +307,28 @@ def aplicar_cabecalhos(html, raiz):
         fim = m.end() + (seguinte.start() if seguinte else 4000)
 
         for classe, campo in CLASSES:
-            valor = head.get(campo)
-            if not valor:
-                continue
             padrao = re.compile(
                 r'(<(\w+)[^>]*class="[^"]*\b%s\b[^"]*"[^>]*>)(.*?)(</\2>)' % classe, re.S)
             m2 = padrao.search(html, m.end(), fim)
             if not m2:
                 continue
-            atual = re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', '', m2.group(3))).strip()
-            if atual == re.sub(r'\s+', ' ', str(valor)).strip():
+            abre, corpo = m2.group(1), m2.group(3)
+            valor = head.get(campo)
+            texto = '' if valor is None else str(valor)
+            if texto.strip():
+                novo_abre, novo_corpo = sem_hidden(abre), escapar(texto)
+                igual = (re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', '', corpo)).strip()
+                         == re.sub(r'\s+', ' ', texto).strip())
+                if igual:
+                    novo_corpo = corpo
+            elif campo == 'title':
                 continue
-            html = html[:m2.start()] + m2.group(1) + escapar(str(valor)) + m2.group(4) + html[m2.end():]
+            else:
+                novo_abre, novo_corpo = com_hidden(abre), ''
+            if novo_abre == abre and novo_corpo == corpo:
+                continue
+            fim += len(novo_abre) + len(novo_corpo) - len(abre) - len(corpo)
+            html = html[:m2.start()] + novo_abre + novo_corpo + m2.group(4) + html[m2.end():]
             trocas += 1
 
     return html, trocas
@@ -607,10 +680,16 @@ def main():
         novo = padrao.sub(lambda m: m.group(1) + conteudo + m.group(2), novo, count=1)
         resumo.append('%s: %d KB' % (z, len(conteudo) // 1024))
 
-    # contactos: o que o app.js corrige em runtime passa a estar no ficheiro
+    # contactos e fotografias: o que o app.js corrige em runtime passa a estar
+    # no ficheiro (as dimensões vêm do _dimensoes.json, que o dimensoes.py
+    # escreve no passo antes deste)
+    try:
+        dims = ler_json(os.path.join(RAIZ, 'data', '_dimensoes.json'), 'data/_dimensoes.json')
+    except ValueError:
+        dims = {}
     try:
         novo, contas = aplicar_site(novo, ler_json(
-            os.path.join(RAIZ, 'data', 'site.json'), 'data/site.json'))
+            os.path.join(RAIZ, 'data', 'site.json'), 'data/site.json'), dims)
     except ValueError as e:
         return travar(e)
     esperado = len(re.findall(r'data-site="', novo))

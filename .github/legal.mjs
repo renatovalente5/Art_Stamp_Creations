@@ -19,7 +19,7 @@
  * prerender.yml corre-o antes do prerender.py, e o passo que grava commita o
  * que mudou (index.html, legal/ e assets/css/styles.css estão nos ALVOS).
  *
- * O que depende dos dados (data/site.json, editado no Pages CMS): o telefone
+ * O que depende dos dados (data/site.json, editado no painel): o telefone
  * (a frase da nota) e o email (o canal dos direitos da privacidade). Nada se
  * inventa: sem email, o bloco dos direitos indica o telefone e a morada.
  *
@@ -140,7 +140,7 @@ export function avisosDosDados(site, nif) {
     morada: [c.address_line1, c.address_line2].filter(Boolean).join(', '),
     email: c.email,
     telefone: c.phone,
-  }, { modo: 'avisar', ecra: { '*': 'Pages CMS › Geral › Contactos', nome: 'Pages CMS › Geral › Nome do titular', nif: 'legal/termos.html (o NIF não está no backoffice)' } });
+  }, { modo: 'avisar', ecra: { '*': 'Página › Contactos', nome: 'Página › Dados legais', nif: 'legal/termos.html (o NIF não está no painel)' } });
   return r.problemas.map((p) => `Identificação (DL 7/2004, art. 10.º) — ${p.mensagem}`);
 }
 

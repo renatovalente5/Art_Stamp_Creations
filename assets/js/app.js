@@ -10,6 +10,14 @@
   function normImg(p) { if (!p) return ''; if (/^https?:\/\//.test(p)) return p; return p.replace(/^\/+/, ''); }
   function getJSON(url) { return fetch(url, { cache: 'default' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }); }
 
+  /* O NÚMERO DO WHATSAPP: o do data/site.json (contacts.phone_intl), que o
+     backoffice muda. Os botões dos catálogos e o formulário tinham-no escrito
+     à mão, e um telefone novo deixava-os no antigo. Até o site.json chegar
+     vale este; os botões desenhados antes disso acertam-se quando ele chega
+     (a troca de todos os «wa.me/», no site.json, lá em baixo). */
+  var TEL_WA = '351932938467';
+  function waCom(texto) { return 'https://wa.me/' + TEL_WA + '?text=' + encodeURIComponent(texto); }
+
   /* Dimensões reais de cada ficheiro de imagem, geradas no build por
      .github/scripts/dimensoes.py. Servem para emitir width/height nos <img>: sem
      elas o browser não reserva espaço, as fotos da galeria colapsam todas dentro
@@ -76,12 +84,28 @@
     });
   }
 
-  /* Aplica o cabeçalho de uma secção (etiqueta/título/subtítulo) a partir de {eyebrow,title,lead} */
+  /* UM TEXTO QUE O CLIENTE ESCREVE NO BACKOFFICE (os [data-site]; a etiqueta e
+     o subtítulo de uma secção): com texto, aparece; vazio — ou só espaços, ou a
+     chave nem existe — o nó fica vazio e escondido, e volta quando se escreve.
+     Antes só se escrevia o que tinha texto, e um campo apagado deixava no site
+     o que lá estava: o cliente ficava convencido de que o tinha apagado. O
+     prerender.py faz o mesmo no HTML congelado (aplicar_site e
+     aplicar_cabecalhos), e o .github/test-app.mjs confere que dizem o mesmo. */
+  function aplicarTexto(n, v) {
+    var t = v == null ? '' : String(v);
+    if (t.trim()) { n.textContent = t; n.hidden = false; }
+    else { n.textContent = ''; n.hidden = true; }
+  }
+
+  /* Aplica o cabeçalho de uma secção (etiqueta/título/subtítulo) a partir de
+     {eyebrow,title,lead}. A etiqueta e o subtítulo apagados saem do site; o
+     título vazio fica como estava (o painel não o deixa gravar vazio: é o que
+     dá nome à secção). */
   function applyHead(scope, head) {
     if (!scope || !head) return;
-    if (head.eyebrow) { var e = scope.querySelector('.eyebrow'); if (e) e.textContent = head.eyebrow; }
-    if (head.title) { var t = scope.querySelector('.section-title'); if (t) t.textContent = head.title; }
-    if (head.lead) { var l = scope.querySelector('.section-lead'); if (l) l.textContent = head.lead; }
+    var e = scope.querySelector('.eyebrow'); if (e) aplicarTexto(e, head.eyebrow);
+    if (head.title && String(head.title).trim()) { var t = scope.querySelector('.section-title'); if (t) t.textContent = head.title; }
+    var l = scope.querySelector('.section-lead'); if (l) aplicarTexto(l, head.lead);
   }
 
   /* Colapsar grelhas grandes: mostra N itens + botão "Ver mais" (menos itens no telemóvel).
@@ -292,18 +316,25 @@
   /* ------------------------- CONTEÚDO EDITÁVEL (data/site.json) ------------------------- */
   getJSON('data/site.json').then(function (site) {
     function val(path) { return path.split('.').reduce(function (o, k) { return o && o[k]; }, site); }
-    doc.querySelectorAll('[data-site]').forEach(function (el) { var v = val(el.getAttribute('data-site')); if (v != null && v !== '') el.textContent = v; });
+    /* Um campo apagado no backoffice sai do site (aplicarTexto). */
+    doc.querySelectorAll('[data-site]').forEach(function (el) { aplicarTexto(el, val(el.getAttribute('data-site'))); });
     doc.querySelectorAll('[data-site-src]').forEach(function (el) {
       var v = val(el.getAttribute('data-site-src'));
       if (!v) return;
       v = normImg(v);
       /* Se o backoffice apontar para outra foto, o srcset (que descreve as
          variantes da foto antiga) tem de sair, senão o browser preferia-o e
-         continuava a mostrar a imagem errada. */
-      if (el.hasAttribute('srcset') && el.getAttribute('src') !== v) el.removeAttribute('srcset');
+         continuava a mostrar a imagem errada. E as dimensões passam a ser as
+         da foto nova (o espaço que o browser reserva antes de ela chegar). */
+      if (el.getAttribute('src') !== v) { el.removeAttribute('srcset'); el.removeAttribute('sizes'); }
       el.setAttribute('src', v);
+      dimsProntas.then(function () {
+        var d = dimDe(v);
+        if (d && el.getAttribute('src') === v) { el.setAttribute('width', d[0]); el.setAttribute('height', d[1]); }
+      });
     });
     var c = site.contacts || {};
+    if (c.phone_intl) TEL_WA = String(c.phone_intl);
     if (c.phone_intl) doc.querySelectorAll('[data-tel]').forEach(function (a) { a.setAttribute('href', 'tel:+' + c.phone_intl); });
     if (c.email) doc.querySelectorAll('[data-mail]').forEach(function (a) { a.setAttribute('href', 'mailto:' + c.email); });
     if (c.instagram_url) doc.querySelectorAll('[data-ig]').forEach(function (a) { a.setAttribute('href', c.instagram_url); });
@@ -342,7 +373,7 @@
     applyHead(doc.getElementById('b2b'), b);
     if (b.list) { var bl = doc.getElementById('b2b-list'); if (bl) bl.innerHTML = b.list.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join(''); }
     if (b.cta_label) { var bc = doc.getElementById('b2b-cta'); if (bc) bc.textContent = b.cta_label; }
-    if (b.image) { var bi = doc.getElementById('b2b-img'); if (bi) bi.setAttribute('src', normImg(b.image)); }
+    /* a fotografia da faixa é um [data-site-src="b2b.image"], lá em cima */
   }).catch(function () {});
 
   /* ------------------------- ÍCONES DOS SERVIÇOS ------------------------- */
@@ -404,22 +435,27 @@
   /* ------------------------- MODELOS BASE (THCLOTHES) ------------------------- */
   var mgrid = doc.getElementById('models-grid');
   var mfilters = doc.getElementById('models-filters');
-  var WA = 'https://wa.me/351932938467?text=';
   var CAT_ORDER = ['Todos', 'T-shirts', 'Polos', 'Sweats e hoodies', 'Casacos e softshell', 'Vestuário de trabalho', 'Sacos e acessórios'];
   if (mgrid) {
     var allModels = [], activeCat = 'Todos';
+    /* As linhas da ficha de um modelo: só as que têm valor. Um campo deixado
+       vazio no backoffice não fica como uma linha com o nome e nada à frente. */
+    function temTexto(v) { return v != null && String(v).trim() !== ''; }
+    function linhasDoModelo(m) {
+      var cores = Number(m.colors);
+      return [
+        ['Gramagem', m.gsm], ['Tecido', m.fabric], [temTexto(m.sizes_label) ? m.sizes_label : 'Tamanhos', m.sizes],
+        ['Cores', cores >= 1 ? cores + (cores === 1 ? ' disponível' : ' disponíveis') : ''],
+      ].filter(function (l) { return temTexto(l[1]); })
+        .map(function (l) { return '<li><span>' + esc(l[0]) + '</span><b>' + esc(l[1]) + '</b></li>'; }).join('');
+    }
     function modelCard(m) {
-      var ask = WA + encodeURIComponent('Olá! Tenho interesse no modelo ' + m.name + ' para personalizar. Podem dar-me um orçamento?');
+      var ask = waCom('Olá! Tenho interesse no modelo ' + m.name + ' para personalizar. Podem dar-me um orçamento?');
       return '<article class="model" data-cat="' + esc(m.cat) + '" data-reveal>' +
-        '<div class="model__media"><img src="' + esc(normImg(m.img)) + '" alt="Modelo ' + esc(m.name) + ' — ' + esc(m.tag) + '" loading="lazy" /><span class="model__cat">' + esc(m.cat) + '</span></div>' +
+        '<div class="model__media"><img src="' + esc(normImg(m.img)) + '" alt="Modelo ' + esc(m.name) + (temTexto(m.tag) ? ' — ' + esc(m.tag) : '') + '" loading="lazy" /><span class="model__cat">' + esc(m.cat) + '</span></div>' +
         '<div class="model__body">' +
           '<div class="model__head"><h3 class="model__name">' + esc(m.name) + '</h3><span class="model__tag">' + esc(m.tag) + '</span></div>' +
-          '<ul class="model__specs">' +
-            '<li><span>Gramagem</span><b>' + esc(m.gsm) + '</b></li>' +
-            '<li><span>Tecido</span><b>' + esc(m.fabric) + '</b></li>' +
-            '<li><span>' + esc(m.sizes_label || 'Tamanhos') + '</span><b>' + esc(m.sizes) + '</b></li>' +
-            '<li><span>Cores</span><b>' + esc(m.colors) + ' disponíveis</b></li>' +
-          '</ul>' +
+          '<ul class="model__specs">' + linhasDoModelo(m) + '</ul>' +
           '<a class="btn btn--primary btn--sm model__cta" href="' + ask + '" target="_blank" rel="noopener">Pedir personalização</a>' +
         '</div>' +
       '</article>';
@@ -458,11 +494,10 @@
     var grid = doc.getElementById(cfg.grid);
     if (!grid) return;
     var filtros = doc.getElementById(cfg.filtros);
-    var CWA = 'https://wa.me/351932938467?text=';
     var todos = [], cats = ['Todos'], ativa = 'Todos';
 
     function cartao(p) {
-      var ask = CWA + encodeURIComponent('Olá! Tenho interesse ' + cfg.artigo + ' ' + p.name + '. Podem dar-me um orçamento?');
+      var ask = waCom('Olá! Tenho interesse ' + cfg.artigo + ' ' + p.name + '. Podem dar-me um orçamento?');
       var specs = (p.specs || []).map(function (s) { return '<li><span>' + esc(s.label) + '</span><b>' + esc(s.value) + '</b></li>'; }).join('');
       var imgs = (p.imgs && p.imgs.length) ? p.imgs : (p.img ? [p.img] : []);
       imgs = imgs.map(normImg);
@@ -643,7 +678,7 @@
       if (msg) t += ' ' + msg;
       if (contacto) t += ' O meu contacto: ' + contacto + '.';
       t += ' Podem dar-me um orçamento?';
-      window.open('https://wa.me/351932938467?text=' + encodeURIComponent(t), '_blank', 'noopener');
+      window.open(waCom(t), '_blank', 'noopener');
     });
   }
 
