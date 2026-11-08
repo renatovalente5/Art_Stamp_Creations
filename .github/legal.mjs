@@ -23,6 +23,13 @@
  * (a frase da nota) e o email (o canal dos direitos da privacidade). Nada se
  * inventa: sem email, o bloco dos direitos indica o telefone e a morada.
  *
+ * Nos Termos (legal/termos.html) saem também daqui as peças da venda à
+ * distância (DL 24/2014, arts. 4.º, 6.º, 10.º a 13.º e 17.º; DL 84/2021): os
+ * passos da encomenda adaptados ao orçamento (não há carrinho nem botão de
+ * pagar), a livre resolução — sem os 14 dias no personalizado —, o formulário
+ * de livre resolução com o nome, a morada e o email do titular (data/site.json;
+ * sem eles, fica como estava e avisa) e a frase da garantia.
+ *
  * A guarda da identificação (DL 7/2004, art. 10.º: nome, NIF, morada, email)
  * só AVISA — nunca pára a publicação. O NIF não está no data/site.json: lê-se
  * do que as páginas mostram (legal/termos.html), que é o que conta. No GitHub
@@ -37,6 +44,7 @@ import { fileURLToPath } from 'node:url';
 import {
   VERSAO, esc, livroReclamacoes, livroCss, notaChamada, destinatariosHtml, frasesPrivacidade,
   direitosHtml, DIREITOS, CNPD_URL, ralHtml, verificarIdentificacao,
+  GARANTIA_BENS, LIVRE_RESOLUCAO, SEM_LIVRE_RESOLUCAO_PERSONALIZADO, formularioLivreResolucao,
 } from '../legal-comum/index.mjs';
 
 const RAIZ = resolve(dirname(fileURLToPath(import.meta.url)), '..');
@@ -82,6 +90,40 @@ function direitosSemEmail() {
   ].join('\n');
 }
 
+/* «Como se faz a encomenda» (DL 7/2004, arts. 27.º a 31.º; DL 24/2014, arts.
+   4.º e 6.º): a lista da biblioteca, COMO_SE_FAZ_A_ENCOMENDA({ canal:
+   'whatsapp' }), adaptada ao orçamento — aqui não há carrinho nem botão de
+   pagar: o pedido vem pelo formulário do site (que abre o WhatsApp) ou pelo
+   WhatsApp, a Art Stamp responde com o orçamento (artigos, total com IVA,
+   portes, prazo e forma de pagamento) e a encomenda fica feita quando o
+   cliente o aceita por escrito; a confirmação vai por email, com estas
+   condições. Sem a fórmula feita do art. 5.º, n.º 4 (decisão do Renato, 8 nov
+   2026); os 5 dias e os 10 anos são os da biblioteca. */
+function comoSeFazAEncomenda() {
+  const passos = [
+    'Pede-nos orçamento pelo formulário do site ou pelo WhatsApp, dizendo os artigos que quer (tipo, quantidade e, se houver, as opções e a arte a aplicar).',
+    'Enviamos-lhe o orçamento com os artigos, o preço total com IVA, os portes, o prazo e a forma de pagamento. Antes de aceitar, confira tudo e peça-nos para corrigir qualquer erro.',
+    'A encomenda fica feita quando aceita o orçamento por escrito, por mensagem ou por email.',
+    'Até 5 dias depois e sempre antes da entrega, recebe por email a confirmação da encomenda, com estas condições em anexo.',
+    'O contrato é feito em português. Guardamos o orçamento aceite e a confirmação durante 10 anos e pode pedir-nos uma cópia a qualquer momento. Estas condições podem ser guardadas e impressas.',
+  ];
+  return `<ol class="como-encomendar" lang="pt">\n${passos.map((p) => `<li>${p}</li>`).join('\n')}\n</ol>`;
+}
+
+/* A livre resolução (DL 24/2014, arts. 10.º a 13.º e 17.º, n.º 1): o
+   personalizado — quase tudo o que a Art Stamp faz — não tem os 14 dias; o
+   que não leva personalização tem. Os textos são os da biblioteca; a frase
+   dos custos da devolução é a do art. 13.º, n.º 2 (sem a dizer, era a loja a
+   pagá-los — n.º 3). */
+function livreResolucaoHtml() {
+  return [
+    '<div class="livre-resolucao" lang="pt">',
+    `<p><strong>Artigos personalizados.</strong> ${esc(SEM_LIVRE_RESOLUCAO_PERSONALIZADO)}</p>`,
+    `<p><strong>Artigos sem personalização.</strong> ${esc(LIVRE_RESOLUCAO)} Os custos da devolução do bem ficam a seu cargo (Decreto-Lei n.º 24/2014, art. 13.º, n.º 2).</p>`,
+    '</div>',
+  ].join('\n');
+}
+
 /** As peças, pelo nome do marcador. Cada uma devolve o HTML, ou null quando não há como a escrever. */
 export function pecas(site, avisar = () => {}) {
   const c = site.contacts || {};
@@ -97,6 +139,21 @@ export function pecas(site, avisar = () => {}) {
     direitos: () => (email ? direitosHtml({ email }) : direitosSemEmail()),
     // os 10 centros (âmbito nacional): o competente é o do domicílio do consumidor
     ral: () => ralHtml({ ambito: 'nacional' }),
+    // os Termos: a venda à distância (os nomes das peças são os do cli.mjs da biblioteca)
+    'encomenda-passos': () => comoSeFazAEncomenda(),
+    'encomenda-livre-resolucao': () => livreResolucaoHtml(),
+    // o formulário do Anexo (Parte B) do DL 24/2014, já com o titular; nada se inventa
+    'encomenda-formulario': () => {
+      const nome = String(site.owner_name ?? '').trim();
+      const morada = [c.address_line1, c.address_line2].map((x) => String(x ?? '').trim()).filter(Boolean).join(', ');
+      if (!nome || !morada || !email) {
+        avisar('Falta o nome do titular, a morada ou o email em data/site.json: o formulário de livre resolução fica como estava.');
+        return null;
+      }
+      return `<pre class="formulario" lang="pt">${esc(formularioLivreResolucao({ nome, morada, email }))}</pre>`;
+    },
+    // DL 84/2021, art. 12.º: a frase única (3 anos; presunção de 2; +6 meses por reparação)
+    garantia: () => `<p>${esc(GARANTIA_BENS)}</p>`,
   };
 }
 
