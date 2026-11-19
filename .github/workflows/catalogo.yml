@@ -1,12 +1,16 @@
 name: Catálogo em PDF
 
-# Faz o catálogo (https://artstampcreations.pt/catalogo.pdf) com o que está no
-# site: os dados de data/*.json e as fotografias (.github/catalogo/gerar.py).
-# Só corre quando alguém pede: o «Atualizar catálogo» do painel
-# (backoffice.artstampcreations.pt), que é um workflow_dispatch no main, sem
-# inputs — ou o botão «Run workflow» aqui no GitHub. Grava o catalogo.pdf e o
-# catalogo.json (quando foi feito, quantas páginas, de que commit vieram os
-# dados); o GitHub Pages publica-os um minuto depois. O link nunca muda.
+# Faz o catálogo com o que está no site — os dados de data/*.json e as
+# fotografias (.github/catalogo/gerar.py) — e ENTREGA-O ao painel
+# (backoffice.artstampcreations.pt), que guarda só o último e o serve no
+# Início («Descarregar») e em https://catalogo.artstampcreations.pt (o link da
+# bio do Instagram). Nada fica no repositório: o Renato não quer as versões
+# guardadas (19 nov 2026).
+#
+# Só corre quando alguém pede: o «Atualizar catálogo» do painel, que é um
+# workflow_dispatch no main, sem inputs — ou o botão «Run workflow» aqui no
+# GitHub. Precisa do segredo CATALOGO_SEGREDO do repositório, o mesmo que o
+# Worker do painel tem (scripts/segredo.sh no painel).
 
 on:
   workflow_dispatch:
@@ -18,7 +22,7 @@ concurrency:
   cancel-in-progress: false
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   catalogo:
@@ -39,23 +43,26 @@ jobs:
       - name: Fazer o catálogo
         env:
           CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
-        run: python3 .github/catalogo/gerar.py
+        run: python3 .github/catalogo/gerar.py --saida "$RUNNER_TEMP/catalogo.pdf"
 
-      - name: Publicar o catálogo
+      - name: Entregar o catálogo ao painel
+        env:
+          CATALOGO_SEGREDO: ${{ secrets.CATALOGO_SEGREDO }}
         run: |
           set -euo pipefail
-          git config user.name  "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add catalogo.pdf catalogo.json
-          git commit -m "Catálogo em PDF: feito com o que está no site" \
-                     -m "Pedido no painel, ou à mão no separador Actions."
-          # Se entrar outro push entretanto (uma gravação no painel, o robô do
-          # pré-render), rebase e três tentativas: o catálogo não toca em mais
-          # nenhum ficheiro, por isso o rebase não tem conflitos.
-          for tentativa in 1 2 3; do
-            if git pull --rebase origin main && git push; then exit 0; fi
-            echo "Tentativa $tentativa falhou; a repetir."
-            sleep $((tentativa * 5))
-          done
-          echo "::error::Não consegui publicar o catálogo depois de 3 tentativas."
-          exit 1
+          if [ -z "${CATALOGO_SEGREDO:-}" ]; then
+            echo "::error::Falta o segredo CATALOGO_SEGREDO no repositório (o mesmo do Worker do painel)."
+            exit 1
+          fi
+          # O segredo vai num ficheiro de cabeçalhos, escrito pelo printf da
+          # própria shell: nunca num argumento de um processo (o ps vê-os).
+          umask 077
+          CAB="$RUNNER_TEMP/cabecalhos"
+          printf 'authorization: Bearer %s\n' "$CATALOGO_SEGREDO" > "$CAB"
+          printf 'x-catalogo: %s\n' "$(base64 -w0 "$RUNNER_TEMP/catalogo.json")" >> "$CAB"
+          curl --fail-with-body --silent --show-error --retry 3 --retry-all-errors --max-time 120 \
+            -X POST "https://backoffice.artstampcreations.pt/catalogo/receber" \
+            -H @"$CAB" -H "content-type: application/pdf" \
+            --data-binary @"$RUNNER_TEMP/catalogo.pdf"
+          echo
+          rm -f "$CAB"

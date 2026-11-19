@@ -11,14 +11,16 @@ pelo Renato a 19 nov 2026 (a «proposta B»); a capa é o logótipo, a pedido do
 Vitor (18 nov 2026).
 
 Corre no GitHub — o workflow catalogo.yml, que o painel dispara com
-«Atualizar catálogo» — e também aqui:
+«Atualizar catálogo» e que ENTREGA o PDF ao painel (nada fica no repositório:
+o Renato não quer as versões guardadas) — e também aqui:
 
-    python3 .github/catalogo/gerar.py        # escreve catalogo.pdf e catalogo.json
+    python3 .github/catalogo/gerar.py                  # _source/catalogo/Catalogo-ArtStampCreations.pdf
+    python3 .github/catalogo/gerar.py --saida X.pdf    # e X.json ao lado
 
 Precisa do Pillow, do segno (o código QR) e de um Chrome (CHROME_PATH, como o
-prerender.py). O catalogo.json diz quando foi feito, com quantas páginas, e de
-que commit vieram os dados: é o que o painel mostra e usa para saber se o site
-mudou depois do último catálogo.
+prerender.py). O .json ao lado do PDF diz quando foi feito, com quantas
+páginas, e de que commit vieram os dados: vai com o PDF para o painel, que o
+mostra e o usa para saber se o site mudou depois do último catálogo.
 """
 import argparse
 import base64
@@ -596,12 +598,15 @@ def origem():
 
 def main():
     ap = argparse.ArgumentParser(description='Faz o catálogo em PDF com o que está no site.')
-    ap.add_argument('--saida', default=os.path.join(ROOT, 'catalogo.pdf'))
+    ap.add_argument('--saida', default=os.path.join(ROOT, '_source', 'catalogo', 'Catalogo-ArtStampCreations.pdf'),
+                    help='o PDF (e o .json das informações ao lado); por omissão em _source/, fora do git')
     ap.add_argument('--html', help='guardar também o HTML (para rever)')
     a = ap.parse_args()
 
     global CSS
     CSS = fontes() + CSS
+    a.saida = os.path.abspath(a.saida)
+    os.makedirs(os.path.dirname(a.saida), exist_ok=True)
     tmp = tempfile.mkdtemp(prefix='catalogo-')
     try:
         doc, paginas = Catalogo(Imagens(tmp)).fazer()
@@ -633,10 +638,9 @@ def main():
         'origem_data': data,
         'dados': ['data/' + n for n in DADOS],
     }
-    if os.path.abspath(a.saida) == os.path.join(ROOT, 'catalogo.pdf'):
-        with open(os.path.join(ROOT, 'catalogo.json'), 'w', encoding='utf-8') as f:
-            json.dump(meta, f, ensure_ascii=False, indent=2)
-            f.write('\n')
+    with open(os.path.splitext(a.saida)[0] + '.json', 'w', encoding='utf-8') as f:
+        json.dump(meta, f, ensure_ascii=False, indent=2)
+        f.write('\n')
     print('Catálogo: %d páginas, %.1f MB -> %s' % (paginas, meta['bytes'] / 1e6, a.saida))
 
 
