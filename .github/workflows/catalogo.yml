@@ -1,0 +1,61 @@
+name: Catálogo em PDF
+
+# Faz o catálogo (https://artstampcreations.pt/catalogo.pdf) com o que está no
+# site: os dados de data/*.json e as fotografias (.github/catalogo/gerar.py).
+# Só corre quando alguém pede: o «Atualizar catálogo» do painel
+# (backoffice.artstampcreations.pt), que é um workflow_dispatch no main, sem
+# inputs — ou o botão «Run workflow» aqui no GitHub. Grava o catalogo.pdf e o
+# catalogo.json (quando foi feito, quantas páginas, de que commit vieram os
+# dados); o GitHub Pages publica-os um minuto depois. O link nunca muda.
+
+on:
+  workflow_dispatch:
+
+# Dois pedidos seguidos: o segundo espera pelo primeiro em vez de o cancelar
+# (quem carregou quer o catálogo com o que acabou de gravar).
+concurrency:
+  group: catalogo
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  catalogo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Instalar o Pillow e o segno
+        run: python3 -m pip install --quiet --disable-pip-version-check Pillow segno
+
+      - name: Instalar o Chrome
+        uses: browser-actions/setup-chrome@v1
+        id: chrome
+        with:
+          chrome-version: stable
+
+      - name: Fazer o catálogo
+        env:
+          CHROME_PATH: ${{ steps.chrome.outputs.chrome-path }}
+        run: python3 .github/catalogo/gerar.py
+
+      - name: Publicar o catálogo
+        run: |
+          set -euo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add catalogo.pdf catalogo.json
+          git commit -m "Catálogo em PDF: feito com o que está no site" \
+                     -m "Pedido no painel, ou à mão no separador Actions."
+          # Se entrar outro push entretanto (uma gravação no painel, o robô do
+          # pré-render), rebase e três tentativas: o catálogo não toca em mais
+          # nenhum ficheiro, por isso o rebase não tem conflitos.
+          for tentativa in 1 2 3; do
+            if git pull --rebase origin main && git push; then exit 0; fi
+            echo "Tentativa $tentativa falhou; a repetir."
+            sleep $((tentativa * 5))
+          done
+          echo "::error::Não consegui publicar o catálogo depois de 3 tentativas."
+          exit 1

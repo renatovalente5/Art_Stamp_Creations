@@ -1,0 +1,15 @@
+{
+  "gerado_em": "2026-11-19T12:41:55Z",
+  "paginas": 16,
+  "bytes": 2688225,
+  "origem": "ed1b441635d2287a9262ec90962fcaceb06e11af",
+  "origem_data": "2026-11-19T10:15:20Z",
+  "dados": [
+    "data/site.json",
+    "data/services.json",
+    "data/models.json",
+    "data/rigidos.json",
+    "data/lonas.json",
+    "data/gallery.json"
+  ]
+}
