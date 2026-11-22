@@ -66,28 +66,34 @@ export function COMO_SE_FAZ_A_ENCOMENDA({
 }
 
 const RETOMA = {
-  eee: 'Ao comprar um equipamento eléctrico ou electrónico novo, pode entregar-nos gratuitamente um equipamento usado equivalente (do mesmo tipo e com as mesmas funções); diga-nos ao encomendar.',
-  pilhas: 'Pode entregar-nos gratuitamente pilhas e acumuladores portáteis usados, sem obrigação de comprar; diga-nos ao encomendar.',
-  pneus: 'Ao comprar pneus novos, pode entregar-nos gratuitamente os pneus usados equivalentes; diga-nos ao encomendar.',
-  baterias: 'Ao comprar uma bateria nova, pode entregar-nos gratuitamente a bateria usada equivalente; diga-nos ao encomendar.',
+  eee: 'Ao comprar um equipamento eléctrico ou electrónico novo, pode entregar-nos gratuitamente um equipamento usado equivalente (do mesmo tipo e com as mesmas funções)',
+  pilhas: 'Pode entregar-nos gratuitamente pilhas e acumuladores portáteis usados, sem obrigação de comprar',
+  pneus: 'Ao comprar pneus novos, pode entregar-nos gratuitamente os pneus usados equivalentes',
+  baterias: 'Ao comprar uma bateria nova, pode entregar-nos gratuitamente a bateria usada equivalente',
 };
+/** Como o cliente nos diz que quer entregar o usado, quando o checkout tem onde o dizer. */
+const COMO_RETOMA = 'diga-nos ao encomendar';
 
 /**
  * O aviso de retoma gratuita do usado (DL 152-D/2017, art. 13.º).
  * @param {{ tipos: ('eee'|'pilhas'|'pneus'|'baterias')[] }} opcoes
  * @returns {string} texto simples; uma frase por tipo, com a fonte no fim
  */
-export function AVISO_RETOMA({ tipos = [] } = {}) {
+export function AVISO_RETOMA({ tipos = [], como } = {}) {
   if (!Array.isArray(tipos) || !tipos.length) throw new Error('AVISO_RETOMA precisa de tipos: ["eee", "pilhas", "pneus", "baterias"]');
   const frases = tipos.map((t) => {
     if (!RETOMA[t]) throw new Error(`Tipo de retoma desconhecido: ${t} (usa ${Object.keys(RETOMA).join(', ')})`);
-    return RETOMA[t];
+    // `como`: a frase que diz como se pede a retoma — por omissão «diga-nos ao encomendar», que só é
+    // verdade quando o checkout tem onde o dizer; senão, uma frase (ou uma por tipo) que o código cumpra,
+    // p. ex. «diga-nos por email, antes ou até 30 dias depois de receber a encomenda».
+    const c = (typeof como === 'string' ? como : como && como[t]) || COMO_RETOMA;
+    return `${RETOMA[t]}; ${c}.`;
   });
   return `${frases.join(' ')} (Decreto-Lei n.º 152-D/2017, art. 13.º)`;
 }
 
 export const LIVRE_RESOLUCAO =
-  'Tem 14 dias para desistir da compra sem dar justificação, a contar do dia em que recebe o bem (ou, nos serviços, do dia do contrato). Basta dizer-nos por email ou enviar o formulário de livre resolução; devolve o bem em 14 dias e nós reembolsamos tudo, incluindo os portes normais de envio, em 14 dias e pelo mesmo meio de pagamento (Decreto-Lei n.º 24/2014, arts. 10.º a 13.º).';
+  'Tem 14 dias para desistir da compra, a contar do dia em que recebe o bem (ou, nos serviços, do dia do contrato). Para desistir, diga-nos por email ou envie o formulário de livre resolução; devolve o bem em 14 dias e nós reembolsamos tudo, incluindo os portes normais de envio, em 14 dias e pelo mesmo meio de pagamento (Decreto-Lei n.º 24/2014, arts. 10.º a 13.º).';
 
 /** Só estas excepções se aplicam aos sites típicos; escolher cor, tamanho ou modelo do catálogo não é uma delas. */
 export const LIVRE_RESOLUCAO_EXCEPCOES = Object.freeze([
