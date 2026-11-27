@@ -730,15 +730,26 @@
     }
     /* O aviso fica preso ao fundo do ecrã e, sem mais nada, tapava o fim da
        página — o rodapé, com a ligação ao Livro de Reclamações, que a lei quer
-       «visível» (DL 156/2005, art. 5.º-B). Enquanto está aberto, a página
-       ganha por baixo a altura dele (--cookie-alto, no CSS). */
-    function medir() {
-      if (!banner || banner.hidden) return;
-      doc.documentElement.style.setProperty('--cookie-alto', banner.offsetHeight + 'px');
+       «visível» (DL 156/2005, art. 5.º-B). Sai de cena quando a última linha
+       do rodapé chega até ele, e volta ao subir: a página acaba no rodapé, sem
+       espaço vazio por baixo. */
+    // O botão do WhatsApp também, quando a calha de estar por cima dela.
+    var ultimaLinha = doc.querySelector('.footer__bar');
+    var waFab = doc.querySelector('.wa-fab');
+    function fimDoRodape() {
+      if (!ultimaLinha) return;
+      var r = ultimaLinha.getBoundingClientRect(), alto = window.innerHeight;
+      [banner, waFab].forEach(function (el) {
+        if (!el || el.hidden) return;
+        var q = el.getBoundingClientRect();
+        el.classList.toggle('no-fim', r.top < alto && r.bottom > q.top && r.left < q.right && r.right > q.left);
+      });
     }
-    window.addEventListener('resize', medir);
-    function show() { if (banner) { banner.hidden = false; medir(); } }
-    function hide() { if (banner) banner.hidden = true; doc.documentElement.style.removeProperty('--cookie-alto'); }
+    window.addEventListener('scroll', fimDoRodape, { passive: true });
+    window.addEventListener('resize', fimDoRodape);
+    if ('ResizeObserver' in window) new ResizeObserver(fimDoRodape).observe(doc.body);
+    function show() { if (banner) { banner.hidden = false; fimDoRodape(); } }
+    function hide() { if (banner) banner.hidden = true; }
     var cur = get();
     if (cur === 'accepted') loadMap();
     else if (cur !== 'rejected') show();

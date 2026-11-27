@@ -410,9 +410,11 @@ body.menu-open .wa-fab{opacity:0;visibility:hidden;pointer-events:none}
 /* /legal-comum:livro-css */
 
 /* O aviso de cookies não tapa o fim da página (o rodapé, com o Livro de
-   Reclamações): enquanto está aberto, a página ganha por baixo a altura dele
-   (app.js, medir). */
-body:has(#cookie-banner:not([hidden])){padding-bottom:var(--cookie-alto,0px)}
+   Reclamações): sai de cena quando a última linha do rodapé chega até ele, e
+   volta ao subir (app.js, fimDoRodape). A página acaba no rodapé, sem espaço
+   vazio por baixo. */
+#cookie-banner{transition:opacity .25s}
+#cookie-banner.no-fim,.wa-fab.no-fim{opacity:0;visibility:hidden;pointer-events:none;transition:opacity .25s,visibility 0s .25s}
 
 /* Nas páginas legais a nota da chamada segue na mesma linha do número. */
 .legal .call-note{display:inline;font-size:inherit;line-height:inherit;opacity:1}
